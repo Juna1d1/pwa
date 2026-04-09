@@ -1,1 +1,302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMS App</title>
+
+<style>
+:root {
+    --primary: #4a90e2;
+    --dark: #333;
+    --light: #f4f4f4;
+}
+body { font-family: sans-serif; margin: 0; background: var(--light); }
+header { background: var(--primary); color: white; padding: 1rem; text-align: center; }
+
+nav { display: none; justify-content: center; background: #fff; }
+nav a { padding: 1rem; cursor: pointer; }
+
+.page { display: none; padding: 20px; max-width: 700px; margin: auto; }
+.page.active { display: block; }
+
+.card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+input, textarea, select {
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>📚 LMS Sederhana</h1>
+</header>
+
+<!-- LOGIN -->
+<section id="login" class="page active">
+    <h2>Login</h2>
+    <div class="card">
+        <input type="text" id="username" placeholder="Username">
+        <select id="role">
+            <option value="student">Student</option>
+            <option value="admin">Admin</option>
+        </select>
+        <button onclick="login()">Masuk</button>
+    </div>
+</section>
+
+<!-- NAV -->
+<nav id="navMenu">
+    <a onclick="go('dashboard')">Dashboard</a>
+    <a onclick="go('courses')">Tambah Materi</a>
+    <a onclick="go('learning')">Materi Saya</a>
+    <a onclick="go('quiz')">Quiz</a>
+    <a onclick="go('certificate')">Sertifikat</a>
+    <a onclick="logout()">Logout</a>
+</nav>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page">
+    <h2>Dashboard</h2>
+    <div class="card">
+        <p id="welcomeText"></p>
+        <p>Total Materi: <span id="totalCourse"></span></p>
+    </div>
+</section>
+
+<!-- TAMBAH MATERI -->
+<section id="courses" class="page">
+    <h2>Tambah Materi</h2>
+    <div class="card">
+        <input type="text" id="title" placeholder="Judul">
+        <textarea id="desc" placeholder="Deskripsi"></textarea>
+        <button onclick="addCourse()">Tambah</button>
+    </div>
+</section>
+
+<!-- MATERI -->
+<section id="learning" class="page">
+    <h2>Materi Saya</h2>
+    <div id="list"></div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="page">
+    <h2>Quiz</h2>
+    <div class="card">
+        <p>1. Apa itu HTML?</p>
+        <button onclick="answer(true)">Bahasa markup</button>
+        <button onclick="answer(false)">Bahasa database</button>
+
+        <p>2. Fungsi CSS?</p>
+        <button onclick="answer(true)">Styling</button>
+        <button onclick="answer(false)">Backend</button>
+
+        <br><br>
+        <button onclick="finishQuiz()">Selesai Quiz</button>
+    </div>
+</section>
+
+<!-- SERTIFIKAT -->
+<section id="certificate" class="page">
+    <h2>Sertifikat</h2>
+    <div id="certContainer"></div>
+</section>
+
+<script>
+// DATA
+const DB = "lms_data";
+let user = null;
+
+// LOGIN
+function login() {
+    const name = document.getElementById('username').value;
+    const role = document.getElementById('role').value;
+
+    if (!name) return alert("Isi username!");
+
+    user = { name, role };
+    localStorage.setItem("user", JSON.stringify(user));
+
+    document.getElementById("login").classList.remove("active");
+    document.getElementById("navMenu").style.display = "flex";
+
+    go("dashboard");
+}
+
+// LOGOUT
+function logout() {
+    localStorage.removeItem("user");
+    location.reload();
+}
+
+// NAVIGASI
+function go(page) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+
+    if (page === "dashboard") loadDashboard();
+    if (page === "learning") render();
+    if (page === "certificate") loadCertificate();
+}
+
+// DASHBOARD
+function loadDashboard() {
+    document.getElementById("welcomeText").innerText = 
+        "Halo, " + user.name + " (" + user.role + ")";
+
+    const data = JSON.parse(localStorage.getItem(DB) || "[]");
+    document.getElementById("totalCourse").innerText = data.length;
+
+    if (user.role !== "admin") {
+        document.getElementById("courses").style.display = "none";
+    }
+}
+
+// TAMBAH MATERI
+function addCourse() {
+    if (user.role !== "admin") return alert("Hanya admin!");
+
+    const title = document.getElementById("title").value;
+    const desc = document.getElementById("desc").value;
+
+    if (!title || !desc) return alert("Isi semua!");
+
+    const data = JSON.parse(localStorage.getItem(DB) || "[]");
+
+    data.push({
+        title,
+        desc,
+        done: false
+    });
+
+    localStorage.setItem(DB, JSON.stringify(data));
+
+    alert("Materi ditambahkan!");
+    render();
+}
+
+// RENDER
+function render() {
+    const list = document.getElementById("list");
+    const data = JSON.parse(localStorage.getItem(DB) || "[]");
+
+    if (data.length === 0) {
+        list.innerHTML = "<p>Belum ada materi</p>";
+        return;
+    }
+
+    list.innerHTML = data.map((c, i) => `
+        <div class="card">
+            <strong>${c.title}</strong>
+            <p>${c.desc}</p>
+            <p>Status: ${c.done ? "✅ Selesai" : "❌ Belum"}</p>
+
+            <button onclick="toggle(${i})">Tandai Selesai</button>
+            ${user.role === "admin" ? `<button onclick="del(${i})" style="background:red">Hapus</button>` : ""}
+        </div>
+    `).join("");
+}
+
+// TOGGLE STATUS
+function toggle(i) {
+    const data = JSON.parse(localStorage.getItem(DB));
+    data[i].done = !data[i].done;
+    localStorage.setItem(DB, JSON.stringify(data));
+    render();
+}
+
+// DELETE
+function del(i) {
+    const data = JSON.parse(localStorage.getItem(DB));
+    data.splice(i, 1);
+    localStorage.setItem(DB, JSON.stringify(data));
+    render();
+}
+
+// QUIZ
+let score = 0;
+let total = 2;
+
+function answer(correct) {
+    if (correct) score++;
+}
+
+// SELESAI QUIZ
+function finishQuiz() {
+    const result = (score / total) * 100;
+    localStorage.setItem("quiz_score", result);
+
+    alert("Nilai kamu: " + result);
+
+    if (result >= 70) {
+        alert("LULUS 🎉");
+    } else {
+        alert("TIDAK LULUS ❌");
+    }
+
+    score = 0;
+}
+
+// CERTIFICATE
+function loadCertificate() {
+    const container = document.getElementById("certContainer");
+    const nilai = localStorage.getItem("quiz_score");
+
+    if (!nilai) {
+        container.innerHTML = "<p>Belum mengerjakan quiz</p>";
+        return;
+    }
+
+    if (nilai < 70) {
+        container.innerHTML = "<p>Belum lulus, tidak dapat sertifikat</p>";
+        return;
+    }
+
+    container.innerHTML = `
+        <div style="border:3px solid #4a90e2; padding:20px; text-align:center;">
+            <h2>SERTIFIKAT</h2>
+            <p>Diberikan kepada:</p>
+            <h3>${user.name}</h3>
+            <p>Telah menyelesaikan pembelajaran LMS</p>
+            <p>Nilai: ${nilai}</p>
+            <br>
+            <strong>🎓 LULUS 🎓</strong>
+        </div>
+    `;
+}
+
+// AUTO LOGIN
+window.onload = () => {
+    const saved = localStorage.getItem("user");
+    if (saved) {
+        user = JSON.parse(saved);
+        document.getElementById("login").classList.remove("active");
+        document.getElementById("navMenu").style.display = "flex";
+        go("dashboard");
+    }
+};
+</script>
+
+</body>
+</html>
 
