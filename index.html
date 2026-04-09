@@ -72,7 +72,30 @@ input, textarea {
     <a onclick="logout()">Logout</a>
 </nav>
 
+<!-- DASHBOARD -->
+<section id="dashboard" class="page">
+    <h2>Dashboard</h2>
+    <div class="card">
+        <p id="welcomeText"></p>
+        <p>Total Materi: <span id="totalCourse"></span></p>
+    </div>
+</section>
 
+<!-- TAMBAH MATERI (ADMIN ONLY) -->
+<section id="courses" class="page">
+    <h2>Tambah Materi</h2>
+    <div class="card">
+        <input type="text" id="title" placeholder="Judul">
+        <textarea id="desc" placeholder="Deskripsi"></textarea>
+        <button onclick="addCourse()">Tambah</button>
+    </div>
+</section>
+
+<!-- MATERI -->
+<section id="learning" class="page">
+    <h2>Materi Saya</h2>
+    <div id="list"></div>
+</section>
 
 <script>
 // DATA
