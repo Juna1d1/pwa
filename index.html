@@ -1,89 +1,118 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple PWA</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4a90e2">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMS App</title>
 
-    <style>
-        :root {
-            --primary: #4a90e2;
-            --dark: #333;
-            --light: #f4f4f4;
-        }
-        body { font-family: sans-serif; margin: 0; background: var(--light); }
-        header { background: var(--primary); color: white; padding: 1rem; text-align: center; }
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4a90e2">
 
-        /* SPA Navigation */
-        nav { display: flex; justify-content: center; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        nav a { padding: 1rem; text-decoration: none; color: var(--dark); cursor: pointer; }
-        nav a:hover { background: #eee; }
+<style>
+:root {
+    --primary: #4a90e2;
+    --dark: #333;
+    --light: #f4f4f4;
+}
 
-        .page { display: none; padding: 20px; max-width: 600px; margin: auto; }
-        .page.active { display: block; }
+body { font-family: sans-serif; margin: 0; background: var(--light); }
+header { background: var(--primary); color: white; padding: 1rem; text-align: center; }
 
-        /* UI Components */
-        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        button { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
-        button:disabled { background: #ccc; }
-        .sync-status { font-size: 0.8rem; margin-top: 10px; color: #666; }
-    </style>
+nav { display: flex; justify-content: center; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+nav a { padding: 1rem; text-decoration: none; color: var(--dark); cursor: pointer; }
+nav a:hover { background: #eee; }
+
+.page { display: none; padding: 20px; max-width: 700px; margin: auto; }
+.page.active { display: block; }
+
+.card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled { background: #ccc; }
+
+input, textarea {
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+</style>
 </head>
+
 <body>
 
 <header>
-    <h1>Simple Task Manager</h1>
+    <h1>📚 LMS Sederhana</h1>
 </header>
 
 <nav>
-    <a onclick="navigateTo('home')">Beranda</a>
-    <a onclick="navigateTo('tasks')">Daftar Tugas</a>
+    <a onclick="navigateTo('dashboard')">Dashboard</a>
+    <a onclick="navigateTo('courses')">Kursus</a>
+    <a onclick="navigateTo('myLearning')">Materi Saya</a>
 </nav>
 
-<section id="home" class="page active">
-    <h2>Selamat Datang</h2>
-    <p>Ini adalah aplikasi SPA & PWA sederhana yang menyimpan data di LocalStorage dan melakukan sinkronisasi via JSON.</p>
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+    <h2>Dashboard</h2>
     <div class="card">
-        <h3>Status Sinkronisasi</h3>
-        <button id="syncBtn">Sinkronkan Data Sekarang</button>
-        <p class="sync-status" id="statusMsg">Belum ada data disinkronkan.</p>
+        <p>Selamat datang di Learning Management System.</p>
+        <p>Kelola materi belajar kamu dengan mudah.</p>
+    </div>
+
+    <div class="card">
+        <h3>Sinkronisasi Data</h3>
+        <button id="syncBtn">Sinkronkan</button>
+        <p id="statusMsg">Belum sinkron</p>
     </div>
 </section>
 
-<section id="tasks" class="page">
-    <h2>Daftar Tugas</h2>
+<!-- COURSES -->
+<section id="courses" class="page">
+    <h2>Tambah Materi</h2>
 
     <div class="card">
-        <h3>Tambah Tugas Manual</h3>
-        <input type="text" id="taskTitle" placeholder="Judul Tugas" style="width: 90%; padding: 8px; margin-bottom: 10px;">
-        <textarea id="taskDesc" placeholder="Deskripsi" style="width: 90%; padding: 8px; margin-bottom: 10px;"></textarea>
-        <button onclick="addTask()">Simpan ke Lokal</button>
+        <input type="text" id="courseTitle" placeholder="Judul Materi">
+        <textarea id="courseDesc" placeholder="Deskripsi Materi"></textarea>
+        <button onclick="addCourse()">Tambah Materi</button>
     </div>
+</section>
 
-    <hr>
-    <div id="taskList">
-        <p>Tidak ada tugas tersedia. Silakan sinkronkan data.</p>
+<!-- MY LEARNING -->
+<section id="myLearning" class="page">
+    <h2>Materi Saya</h2>
+    <div id="courseList">
+        <p>Belum ada materi</p>
     </div>
 </section>
 
 <script>
-    // --- 1. SPA Routing Logic ---
-    function navigateTo(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        if(pageId === 'tasks') renderTasks();
-    }
+// ROUTING
+function navigateTo(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
 
-    // --- 2. Data Logic (LocalStorage & Fetch) ---
-    const DB_KEY = 'my_app_tasks';
-    const JSON_URL = 'data.json'; // Pastikan file ini ada di folder yang sama
+    if (pageId === 'myLearning') renderCourses();
+}
 
+// DATABASE
+const DB_KEY = 'lms_courses';
+const JSON_URL = 'data.json';
 
-
-
-    async function syncData() {
+// SYNC DATA
+async function syncData() {
     const btn = document.getElementById('syncBtn');
     const msg = document.getElementById('statusMsg');
 
@@ -91,113 +120,88 @@
     msg.innerText = "Sinkronisasi...";
 
     try {
-        const response = await fetch(JSON_URL);
-        if (!response.ok) throw new Error('Gagal mengambil file JSON');
+        const res = await fetch(JSON_URL);
+        const serverData = await res.json();
 
-        const dataFromServer = await response.json();
-
-        // Ambil data yang sudah ada di lokal saat ini
         const localData = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
+        const merged = [...localData];
 
-        // Logika Merge: Masukkan data dari server hanya jika judulnya belum ada di lokal
-        const mergedData = [...localData];
-
-        dataFromServer.forEach(serverTask => {
-            const isDuplicate = localData.some(localTask => localTask.title === serverTask.title);
-            if (!isDuplicate) {
-                mergedData.push(serverTask);
-            }
+        serverData.forEach(item => {
+            const exist = localData.some(c => c.title === item.title);
+            if (!exist) merged.push(item);
         });
 
-        // Simpan hasil penggabungan kembali ke LocalStorage
-        localStorage.setItem(DB_KEY, JSON.stringify(mergedData));
+        localStorage.setItem(DB_KEY, JSON.stringify(merged));
+        msg.innerText = "Sinkron berhasil!";
+        renderCourses();
 
-        msg.innerText = `Terakhir sinkron: ${new Date().toLocaleTimeString()}`;
-        renderTasks();
-        alert('Sinkronisasi berhasil! Data server ditambahkan tanpa menghapus data lokal Anda.');
-
-    } catch (error) {
-        msg.innerText = "Gagal sinkron: " + error.message;
+    } catch (err) {
+        msg.innerText = "Gagal sync!";
     } finally {
         btn.disabled = false;
     }
 }
 
+// TAMBAH MATERI
+function addCourse() {
+    const title = document.getElementById('courseTitle');
+    const desc = document.getElementById('courseDesc');
 
-
-    function renderTasks() {
-        const listContainer = document.getElementById('taskList');
-        const rawData = localStorage.getItem(DB_KEY);
-
-        if (!rawData || JSON.parse(rawData).length === 0) {
-            listContainer.innerHTML = '<p>Tidak ada tugas tersedia.</p>';
-            return;
-        }
-
-        const tasks = JSON.parse(rawData);
-        listContainer.innerHTML = tasks.map((task, index) => `
-            <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <strong>${task.title}</strong>
-                    <p style="margin: 5px 0 0 0;">${task.description}</p>
-                </div>
-                <button onclick="deleteTask(${index})" style="background: #e74c3c; padding: 5px 10px;">Hapus</button>
-            </div>
-        `).join('');
-    }
-
-    // Fungsi Hapus Tugas
-    function deleteTask(index) {
-        if (confirm('Hapus tugas ini?')) {
-            const tasks = JSON.parse(localStorage.getItem(DB_KEY));
-            tasks.splice(index, 1); // Hapus 1 item berdasarkan index
-            localStorage.setItem(DB_KEY, JSON.stringify(tasks));
-            renderTasks(); // Refresh tampilan
-        }
-    }
-
-    function addTask() {
-    const titleInput = document.getElementById('taskTitle');
-    const descInput = document.getElementById('taskDesc');
-
-    if (titleInput.value === '' || descInput.value === '') {
-        alert('Harap isi semua kolom!');
+    if (!title.value || !desc.value) {
+        alert("Isi semua field!");
         return;
     }
 
-    const newTask = {
-        title: titleInput.value,
-        description: descInput.value
+    const newCourse = {
+        title: title.value,
+        description: desc.value
     };
 
-    // Ambil data lama dari LocalStorage
-    const rawData = localStorage.getItem(DB_KEY);
-    const tasks = rawData ? JSON.parse(rawData) : [];
+    const data = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
+    data.unshift(newCourse);
 
-    // Tambahkan tugas baru ke array (di posisi paling atas)
-    tasks.unshift(newTask);
+    localStorage.setItem(DB_KEY, JSON.stringify(data));
 
-    // Simpan kembali ke LocalStorage
-    localStorage.setItem(DB_KEY, JSON.stringify(tasks));
+    title.value = '';
+    desc.value = '';
 
-    // Bersihkan form dan refresh tampilan
-    titleInput.value = '';
-    descInput.value = '';
-    renderTasks();
-    alert('Tugas berhasil disimpan di lokal!');
+    alert("Materi ditambahkan!");
 }
 
+// RENDER
+function renderCourses() {
+    const container = document.getElementById('courseList');
+    const data = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
 
-    document.getElementById('syncBtn').addEventListener('click', syncData);
-
-    // --- 3. Service Worker Registration (PWA) ---
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('SW Registered!', reg))
-                .catch(err => console.log('SW Failed!', err));
-        });
+    if (data.length === 0) {
+        container.innerHTML = "<p>Belum ada materi</p>";
+        return;
     }
+
+    container.innerHTML = data.map((c, i) => `
+        <div class="card">
+            <strong>${c.title}</strong>
+            <p>${c.description}</p>
+            <button onclick="deleteCourse(${i})" style="background:red">Hapus</button>
+        </div>
+    `).join('');
+}
+
+// DELETE
+function deleteCourse(index) {
+    const data = JSON.parse(localStorage.getItem(DB_KEY));
+    data.splice(index, 1);
+    localStorage.setItem(DB_KEY, JSON.stringify(data));
+    renderCourses();
+}
+
+document.getElementById('syncBtn').addEventListener('click', syncData);
+
+// SERVICE WORKER
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+}
 </script>
+
 </body>
 </html>
