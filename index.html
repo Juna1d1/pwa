@@ -3,51 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMS App</title>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#4a90e2">
+<title>LMS App Pro</title>
 
 <style>
 :root {
-    --primary: #4a90e2;
-    --dark: #333;
-    --light: #f4f4f4;
+    --primary:#4a90e2;
+    --light:#f4f4f4;
 }
 
-body { font-family: sans-serif; margin: 0; background: var(--light); }
-header { background: var(--primary); color: white; padding: 1rem; text-align: center; }
+body { margin:0; font-family:sans-serif; background:var(--light); }
+header { background:var(--primary); color:white; padding:1rem; text-align:center; }
 
-nav { display: flex; justify-content: center; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-nav a { padding: 1rem; text-decoration: none; color: var(--dark); cursor: pointer; }
-nav a:hover { background: #eee; }
+nav { display:flex; justify-content:center; background:#fff; }
+nav a { padding:1rem; cursor:pointer; }
 
-.page { display: none; padding: 20px; max-width: 700px; margin: auto; }
-.page.active { display: block; }
+.page { display:none; padding:20px; max-width:800px; margin:auto; }
+.active { display:block; }
 
 .card {
-    background: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background:white;
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
 }
 
 button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:5px;
+    cursor:pointer;
 }
 
-button:disabled { background: #ccc; }
-
 input, textarea {
-    width: 95%;
-    padding: 8px;
-    margin-bottom: 10px;
+    width:95%;
+    padding:8px;
+    margin:5px 0;
 }
 </style>
 </head>
@@ -55,151 +47,188 @@ input, textarea {
 <body>
 
 <header>
-    <h1>📚 LMS Sederhana</h1>
+<h1>📚 LMS App</h1>
 </header>
 
+<!-- LOGIN -->
+<section id="loginPage" class="page active">
+    <div class="card">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <select id="role">
+            <option value="student">Student</option>
+            <option value="admin">Admin</option>
+        </select>
+        <br><br>
+        <button onclick="login()">Masuk</button>
+    </div>
+</section>
+
+<!-- APP -->
+<div id="app" style="display:none">
+
 <nav>
-    <a onclick="navigateTo('dashboard')">Dashboard</a>
-    <a onclick="navigateTo('courses')">Kursus</a>
-    <a onclick="navigateTo('myLearning')">Materi Saya</a>
+    <a onclick="nav('dashboard')">Dashboard</a>
+    <a onclick="nav('courses')">Materi</a>
+    <a onclick="nav('my')">Belajar Saya</a>
+    <a onclick="logout()">Logout</a>
 </nav>
 
 <!-- DASHBOARD -->
-<section id="dashboard" class="page active">
+<section id="dashboard" class="page">
     <h2>Dashboard</h2>
-    <div class="card">
-        <p>Selamat datang di Learning Management System.</p>
-        <p>Kelola materi belajar kamu dengan mudah.</p>
-    </div>
-
-    <div class="card">
-        <h3>Sinkronisasi Data</h3>
-        <button id="syncBtn">Sinkronkan</button>
-        <p id="statusMsg">Belum sinkron</p>
-    </div>
+    <div class="card" id="stats"></div>
 </section>
 
-<!-- COURSES -->
+<!-- ADMIN PAGE -->
 <section id="courses" class="page">
-    <h2>Tambah Materi</h2>
+    <h2>Kelola Materi</h2>
 
-    <div class="card">
-        <input type="text" id="courseTitle" placeholder="Judul Materi">
-        <textarea id="courseDesc" placeholder="Deskripsi Materi"></textarea>
-        <button onclick="addCourse()">Tambah Materi</button>
+    <div id="adminOnly">
+        <input id="title" placeholder="Judul">
+        <textarea id="desc" placeholder="Deskripsi"></textarea>
+        <button onclick="add()">Tambah</button>
     </div>
+
+    <div id="list"></div>
 </section>
 
-<!-- MY LEARNING -->
-<section id="myLearning" class="page">
+<!-- STUDENT PAGE -->
+<section id="my" class="page">
     <h2>Materi Saya</h2>
-    <div id="courseList">
-        <p>Belum ada materi</p>
-    </div>
+    <div id="myList"></div>
 </section>
+
+</div>
 
 <script>
-// ROUTING
-function navigateTo(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
+let user = null;
+const DB = "lms_data";
 
-    if (pageId === 'myLearning') renderCourses();
+// LOGIN
+function login(){
+    const name = document.getElementById("username").value;
+    const role = document.getElementById("role").value;
+
+    if(!name) return alert("Isi username");
+
+    user = {name, role};
+    localStorage.setItem("user", JSON.stringify(user));
+
+    startApp();
 }
 
-// DATABASE
-const DB_KEY = 'lms_courses';
-const JSON_URL = 'data.json';
+// START APP
+function startApp(){
+    user = JSON.parse(localStorage.getItem("user"));
+    document.getElementById("loginPage").style.display="none";
+    document.getElementById("app").style.display="block";
 
-// SYNC DATA
-async function syncData() {
-    const btn = document.getElementById('syncBtn');
-    const msg = document.getElementById('statusMsg');
-
-    btn.disabled = true;
-    msg.innerText = "Sinkronisasi...";
-
-    try {
-        const res = await fetch(JSON_URL);
-        const serverData = await res.json();
-
-        const localData = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
-        const merged = [...localData];
-
-        serverData.forEach(item => {
-            const exist = localData.some(c => c.title === item.title);
-            if (!exist) merged.push(item);
-        });
-
-        localStorage.setItem(DB_KEY, JSON.stringify(merged));
-        msg.innerText = "Sinkron berhasil!";
-        renderCourses();
-
-    } catch (err) {
-        msg.innerText = "Gagal sync!";
-    } finally {
-        btn.disabled = false;
-    }
+    nav('dashboard');
 }
 
-// TAMBAH MATERI
-function addCourse() {
-    const title = document.getElementById('courseTitle');
-    const desc = document.getElementById('courseDesc');
+// NAV
+function nav(id){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
 
-    if (!title.value || !desc.value) {
-        alert("Isi semua field!");
-        return;
-    }
-
-    const newCourse = {
-        title: title.value,
-        description: desc.value
-    };
-
-    const data = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
-    data.unshift(newCourse);
-
-    localStorage.setItem(DB_KEY, JSON.stringify(data));
-
-    title.value = '';
-    desc.value = '';
-
-    alert("Materi ditambahkan!");
+    if(id==='dashboard') loadStats();
+    if(id==='courses') loadCourses();
+    if(id==='my') loadMy();
 }
 
-// RENDER
-function renderCourses() {
-    const container = document.getElementById('courseList');
-    const data = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
+// DATA
+function getData(){
+    return JSON.parse(localStorage.getItem(DB)||"[]");
+}
 
-    if (data.length === 0) {
-        container.innerHTML = "<p>Belum ada materi</p>";
-        return;
-    }
+function saveData(data){
+    localStorage.setItem(DB, JSON.stringify(data));
+}
 
-    container.innerHTML = data.map((c, i) => `
+// ADMIN ADD
+function add(){
+    const title = document.getElementById("title").value;
+    const desc = document.getElementById("desc").value;
+
+    if(!title || !desc) return alert("Isi semua");
+
+    const data = getData();
+    data.push({title, desc, done:false});
+    saveData(data);
+
+    loadCourses();
+}
+
+// LOAD COURSES
+function loadCourses(){
+    const data = getData();
+    const list = document.getElementById("list");
+
+    document.getElementById("adminOnly").style.display =
+        user.role === "admin" ? "block":"none";
+
+    list.innerHTML = data.map((d,i)=>`
         <div class="card">
-            <strong>${c.title}</strong>
-            <p>${c.description}</p>
-            <button onclick="deleteCourse(${i})" style="background:red">Hapus</button>
+            <b>${d.title}</b>
+            <p>${d.desc}</p>
+            ${user.role==="admin" ?
+            `<button onclick="del(${i})">Hapus</button>` : ""}
         </div>
-    `).join('');
+    `).join("");
 }
 
 // DELETE
-function deleteCourse(index) {
-    const data = JSON.parse(localStorage.getItem(DB_KEY));
-    data.splice(index, 1);
-    localStorage.setItem(DB_KEY, JSON.stringify(data));
-    renderCourses();
+function del(i){
+    const data = getData();
+    data.splice(i,1);
+    saveData(data);
+    loadCourses();
 }
 
-document.getElementById('syncBtn').addEventListener('click', syncData);
+// STUDENT
+function loadMy(){
+    const data = getData();
+    const list = document.getElementById("myList");
 
-// SERVICE WORKER
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
+    list.innerHTML = data.map((d,i)=>`
+        <div class="card">
+            <b>${d.title}</b>
+            <p>${d.desc}</p>
+            <button onclick="toggle(${i})">
+                ${d.done ? "✔ Selesai" : "Tandai Selesai"}
+            </button>
+        </div>
+    `).join("");
+}
+
+function toggle(i){
+    const data = getData();
+    data[i].done = !data[i].done;
+    saveData(data);
+    loadMy();
+}
+
+// DASHBOARD
+function loadStats(){
+    const data = getData();
+    const done = data.filter(d=>d.done).length;
+
+    document.getElementById("stats").innerHTML = `
+        <p>Total Materi: ${data.length}</p>
+        <p>Selesai: ${done}</p>
+    `;
+}
+
+// LOGOUT
+function logout(){
+    localStorage.removeItem("user");
+    location.reload();
+}
+
+// AUTO LOGIN
+if(localStorage.getItem("user")){
+    startApp();
 }
 </script>
 
