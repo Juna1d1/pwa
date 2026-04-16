@@ -2,7 +2,7 @@
 <h2>1. Manajemen Proses (Process Management)</h2>
 <h3>Foreground Process</h3>
 <b>P (Point)
-Foreground process adalah proses dengan prioritas tertinggi karena sedang digunakan langsung oleh pengguna.
+Foreground process adalah proses dengan prioritas tertinggi karena sedang digunakan langsung oleh pengguna.<br>
 R (Reason)
 Android harus memastikan pengalaman pengguna tetap lancar, sehingga proses ini tidak boleh terganggu atau dihentikan secara tiba-tiba.
 E (Example)
