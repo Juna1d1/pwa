@@ -111,5 +111,3 @@ User Experience: Aplikasi terasa cepat dan responsif.
 Resource Efficiency: Penggunaan RAM, CPU, dan Baterai tetap minimal.
 
 Security: Data tetap aman meskipun banyak proses yang berjalan secara bersamaan.
-
-Apakah ada bagian spesifik dari coretan di papan tersebut, seperti diagram kotak di sebelah kiri bawah, yang ingin Anda bedah lebih dalam fungsinya?
