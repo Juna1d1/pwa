@@ -13,10 +13,10 @@ Hal ini dilakukan karena perangkat mobile memiliki keterbatasan RAM dan CPU, seh
 -Background → musik atau download
 -Cached → aplikasi yang sudah ditutup tapi masih disimpan
 <b><h3>Point Reinforcement</h3></b>
-Dengan sistem ini, Android dapat menjaga keseimbangan antara performa dan efisiensi.
-Foreground process adalah aplikasi yang sedang digunakan dan memiliki prioritas tertinggi. Sistem tidak akan menghentikan proses ini karena berhubungan langsung dengan pengalaman pengguna.
-
-Background process tetap berjalan meskipun tidak terlihat, tetapi dapat dihentikan jika sistem membutuhkan memori. Sementara itu, cached process hanya disimpan untuk mempercepat pembukaan ulang aplikasi dan akan dihapus terlebih dahulu jika memori penuh.
+Dengan sistem ini, Android dapat menjaga keseimbangan antara performa dan efisiensi.<br>
+<h4>Penjelasan singkat</h4>
+Foreground process adalah aplikasi yang sedang digunakan dan memiliki prioritas tertinggi. Sistem tidak akan menghentikan proses ini karena berhubungan langsung dengan pengalaman pengguna.<br>
+Background process tetap berjalan meskipun tidak terlihat, tetapi dapat dihentikan jika sistem membutuhkan memori. Sementara itu, cached process hanya disimpan untuk mempercepat pembukaan ulang aplikasi dan akan dihapus terlebih dahulu jika memori penuh.<br>
 
 <h2>2. Komunikasi Antar Proses (IPC)</h2>
 <b><h3>Point</h3></b>
@@ -27,10 +27,9 @@ Karena setiap aplikasi berjalan terpisah (sandbox), diperlukan cara untuk saling
 -Intent → membuka aplikasi lain (share ke WhatsApp)
 -WorkManager → menjalankan task background seperti sync data
 <b><h3>Point Reinforcement</h3></b>
-IPC memungkinkan sistem Android tetap fleksibel dan modular tanpa mengorbankan keamanan.
-
-Intent adalah mekanisme utama komunikasi antar komponen, baik dalam satu aplikasi maupun antar aplikasi. Sedangkan WorkManager digunakan untuk menjalankan proses di background secara efisien dan terjadwal.
-
+IPC memungkinkan sistem Android tetap fleksibel dan modular tanpa mengorbankan keamanan.<br>
+<h4>Penjelasan Singkat</h4>
+Intent adalah mekanisme utama komunikasi antar komponen, baik dalam satu aplikasi maupun antar aplikasi. Sedangkan WorkManager digunakan untuk menjalankan proses di background secara efisien dan terjadwal.<br>
 Selain itu, Android menggunakan konsep event-driven, yaitu sistem hanya berjalan ketika ada event seperti klik tombol atau notifikasi masuk. Hal ini membuat penggunaan resource menjadi lebih hemat.
 
 <h2>3. Keamanan sistem mobile</h2>
@@ -43,11 +42,10 @@ Hal ini diperlukan untuk melindungi data pengguna dari akses tidak sah.
 -Injection → SQL Injection jika input tidak divalidasi
 -NFC → pembayaran digital
 <b><h3>Point Reinforcement</h3></b>
-Keamanan tidak hanya bergantung pada sistem, tetapi juga pada cara aplikasi dikembangkan.
-
-Permission system memastikan aplikasi tidak bisa sembarangan mengakses data pengguna. Exploit merupakan celah keamanan yang bisa dimanfaatkan hacker, sedangkan injection attack terjadi karena input yang tidak aman.
-
-Teknologi NFC memungkinkan komunikasi jarak dekat, tetapi tetap harus dikelola dengan aman karena berkaitan dengan data sensitif.
+Keamanan tidak hanya bergantung pada sistem, tetapi juga pada cara aplikasi dikembangkan.<br>
+<h4>Penjelasan Singkat</h4>
+Permission system memastikan aplikasi tidak bisa sembarangan mengakses data pengguna. Exploit merupakan celah keamanan yang bisa dimanfaatkan hacker, sedangkan injection attack terjadi karena input yang tidak aman.<br>
+Teknologi NFC memungkinkan komunikasi jarak dekat, tetapi tetap harus dikelola dengan aman karena berkaitan dengan data sensitif.<br>
 
 <h2>4. Notifikasi & Layanan Sistem</h2>
 <b><h3>Point</h3></b>
@@ -59,11 +57,10 @@ Pengguna tidak selalu membuka aplikasi, tetapi tetap membutuhkan informasi secar
 -GPS pada aplikasi maps
 -Musik yang tetap berjalan
 <b><h3>Point Reinforcement</h3></b>
-Layanan sistem meningkatkan fungsionalitas aplikasi tanpa mengganggu user experience.
-
-Notifikasi memungkinkan komunikasi langsung dengan user. GPS digunakan untuk layanan berbasis lokasi, sedangkan media service memungkinkan aplikasi berjalan di background.
-
-Cache juga berperan dalam mempercepat akses data dan mengurangi penggunaan jaringan.
+Layanan sistem meningkatkan fungsionalitas aplikasi tanpa mengganggu user experience.<br>
+<h4>Penjelasan Singkat</h4>
+Notifikasi memungkinkan komunikasi langsung dengan user. GPS digunakan untuk layanan berbasis lokasi, sedangkan media service memungkinkan aplikasi berjalan di background.<br>
+Cache juga berperan dalam mempercepat akses data dan mengurangi penggunaan jaringan.<br>
 
 <h2>5. Optimasi Sistem</h2>
 <b><h3>Point</h3></b>
@@ -75,11 +72,10 @@ Resource seperti baterai, CPU, dan RAM terbatas pada perangkat mobile.
 -Menggunakan cache
 -Mengatur penggunaan GPS
 <b><h3>Point Reinforcement</h3></b>
-Optimasi yang baik akan menghasilkan aplikasi yang ringan, cepat, dan hemat energi.
-
-Optimasi mencakup pengelolaan CPU, RAM, dan baterai. Konsep aktif dan pasif juga penting, di mana proses aktif lebih cepat tetapi boros, sedangkan proses pasif lebih hemat.
-
-Penggunaan baterai harus diperhatikan karena menjadi faktor utama dalam pengalaman pengguna.
+Optimasi yang baik akan menghasilkan aplikasi yang ringan, cepat, dan hemat energi.<br>
+<h4>Penjelasan Singkat</h4>
+Optimasi mencakup pengelolaan CPU, RAM, dan baterai. Konsep aktif dan pasif juga penting, di mana proses aktif lebih cepat tetapi boros, sedangkan proses pasif lebih hemat.<br>
+Penggunaan baterai harus diperhatikan karena menjadi faktor utama dalam pengalaman pengguna.<br>
 
 <h2>Kesimpulan</h2>
 <b><h3>Point</h3></b>
