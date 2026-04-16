@@ -1,16 +1,15 @@
-const CACHE_NAME = 'v1_cache';
-const urlsToCache = ['./', './index.html'];
+const CACHE = "lms-v1";
 
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+self.addEventListener("install", e => {
+    e.waitUntil(
+        caches.open(CACHE).then(cache => {
+            return cache.addAll(["index.html"]);
+        })
     );
 });
 
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request).then(response => {
-            return response || fetch(event.request);
-        })
+self.addEventListener("fetch", e => {
+    e.respondWith(
+        caches.match(e.request).then(res => res || fetch(e.request))
     );
 });
