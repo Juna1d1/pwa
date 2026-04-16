@@ -1,31 +1,26 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMS App</title>
+<title>LMS Final Fix</title>
 
 <style>
 :root {
     --primary: #4a90e2;
-    --dark: #333;
     --light: #f4f4f4;
 }
 body { font-family: sans-serif; margin: 0; background: var(--light); }
 header { background: var(--primary); color: white; padding: 1rem; text-align: center; }
 
-nav { display: none; justify-content: center; background: #fff; }
+nav { display: none; justify-content: center; background: #fff; flex-wrap: wrap; }
 nav a { padding: 1rem; cursor: pointer; }
 
-.page { display: none; padding: 20px; max-width: 700px; margin: auto; }
+.page { display: none; padding: 20px; max-width: 800px; margin: auto; }
 .page.active { display: block; }
 
-.card {
-    background: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
+.card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; }
 
 button {
     background: var(--primary);
@@ -43,38 +38,41 @@ input, textarea, select {
     margin-bottom: 10px;
 }
 </style>
+
 </head>
 
 <body>
 
-<header>
-    <h1>📚 LMS Sederhana</h1>
-</header>
+<header><h1>📚 LMS Kampus</h1></header>
 
 <!-- LOGIN -->
+
 <section id="login" class="page active">
     <h2>Login</h2>
     <div class="card">
-        <input type="text" id="username" placeholder="Username">
+        <input type="text" id="username" placeholder="Nama">
         <select id="role">
-            <option value="student">Student</option>
-            <option value="admin">Admin</option>
+            <option value="student">Mahasiswa</option>
+            <option value="admin">Dosen</option>
         </select>
         <button onclick="login()">Masuk</button>
     </div>
 </section>
 
 <!-- NAV -->
+
 <nav id="navMenu">
     <a onclick="go('dashboard')">Dashboard</a>
-    <a onclick="go('courses')">Tambah Materi</a>
-    <a onclick="go('learning')">Materi Saya</a>
-    <a onclick="go('quiz')">Quiz</a>
-    <a onclick="go('certificate')">Sertifikat</a>
+    <a id="menuCourse" onclick="go('courses')">Tambah Materi</a>
+    <a id="menuQuizAdmin" onclick="go('quizAdmin')">Buat Quiz</a>
+    <a onclick="go('learning')">Materi</a>
+    <a id="menuQuizUser" onclick="go('quiz')">Kerjakan Quiz</a>
+    <a id="menuCert" onclick="go('certificate')">Sertifikat</a>
     <a onclick="logout()">Logout</a>
 </nav>
 
 <!-- DASHBOARD -->
+
 <section id="dashboard" class="page">
     <h2>Dashboard</h2>
     <div class="card">
@@ -84,44 +82,50 @@ input, textarea, select {
 </section>
 
 <!-- TAMBAH MATERI -->
+
 <section id="courses" class="page">
     <h2>Tambah Materi</h2>
     <div class="card">
         <input type="text" id="title" placeholder="Judul">
         <textarea id="desc" placeholder="Deskripsi"></textarea>
-
-        <!-- TAMBAHAN -->
-        <textarea id="content" placeholder="Isi Materi"></textarea>
         <input type="file" id="file">
-
         <button onclick="addCourse()">Tambah</button>
     </div>
 </section>
 
+<!-- BUAT QUIZ -->
+
+<section id="quizAdmin" class="page">
+    <h2>Buat Quiz</h2>
+    <div class="card">
+        <input type="text" id="qText" placeholder="Pertanyaan">
+        <input type="text" id="opt1" placeholder="Jawaban A">
+        <input type="text" id="opt2" placeholder="Jawaban B">
+        <input type="text" id="opt3" placeholder="Jawaban C">
+        <input type="text" id="opt4" placeholder="Jawaban D">
+        <input type="number" id="correct" placeholder="Jawaban benar (0-3)">
+        <button onclick="addQuestion()">Tambah Soal</button>
+    </div>
+</section>
+
 <!-- MATERI -->
+
 <section id="learning" class="page">
-    <h2>Materi Saya</h2>
+    <h2>Materi</h2>
     <div id="list"></div>
 </section>
 
 <!-- QUIZ -->
+
 <section id="quiz" class="page">
     <h2>Quiz</h2>
-    <div class="card">
-        <p>1. Apa itu HTML?</p>
-        <button onclick="answer(true)">Bahasa markup</button>
-        <button onclick="answer(false)">Bahasa database</button>
-
-        <p>2. Fungsi CSS?</p>
-        <button onclick="answer(true)">Styling</button>
-        <button onclick="answer(false)">Backend</button>
-
-        <br><br>
-        <button onclick="finishQuiz()">Selesai Quiz</button>
-    </div>
+    <div id="quizContainer"></div>
+    <br>
+    <button onclick="finishQuiz()">Selesai Quiz</button>
 </section>
 
 <!-- SERTIFIKAT -->
+
 <section id="certificate" class="page">
     <h2>Sertifikat</h2>
     <div id="certContainer"></div>
@@ -129,31 +133,52 @@ input, textarea, select {
 
 <script>
 const DB = "lms_data";
+const QUIZ_DB = "quiz_data";
+
 let user = null;
+
+// ELEMENT
+const navMenu = document.getElementById("navMenu");
+const menuCourse = document.getElementById("menuCourse");
+const menuQuizAdmin = document.getElementById("menuQuizAdmin");
+const menuQuizUser = document.getElementById("menuQuizUser");
+const menuCert = document.getElementById("menuCert");
+const loginSection = document.getElementById("login");
 
 // LOGIN
 function login() {
-    const name = document.getElementById('username').value;
-    const role = document.getElementById('role').value;
+    const name = document.getElementById("username").value;
+    const role = document.getElementById("role").value;
 
-    if (!name) return alert("Isi username!");
+    if (!name) return alert("Isi nama!");
 
     user = { name, role };
     localStorage.setItem("user", JSON.stringify(user));
 
-    document.getElementById("login").classList.remove("active");
-    document.getElementById("navMenu").style.display = "flex";
+    loginPage();
+}
+
+function loginPage() {
+    loginSection.classList.remove("active");
+    navMenu.style.display = "flex";
+
+    if (user.role === "student") {
+        menuCourse.style.display = "none";
+        menuQuizAdmin.style.display = "none";
+    } else {
+        menuQuizUser.style.display = "none";
+        menuCert.style.display = "none";
+    }
 
     go("dashboard");
 }
 
-// LOGOUT
 function logout() {
     localStorage.removeItem("user");
     location.reload();
 }
 
-// NAVIGASI
+// NAV
 function go(page) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById(page).classList.add("active");
@@ -161,43 +186,37 @@ function go(page) {
     if (page === "dashboard") loadDashboard();
     if (page === "learning") render();
     if (page === "certificate") loadCertificate();
+    if (page === "quiz") renderQuiz();
 }
 
 // DASHBOARD
 function loadDashboard() {
-    document.getElementById("welcomeText").innerText = 
+    document.getElementById("welcomeText").innerText =
         "Halo, " + user.name + " (" + user.role + ")";
 
     const data = JSON.parse(localStorage.getItem(DB) || "[]");
     document.getElementById("totalCourse").innerText = data.length;
-
-    if (user.role !== "admin") {
-        document.getElementById("courses").style.display = "none";
-    }
 }
 
-// TAMBAH MATERI
+// ===== MATERI =====
 function addCourse() {
-    if (user.role !== "admin") return alert("Hanya admin!");
+    if (user.role !== "admin") return alert("Hanya dosen!");
 
     const title = document.getElementById("title").value;
     const desc = document.getElementById("desc").value;
-    const content = document.getElementById("content").value;
     const fileInput = document.getElementById("file");
 
-    if (!title || !desc || !content) return alert("Isi semua!");
+    if (!title || !desc) return alert("Isi semua!");
 
     const reader = new FileReader();
 
-    reader.onload = function(e) {
+    reader.onload = function () {
         const data = JSON.parse(localStorage.getItem(DB) || "[]");
 
         data.push({
             title,
             desc,
-            content,
-            file: e.target.result,
-            opened: false,
+            file: reader.result || null,
             done: false
         });
 
@@ -209,118 +228,147 @@ function addCourse() {
     if (fileInput.files[0]) {
         reader.readAsDataURL(fileInput.files[0]);
     } else {
-        reader.onload({ target: { result: null } });
+        reader.onload();
     }
 }
 
-// RENDER
 function render() {
     const list = document.getElementById("list");
     const data = JSON.parse(localStorage.getItem(DB) || "[]");
 
-    if (data.length === 0) {
+    if (!data.length) {
         list.innerHTML = "<p>Belum ada materi</p>";
         return;
     }
 
-    list.innerHTML = data.map((c, i) => `
+    list.innerHTML = data.map((c,i)=>`
         <div class="card">
-            <strong>${c.title}</strong>
+            <b>${c.title}</b>
             <p>${c.desc}</p>
 
-            <button onclick="openMateri(${i})">Buka Materi</button>
+            ${c.file ? `<a href="${c.file}" download>📥 Download File</a>` : ""}
 
-            ${c.opened ? `
-                <div style="margin-top:10px;">
-                    <p>${c.content}</p>
-                    ${c.file ? `<a href="${c.file}" download>Download File</a>` : ""}
-                </div>
-            ` : ""}
+            <p>${c.done ? "✅ Selesai" : "❌ Belum"}</p>
 
-            <p>Status: ${c.done ? "✅ Selesai" : "❌ Belum"}</p>
-
-            <button onclick="toggle(${i})" ${!c.opened ? "disabled" : ""}>
-                Tandai Selesai
-            </button>
-
-            ${user.role === "admin" ? `<button onclick="del(${i})" style="background:red">Hapus</button>` : ""}
+            <button onclick="toggle(${i})">Selesai</button>
+            ${user.role==="admin"?`<button onclick="del(${i})" style="background:red">Hapus</button>`:""}
         </div>
     `).join("");
 }
 
-// BUKA MATERI
-function openMateri(i) {
+function toggle(i){
     const data = JSON.parse(localStorage.getItem(DB));
-    data[i].opened = true;
+    data[i].done = !data[i].done;
     localStorage.setItem(DB, JSON.stringify(data));
     render();
 }
 
-// TOGGLE
-function toggle(i) {
+function del(i){
     const data = JSON.parse(localStorage.getItem(DB));
-    if (!data[i].opened) return alert("Buka materi dulu!");
-    data[i].done = true;
+    data.splice(i,1);
     localStorage.setItem(DB, JSON.stringify(data));
     render();
 }
 
-// DELETE
-function del(i) {
-    const data = JSON.parse(localStorage.getItem(DB));
-    data.splice(i, 1);
-    localStorage.setItem(DB, JSON.stringify(data));
-    render();
+// ===== QUIZ DOSEN =====
+function addQuestion(){
+    const q = qText.value;
+    const a1 = opt1.value;
+    const a2 = opt2.value;
+    const a3 = opt3.value;
+    const a4 = opt4.value;
+    const c = correct.value;
+
+    if(!q||!a1||!a2||!a3||!a4) return alert("Isi semua!");
+    if(c < 0 || c > 3) return alert("Jawaban benar 0-3!");
+
+    const data = JSON.parse(localStorage.getItem(QUIZ_DB)||"[]");
+
+    data.push({
+        q,
+        a:[a1,a2,a3,a4],
+        correct:Number(c)
+    });
+
+    localStorage.setItem(QUIZ_DB,JSON.stringify(data));
+    alert("Soal ditambahkan!");
 }
 
-// QUIZ
+// ===== QUIZ MAHASISWA =====
 let score = 0;
-let total = 2;
+let answered = {};
 
-function answer(correct) {
-    if (correct) score++;
-}
+function renderQuiz(){
+    const container = document.getElementById("quizContainer");
+    const questions = JSON.parse(localStorage.getItem(QUIZ_DB) || "[]");
 
-// SELESAI QUIZ
-function finishQuiz() {
-    const result = (score / total) * 100;
-    localStorage.setItem("quiz_score", result);
-
-    alert("Nilai kamu: " + result);
-
-    if (result >= 70) {
-        alert("LULUS 🎉");
-    } else {
-        alert("TIDAK LULUS ❌");
+    if (!questions.length){
+        container.innerHTML = "<p>Belum ada quiz</p>";
+        return;
     }
 
-    score = 0;
+    container.innerHTML = questions.map((q,i)=>`
+        <div class="card">
+            <p>${i+1}. ${q.q}</p>
+            ${q.a.map((opt,j)=>`
+                <button id="q${i}_${j}" onclick="answerQuiz(${i},${j})">${opt}</button>
+            `).join("")}
+        </div>
+    `).join("");
 }
 
-// CERTIFICATE
-function loadCertificate() {
-    const container = document.getElementById("certContainer");
-    const nilai = localStorage.getItem("quiz_score");
+function answerQuiz(i,j){
+    const questions = JSON.parse(localStorage.getItem(QUIZ_DB) || "[]");
 
-    if (!nilai) {
+    if (answered[i]) return;
+    answered[i] = true;
+
+    if (j === questions[i].correct){
+        score++;
+        document.getElementById(`q${i}_${j}`).style.background = "green";
+    } else {
+        document.getElementById(`q${i}_${j}`).style.background = "red";
+        document.getElementById(`q${i}_${questions[i].correct}`).style.background = "green";
+    }
+}
+
+function finishQuiz(){
+    const questions = JSON.parse(localStorage.getItem(QUIZ_DB) || "[]");
+
+    if (!questions.length) return alert("Belum ada soal!");
+
+    const result = (score / questions.length) * 100;
+
+    localStorage.setItem("quiz_score", result);
+
+    alert("Nilai: " + result);
+    alert(result >= 70 ? "LULUS 🎉" : "TIDAK LULUS ❌");
+
+    score = 0;
+    answered = {};
+}
+
+// ===== SERTIFIKAT =====
+function loadCertificate(){
+    const nilai = localStorage.getItem("quiz_score");
+    const container = document.getElementById("certContainer");
+
+    if (!nilai){
         container.innerHTML = "<p>Belum mengerjakan quiz</p>";
         return;
     }
 
-    if (nilai < 70) {
-        container.innerHTML = "<p>Belum lulus, tidak dapat sertifikat</p>";
+    if (nilai < 70){
+        container.innerHTML = "<p>Tidak lulus</p>";
         return;
     }
 
     container.innerHTML = `
-        <div style="border:3px solid #4a90e2; padding:20px; text-align:center;">
+        <div style="border:3px solid #4a90e2;padding:20px;text-align:center">
             <h2>SERTIFIKAT</h2>
-            <p>Diberikan kepada:</p>
             <h3>${user.name}</h3>
-            <p>Telah menyelesaikan pembelajaran LMS</p>
             <p>Nilai: ${nilai}</p>
-            <br>
-            <strong>🎓 LULUS 🎓</strong>
+            <b>LULUS 🎓</b>
         </div>
     `;
 }
@@ -328,11 +376,9 @@ function loadCertificate() {
 // AUTO LOGIN
 window.onload = () => {
     const saved = localStorage.getItem("user");
-    if (saved) {
+    if (saved){
         user = JSON.parse(saved);
-        document.getElementById("login").classList.remove("active");
-        document.getElementById("navMenu").style.display = "flex";
-        go("dashboard");
+        loginPage();
     }
 };
 </script>
