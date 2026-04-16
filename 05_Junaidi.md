@@ -1,5 +1,4 @@
 1. Klasifikasi Proses (Mobile System Behavior)
-Di kiri tertulis:
 1. Foreground
 Proses yang aktif digunakan user (misalnya aplikasi yang sedang dibuka di layar).
 Prioritas tinggi → tidak mudah dihentikan sistem.
