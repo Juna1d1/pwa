@@ -1,10 +1,9 @@
 {
-  "name": "Task Manager PWA",
-  "short_name": "TaskManager",
-  "description": "Aplikasi Task Manager SPA dan PWA sederhana.",
+  "name": "LMS Kampus",
+  "short_name": "LMS",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#f4f4f4",
+  "background_color": "#ffffff",
   "theme_color": "#4a90e2",
   "icons": [
     {
