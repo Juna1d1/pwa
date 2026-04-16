@@ -1,13 +1,13 @@
 1. Klasifikasi Proses (Mobile System Behavior)
-1. Foreground
+a. Foreground
 Proses yang aktif digunakan user (misalnya aplikasi yang sedang dibuka di layar).
 Prioritas tinggi → tidak mudah dihentikan sistem.
 Contoh: kamu lagi buka WhatsApp, itu foreground.
-2. Background
+b. Background
 Proses yang berjalan tapi tidak terlihat langsung.
 Biasanya untuk tugas seperti sync data, notifikasi, dll.
 Contoh: aplikasi email ngecek pesan baru.
-3. Cache
+c. Cache
 Proses/aplikasi yang sudah tidak aktif tapi disimpan sementara.
 Tujuannya supaya buka lagi jadi cepat.
 Ini penting di mobile karena resource terbatas (RAM & baterai).
