@@ -3,7 +3,7 @@ Bagian ini menjelaskan hierarki bagaimana Android mematikan proses aplikasi untu
 
 Foreground: Aplikasi yang sedang aktif di layar dan berinteraksi dengan pengguna. Ini memiliki prioritas tertinggi dan terakhir untuk dimatikan.
 
-Background (ditulis "Badground"): Aplikasi yang tidak terlihat oleh pengguna. Android sering membatasi aktivitas ini untuk menghemat baterai.
+Background : Aplikasi yang tidak terlihat oleh pengguna. Android sering membatasi aktivitas ini untuk menghemat baterai.
 
 Cache: Aplikasi yang sudah berhenti tetapi prosesnya masih disimpan di RAM agar saat dibuka kembali terasa cepat. Ini adalah yang pertama akan "dibunuh" jika sistem butuh memori.
 
