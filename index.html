@@ -89,6 +89,11 @@ input, textarea, select {
     <div class="card">
         <input type="text" id="title" placeholder="Judul">
         <textarea id="desc" placeholder="Deskripsi"></textarea>
+
+        <!-- TAMBAHAN -->
+        <textarea id="content" placeholder="Isi Materi"></textarea>
+        <input type="file" id="file">
+
         <button onclick="addCourse()">Tambah</button>
     </div>
 </section>
@@ -123,7 +128,6 @@ input, textarea, select {
 </section>
 
 <script>
-// DATA
 const DB = "lms_data";
 let user = null;
 
@@ -178,21 +182,35 @@ function addCourse() {
 
     const title = document.getElementById("title").value;
     const desc = document.getElementById("desc").value;
+    const content = document.getElementById("content").value;
+    const fileInput = document.getElementById("file");
 
-    if (!title || !desc) return alert("Isi semua!");
+    if (!title || !desc || !content) return alert("Isi semua!");
 
-    const data = JSON.parse(localStorage.getItem(DB) || "[]");
+    const reader = new FileReader();
 
-    data.push({
-        title,
-        desc,
-        done: false
-    });
+    reader.onload = function(e) {
+        const data = JSON.parse(localStorage.getItem(DB) || "[]");
 
-    localStorage.setItem(DB, JSON.stringify(data));
+        data.push({
+            title,
+            desc,
+            content,
+            file: e.target.result,
+            opened: false,
+            done: false
+        });
 
-    alert("Materi ditambahkan!");
-    render();
+        localStorage.setItem(DB, JSON.stringify(data));
+        alert("Materi ditambahkan!");
+        render();
+    };
+
+    if (fileInput.files[0]) {
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        reader.onload({ target: { result: null } });
+    }
 }
 
 // RENDER
@@ -209,18 +227,40 @@ function render() {
         <div class="card">
             <strong>${c.title}</strong>
             <p>${c.desc}</p>
+
+            <button onclick="openMateri(${i})">Buka Materi</button>
+
+            ${c.opened ? `
+                <div style="margin-top:10px;">
+                    <p>${c.content}</p>
+                    ${c.file ? `<a href="${c.file}" download>Download File</a>` : ""}
+                </div>
+            ` : ""}
+
             <p>Status: ${c.done ? "✅ Selesai" : "❌ Belum"}</p>
 
-            <button onclick="toggle(${i})">Tandai Selesai</button>
+            <button onclick="toggle(${i})" ${!c.opened ? "disabled" : ""}>
+                Tandai Selesai
+            </button>
+
             ${user.role === "admin" ? `<button onclick="del(${i})" style="background:red">Hapus</button>` : ""}
         </div>
     `).join("");
 }
 
-// TOGGLE STATUS
+// BUKA MATERI
+function openMateri(i) {
+    const data = JSON.parse(localStorage.getItem(DB));
+    data[i].opened = true;
+    localStorage.setItem(DB, JSON.stringify(data));
+    render();
+}
+
+// TOGGLE
 function toggle(i) {
     const data = JSON.parse(localStorage.getItem(DB));
-    data[i].done = !data[i].done;
+    if (!data[i].opened) return alert("Buka materi dulu!");
+    data[i].done = true;
     localStorage.setItem(DB, JSON.stringify(data));
     render();
 }
@@ -299,4 +339,3 @@ window.onload = () => {
 
 </body>
 </html>
-
