@@ -11,6 +11,6 @@ Namun, jika efisiensi waktu adalah kunci, kita bisa menggunakan Hybrid Framework
 Sedikit Catatan buat Kamu:
 Di papan tulis ada tulisan "EPP" dan "POS" di kolom Hybrid. Itu contoh kasus yang pas banget:
 
-EPP (Employee Portal Program): Biasanya butuh cepat dan fitur gak neko-neko, jadi Hybrid udah lebih dari cukup.
+- EPP (Employee Portal Program): Biasanya butuh cepat dan fitur gak neko-neko, jadi Hybrid udah lebih dari cukup.
 
-POS (Point of Sale): Butuh konek ke printer atau scanner (hardware), tapi tetep pengen gampang di-update di banyak device, makanya Hybrid sering jadi pilihan.
+- POS (Point of Sale): Butuh konek ke printer atau scanner (hardware), tapi tetep pengen gampang di-update di banyak device, makanya Hybrid sering jadi pilihan.
