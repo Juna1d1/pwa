@@ -1,7 +1,7 @@
-Satu Kesatuan: WMC, Web App, dan Framework
+- Satu Kesatuan: WMC, Web App, dan Framework
 Dalam dunia Mobile & Wireless Computing (WMC), fokus utamanya adalah bagaimana menyediakan layanan digital kepada pengguna yang bergerak bebas (mobile) melalui jaringan nirkabel. Tantangan terbesarnya adalah keterbatasan perangkat (baterai, layar kecil) dan variasi sinyal. Di sinilah Teknologi Mobile Web Aplikasi berperan sebagai solusi untuk mendistribusikan konten tanpa harus memaksa pengguna mengunduh aplikasi besar. Agar pengembangan ini efisien, kita menggunakan Framework, yaitu kerangka kerja siap pakai yang membantu developer membangun aplikasi lebih cepat dan terstruktur.
 
-Narasi Strategi Pengembangan Aplikasi (Analisis Papan Tulis)
+- Narasi Strategi Pengembangan Aplikasi (Analisis Papan Tulis)
 Jika kita merangkum catatan papan tulis kamu ke dalam satu penjelasan komprehensif, maka gambarannya seperti ini:
 
 Pemilihan strategi pengembangan aplikasi sangat bergantung pada Dimensi Akses Hardware dan Performa yang dibutuhkan. Jika sebuah proyek memerlukan integrasi mendalam seperti NFC dan kamera dengan kecepatan tinggi (seperti aplikasi AR/VR), maka pendekatan Native adalah pilihan mutlak meskipun memakan Biaya Tim yang besar karena butuh spesialis di tiap OS.
