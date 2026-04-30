@@ -187,7 +187,7 @@ Point: Untuk 2 platform dengan budget terbatas, Hybrid atau PWA lebih direkomend
 
 </table>
 
-<h1>Kesimpulan P6</h1>
+<h3>Kesimpulan P6</h3>
 <p>
 Pemilihan antara Native, Hybrid, dan PWA sangat bergantung pada kebutuhan aplikasi, target platform, dan anggaran yang tersedia. Native menawarkan performa terbaik dan akses penuh ke fitur perangkat, namun membutuhkan biaya dan waktu pengembangan yang lebih besar karena harus dibuat terpisah untuk setiap platform. Hybrid memberikan solusi yang lebih efisien dengan satu codebase untuk berbagai platform, meskipun performanya tidak seoptimal native. Sementara itu, PWA menjadi pilihan paling ringan dan hemat biaya karena berbasis web, tetapi memiliki keterbatasan dalam akses fitur perangkat. Oleh karena itu, untuk pengembangan aplikasi dengan dua platform dan keterbatasan budget, pendekatan Hybrid atau PWA menjadi pilihan yang paling rasional.
 </p>
