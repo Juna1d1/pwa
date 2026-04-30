@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMS Final Fix</title>
+<title>LMS Kelompok Keliatan</title>
 
 <style>
 :root {
@@ -87,9 +87,19 @@ input, textarea, select {
     <h2>Tambah Materi</h2>
     <div class="card">
         <input type="text" id="title" placeholder="Judul">
+        
+        <select id="category">
+            <option value="">Pilih Kategori</option>
+            <option value="Pemrograman">Pemrograman</option>
+            <option value="Jaringan">Jaringan</option>
+            <option value="Database">Database</option>
+        </select>
+
         <textarea id="desc" placeholder="Deskripsi"></textarea>
         <input type="file" id="file">
+
         <button onclick="addCourse()">Tambah</button>
+        <button onclick="updateCourse()" style="background:orange">Update</button>
     </div>
 </section>
 
@@ -134,7 +144,7 @@ input, textarea, select {
 <script>
 const DB = "lms_data";
 const QUIZ_DB = "quiz_data";
-
+let editIndex = null;
 let user = null;
 
 // ELEMENT
@@ -204,9 +214,10 @@ function addCourse() {
 
     const title = document.getElementById("title").value;
     const desc = document.getElementById("desc").value;
+    const category = document.getElementById("category").value;
     const fileInput = document.getElementById("file");
 
-    if (!title || !desc) return alert("Isi semua!");
+    if (!title || !desc || !category) return alert("Isi semua!");
 
     const reader = new FileReader();
 
@@ -216,12 +227,14 @@ function addCourse() {
         data.push({
             title,
             desc,
+            category,
             file: reader.result || null,
             done: false
         });
 
         localStorage.setItem(DB, JSON.stringify(data));
         alert("Materi ditambahkan!");
+        clearForm();
         render();
     };
 
@@ -230,6 +243,33 @@ function addCourse() {
     } else {
         reader.onload();
     }
+}
+
+function editCourse(i){
+    const data = JSON.parse(localStorage.getItem(DB));
+
+    document.getElementById("title").value = data[i].title;
+    document.getElementById("desc").value = data[i].desc;
+    document.getElementById("category").value = data[i].category;
+
+    editIndex = i;
+}
+
+function updateCourse(){
+    if(editIndex === null) return alert("Pilih materi dulu!");
+
+    const data = JSON.parse(localStorage.getItem(DB));
+
+    data[editIndex].title = document.getElementById("title").value;
+    data[editIndex].desc = document.getElementById("desc").value;
+    data[editIndex].category = document.getElementById("category").value;
+
+    localStorage.setItem(DB, JSON.stringify(data));
+
+    alert("Materi diupdate!");
+    editIndex = null;
+    clearForm();
+    render();
 }
 
 function render() {
@@ -244,16 +284,38 @@ function render() {
     list.innerHTML = data.map((c,i)=>`
         <div class="card">
             <b>${c.title}</b>
+            <p><i>${c.category}</i></p>
             <p>${c.desc}</p>
 
-            ${c.file ? `<a href="${c.file}" download>📥 Download File</a>` : ""}
+            ${
+                c.file 
+                ? c.file.startsWith("data:image")
+                    ? `<img src="${c.file}" width="100%">`
+                    : `<a href="${c.file}" download>📥 Download File</a>`
+                : ""
+            }
 
             <p>${c.done ? "✅ Selesai" : "❌ Belum"}</p>
 
             <button onclick="toggle(${i})">Selesai</button>
-            ${user.role==="admin"?`<button onclick="del(${i})" style="background:red">Hapus</button>`:""}
+
+            ${
+                user.role==="admin"
+                ? `
+                    <button onclick="editCourse(${i})" style="background:orange">Edit</button>
+                    <button onclick="del(${i})" style="background:red">Hapus</button>
+                  `
+                : ""
+            }
         </div>
     `).join("");
+}
+
+function clearForm(){
+    document.getElementById("title").value = "";
+    document.getElementById("desc").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("file").value = "";
 }
 
 function toggle(i){
