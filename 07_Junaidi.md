@@ -178,7 +178,7 @@ Point: Untuk 2 platform dengan budget terbatas, Hybrid atau PWA lebih direkomend
 
 <tr>
 <td>PWA</td>
-<td>Tidak semua app perlu install</td>
+<td>Tidak semua app perlu di install</td>
 <td>PWA jadi alternatif</td>
 <td>Berjalan di browser seperti app</td>
 <td>Contoh: e-commerce ringan</td>
