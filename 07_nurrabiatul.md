@@ -36,23 +36,29 @@
 
 Untuk kasus aplikasi inventaris dengan **budget terbatas** pada **dua platform**, strategi **Hybrid** atau **PWA** adalah pilihan terbaik berdasarkan analisis **APBDD** berikut:
 
-### Tabel Perbandingan Strategi (Metode APBDD)
+Tentu! Mari kita ubah bahasa teknis di tabel **APBDD** tadi menjadi bahasa sehari-hari yang lebih "membumi" agar kamu lebih mudah menjelaskannya saat UTS nanti.
 
-| Dimensi APBDD | **Native** | **Hybrid** | **PWA** |
+Berikut adalah versi tabel dengan bahasa yang sangat sederhana:
+
+### **Tabel Strategi Bikin Aplikasi (Metode APBDD)**
+
+| Dimensi APBDD | **Native** (Bikin Satu-Satu) | **Hybrid** (Bikin Sekaligus) | **PWA** (Web Rasa Aplikasi) |
 | :--- | :--- | :--- | :--- |
-| **A**rchitecture | Spesifik per OS (Kotlin/Swift) | *Single Codebase* (Web Wrapper) | Berbasis Web (Browser) |
-| **P**erformance | Sangat Halus (Terbaik) | Baik & Stabil | Cukup (Tergantung Browser) |
-| **B**udget | **Tinggi** (Butuh 2 tim/proyek) | **Menengah** (Efisien) | **Sangat Rendah** |
-| **D**istribution | App Store & Play Store | App Store & Play Store | Langsung via URL / Link |
-| **D**evelopment | Lambat (Coding 2x) | **Cepat** (Coding 1x) | **Sangat Cepat** |
+| **A**rchitecture (Cara Bikin) | Harus bikin dua aplikasi beda bahasa (ribet). | Bikin satu aplikasi untuk semua hp (praktis). | Seperti buka website tapi tampilannya mirip app. |
+| **P**erformance (Kelancaran) | Paling mulus dan anti-lemot. | Bagus dan lancar untuk aplikasi kantor/bisnis. | Tergantung sinyal internet dan browser. |
+| **B**udget (Biaya) | **Sangat Mahal** (Bayar dua tim/proyek). | **Hemat** (Cukup bayar satu kali kerja). | **Paling Murah** (Modal website saja). |
+| **D**istribution (Cara Instal) | Cari di Play Store atau App Store. | Cari di Play Store atau App Store. | Cukup buka link/URL di browser. |
+| **D**evelopment (Waktu) | Lama banget (kerjanya dua kali). | **Cepat** (sekali bikin langsung jadi dua). | **Sangat Cepat** (paling kilat jadinya). |
 
-### Detail Penjelasan Dimensi:
+---
 
-1.  **Budget (B):** Native paling mahal karena butuh pengembangan terpisah. Hybrid/PWA jauh lebih hemat untuk klien dengan dana terbatas.
-2.  **Development (D):** Hybrid menang karena cukup menulis satu kode yang bisa berjalan di Android & iOS sekaligus menggunakan *framework* seperti Flutter atau React Native.
-3.  **Performance (P):** Meski Native unggul, untuk aplikasi inventaris (pencatatan barang), performa Hybrid sudah lebih dari cukup.
-4.  **Distribution (D):** PWA paling mudah karena tidak perlu proses kurasi toko aplikasi yang rumit, namun Hybrid tetap memberi kesan "profesional" karena tersedia di Store.
-5.  **Architecture (A):** Hybrid bisa mengakses kamera (untuk scan barcode) melalui *plugin*, sedangkan PWA memiliki keterbatasan akses hardware terutama di iOS.
+### **Penjelasan Gampangnya:**
 
-**Kesimpulan Strategi:**
-Berdasarkan konteks bisnis, efisiensi sumber daya melalui metode **Hybrid** direkomendasikan karena memenuhi syarat anggaran terbatas namun tetap memiliki fungsi akses hardware yang baik untuk inventaris.
+1.  **Budget (B):** Bayangkan **Native** itu seperti membangun dua rumah yang berbeda desainnya (Android & iOS), jelas mahal. **Hybrid** itu seperti membangun satu rumah tapi punya dua pintu berbeda, jadi jauh lebih murah.
+2.  **Development (D):** Karena kamu cuma perlu nulis kode satu kali di **Hybrid**, waktunya jadi cepat. Ini cocok buat klien yang ingin aplikasinya cepat beres tapi uangnya pas-pasan.
+3.  **Performance (P):** Aplikasi inventaris (catat stok barang) itu bukan *game* berat seperti Mobile Legends, jadi pakai **Hybrid** sudah lebih dari cukup dan tidak terasa lemot.
+4.  **Distribution (D):** Aplikasi **Hybrid** tetap terlihat keren karena bisa di-download resmi di Play Store, beda dengan **PWA** yang cuma lewat link browser saja.
+5.  **Architecture (A):** Untuk inventaris biasanya butuh kamera buat *scan* barcode. **Hybrid** bisa melakukan itu dengan mudah, sedangkan **PWA** kadang susah konek ke kamera di iPhone.
+
+
+
