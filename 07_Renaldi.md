@@ -1,243 +1,242 @@
-# 📚 Jawaban Soal Mobile & Wireless Computing
-
-## 1. Perbedaan Wireless & Mobile Computing
-
-### Point (Pernyataan Utama)
-
-Perbedaan utama antara wireless computing dan mobile computing terletak pada fokusnya:
-
-* Wireless computing berfokus pada teknologi jaringan tanpa kabel.
-* Mobile computing berfokus pada kemampuan perangkat untuk digunakan secara berpindah (mobile), baik dengan atau tanpa koneksi wireless.
+# 📚 Mobile & Wireless Computing 
 
 ---
 
-### Reason (Alasan)
+## 1. Wireless vs Mobile Computing
 
-* Wireless computing menggunakan media transmisi tanpa kabel seperti Wi-Fi, Bluetooth, atau jaringan seluler untuk komunikasi data. Perangkatnya tidak harus berpindah tempat.
-* Mobile computing menekankan mobilitas pengguna/perangkat, artinya perangkat bisa digunakan saat berpindah lokasi, meskipun koneksinya bisa offline atau menggunakan kabel.
+### Definisi
 
----
-
-### Example (Contoh)
-
-1. Hanya Wireless (tidak mobile)
-
-   * PC desktop di rumah yang terhubung ke Wi-Fi
-     → Wireless karena tanpa kabel, tapi tidak mobile karena tidak berpindah.
-
-2. Hanya Mobile (tidak wireless)
-
-   * Laptop yang digunakan di mobil tapi memakai kabel LAN atau tanpa koneksi (offline)
-     → Mobile karena berpindah, tapi tidak wireless.
-
-3. Keduanya (Wireless + Mobile)
-
-   * Smartphone yang menggunakan jaringan 4G/5G atau Wi-Fi saat berpindah tempat
-     → Wireless dan mobile sekaligus.
+* **Wireless Computing** adalah teknologi komputasi yang menggunakan media transmisi tanpa kabel seperti Wi-Fi, Bluetooth, dan jaringan seluler untuk mengirimkan data.
+* **Mobile Computing** adalah penggunaan perangkat komputasi yang dapat digunakan secara fleksibel dengan berpindah tempat tanpa terikat lokasi tertentu.
 
 ---
 
-### Point (Penegasan Ulang)
+### PREP
 
-Jadi, wireless computing = cara koneksi (tanpa kabel), sedangkan mobile computing = cara penggunaan (berpindah tempat). Keduanya bisa berdiri sendiri, tetapi sering juga digunakan bersamaan dalam kehidupan sehari-hari.
+#### Point
 
----
+Perbedaan utama antara wireless computing dan mobile computing terletak pada fokusnya, yaitu wireless berfokus pada **cara perangkat terhubung ke jaringan**, sedangkan mobile berfokus pada **kemampuan perangkat untuk digunakan secara berpindah tempat**.
 
-## 2. Hard vs Soft Handoff
+#### Reason
 
-### Point (Pernyataan Utama)
+Wireless computing memungkinkan perangkat saling berkomunikasi tanpa menggunakan kabel fisik, sehingga memberikan fleksibilitas dalam hal konektivitas. Namun, penggunaan wireless tidak selalu berarti perangkat tersebut berpindah tempat, karena perangkat seperti PC desktop tetap bisa menggunakan Wi-Fi dalam posisi tetap.
+Sebaliknya, mobile computing lebih menekankan pada mobilitas pengguna dan perangkat. Perangkat mobile seperti laptop atau smartphone dirancang untuk tetap dapat digunakan dalam berbagai kondisi lokasi, bahkan tanpa koneksi jaringan sekalipun (offline). Hal ini menunjukkan bahwa mobilitas tidak selalu bergantung pada wireless, meskipun dalam praktiknya keduanya sering digunakan bersamaan.
 
-Perbedaan utama antara hard handoff dan soft handoff adalah pada cara perpindahan koneksi antar sel:
+#### Example
 
-* Hard handoff: koneksi lama diputus dulu, baru pindah ke koneksi baru (break before make).
-* Soft handoff: koneksi lama tetap aktif sambil membangun koneksi baru (make before break).
+* **Wireless saja** → PC desktop yang terhubung ke Wi-Fi di rumah, tidak berpindah tempat.
+* **Mobile saja** → Laptop yang digunakan saat perjalanan tanpa koneksi internet.
+* **Keduanya** → Smartphone yang menggunakan jaringan seluler saat berpindah lokasi.
 
-Untuk voice call, soft handoff lebih baik.
+#### Point (Penegasan)
 
----
-
-### Reason (Alasan)
-
-* Hard handoff berisiko menyebabkan jeda atau bahkan putus panggilan karena ada waktu kosong saat perpindahan koneksi.
-* Soft handoff menjaga kontinuitas koneksi karena perangkat terhubung ke lebih dari satu base station secara bersamaan, sehingga suara tetap stabil tanpa gangguan.
+Wireless computing berfokus pada **media komunikasi tanpa kabel**, sedangkan mobile computing berfokus pada **fleksibilitas penggunaan perangkat di berbagai lokasi**.
 
 ---
 
-### Example (Contoh)
+## 2. Hard Handoff vs Soft Handoff
 
-* Hard handoff: terjadi pada jaringan seperti GSM → saat berpindah sel, kadang suara bisa terputus sesaat.
-* Soft handoff: digunakan pada CDMA → saat berpindah sel, panggilan tetap lancar karena ada overlap koneksi.
+### Definisi
+
+* **Hard Handoff** adalah proses perpindahan koneksi antar sel dimana koneksi lama diputus terlebih dahulu sebelum koneksi baru dibuat (*break before make*).
+* **Soft Handoff** adalah proses perpindahan koneksi dimana koneksi lama tetap dipertahankan sambil membangun koneksi baru (*make before break*).
 
 ---
 
-### Point (Penegasan Ulang)
+### PREP
 
-Jadi, soft handoff lebih baik untuk voice call karena mampu menjaga kualitas suara tetap stabil tanpa putus, sedangkan hard handoff lebih sederhana tetapi berisiko gangguan komunikasi.
+#### Point
+
+Perbedaan utama antara hard handoff dan soft handoff terletak pada mekanisme perpindahan koneksi antar base station, yang mempengaruhi kualitas komunikasi terutama pada layanan real-time seperti voice call.
+
+#### Reason
+
+Pada hard handoff, ketika perangkat berpindah dari satu sel ke sel lain, koneksi lama akan diputus terlebih dahulu sebelum koneksi baru terbentuk. Proses ini dapat menyebabkan jeda komunikasi yang berpotensi mengganggu, bahkan memutus panggilan jika perpindahan tidak berjalan mulus.
+Sebaliknya, soft handoff memungkinkan perangkat terhubung dengan lebih dari satu base station secara bersamaan dalam periode tertentu. Hal ini membuat proses perpindahan menjadi lebih halus tanpa adanya jeda komunikasi, sehingga sangat cocok untuk layanan yang membutuhkan kontinuitas tinggi seperti panggilan suara.
+
+#### Example
+
+* **Hard handoff** → digunakan pada jaringan GSM, terkadang menyebabkan suara terputus sesaat saat berpindah sel.
+* **Soft handoff** → digunakan pada CDMA, memungkinkan panggilan tetap stabil tanpa gangguan.
+
+#### Point (Penegasan)
+
+Soft handoff lebih baik untuk voice call karena mampu menjaga koneksi tetap aktif tanpa gangguan selama proses perpindahan.
 
 ---
 
 ## 3. Standar IEEE & Mode Jaringan
 
-### Point (Pernyataan Utama)
+### Definisi
 
-Standar IEEE untuk jaringan wireless berbeda-beda tergantung kategorinya, dan perbedaan utama antara ad-hoc dan infrastructure mode terletak pada keberadaan access point (AP).
-
----
-
-### Reason (Alasan)
-
-* IEEE membuat berbagai standar agar komunikasi jaringan memiliki aturan yang jelas dan kompatibel.
-* Ad-hoc mode tidak menggunakan access point, sehingga perangkat saling terhubung langsung (peer-to-peer).
-* Infrastructure mode menggunakan access point sebagai pusat komunikasi, sehingga semua perangkat terhubung melalui AP.
+**IEEE (Institute of Electrical and Electronics Engineers)** adalah organisasi internasional yang menetapkan standar teknis untuk berbagai teknologi, termasuk jaringan wireless.
 
 ---
 
-### Example (Contoh)
+### PREP
 
-#### 1. Standar IEEE untuk kategori wireless:
+#### Point
 
-* IEEE 802.11 → WLAN (Wi-Fi)
-* IEEE 802.15 → Bluetooth, ZigBee
-* IEEE 802.16 → WMAN
-* IEEE 802.20 → Mobile broadband (jarang digunakan)
+Standar IEEE mengelompokkan teknologi jaringan berdasarkan kategori dan cakupan, sedangkan perbedaan antara ad-hoc dan infrastructure mode terletak pada keberadaan access point sebagai pusat komunikasi.
 
-#### 2. Perbedaan mode jaringan:
+#### Reason
 
-* **Ad-hoc mode**
+Standar IEEE dibuat untuk memastikan bahwa perangkat dari berbagai produsen dapat saling terhubung dengan baik melalui aturan yang sama. Setiap standar memiliki fungsi dan cakupan berbeda, misalnya untuk jaringan lokal, personal, atau metropolitan.
+Dalam implementasi jaringan:
 
-  * Contoh: Laptop ke laptop langsung via Wi-Fi tanpa router
-  * Tidak ada access point
+* **Ad-hoc mode** memungkinkan perangkat saling berkomunikasi langsung tanpa perantara, sehingga lebih sederhana namun terbatas dalam jangkauan dan manajemen.
+* **Infrastructure mode** menggunakan access point untuk mengatur komunikasi, sehingga jaringan lebih terorganisir, stabil, dan dapat melayani lebih banyak perangkat.
 
-* **Infrastructure mode**
+#### Example
 
-  * Contoh: HP/laptop terhubung ke Wi-Fi melalui router rumah
-  * Menggunakan access point
+Standar:
 
----
+* 802.11 → WLAN (Wi-Fi)
+* 802.15 → WPAN (Bluetooth, ZigBee)
+* 802.16 → WMAN (WiMAX)
+* 802.20 → Mobile broadband
 
-### Point (Penegasan Ulang)
+Mode:
 
-Jadi, standar IEEE membedakan jenis jaringan wireless berdasarkan cakupan dan teknologi, sedangkan perbedaan utama ad-hoc dan infrastructure adalah ada atau tidaknya access point sebagai pusat komunikasi.
+* Ad-hoc → komunikasi langsung antar laptop tanpa router
+* Infrastructure → perangkat terhubung ke Wi-Fi melalui access point
 
----
+#### Point (Penegasan)
 
-## 4. Arsitektur 4 Lapisan + Sandbox (OS Mobile)
-
-### Point (Pernyataan Utama)
-
-Arsitektur OS mobile umumnya terdiri dari 4 lapisan utama, dan menggunakan sandboxing untuk membatasi akses aplikasi. Sandboxing di mobile lebih ketat dibanding desktop karena faktor keamanan dan privasi.
+Perbedaan utama antara ad-hoc dan infrastructure adalah keberadaan access point yang berfungsi sebagai pusat pengaturan komunikasi jaringan.
 
 ---
 
-### Reason (Alasan)
+## 4. Arsitektur OS Mobile & Sandbox
 
-Setiap lapisan punya fungsi spesifik:
+### Definisi
 
-1. Kernel Layer → inti OS yang mengatur hardware (CPU, memori, driver).
-2. Libraries / Native Layer → menyediakan library dasar (grafik, database, media).
-3. Application Framework → menyediakan API untuk developer (UI, notifikasi, dll).
-4. Application Layer → tempat aplikasi berjalan (user apps).
-
-Sandboxing lebih ketat karena:
-
-* Menyimpan data sensitif (kontak, kamera, lokasi)
-* Risiko malware tinggi
-* Perangkat bersifat personal
+Sistem operasi mobile memiliki arsitektur berlapis yang mengatur interaksi antara hardware dan aplikasi, serta menggunakan sandbox untuk membatasi akses aplikasi demi keamanan.
 
 ---
 
-### Example (Contoh)
+### PREP
 
-**Android:**
+#### Point
 
-* Kernel: berbasis Linux
-* Libraries: SQLite, WebKit
-* Framework: Activity Manager, Notification Manager
-* Application: WhatsApp, Instagram
+OS mobile terdiri dari empat lapisan utama yang bekerja secara terstruktur, serta menerapkan sandboxing yang lebih ketat dibandingkan sistem desktop untuk melindungi data pengguna.
 
-**Sandbox:**
+#### Reason
 
-* Setiap aplikasi punya ruang sendiri
-* Tidak bisa akses data aplikasi lain tanpa izin
+Setiap lapisan dalam OS mobile memiliki peran penting:
 
-**Desktop (Windows):**
+1. **Kernel Layer** mengatur interaksi langsung dengan hardware seperti CPU, memori, dan driver perangkat.
+2. **Libraries Layer** menyediakan fungsi dasar seperti pengolahan data, grafis, dan database.
+3. **Application Framework** menyediakan API yang memudahkan developer dalam membuat aplikasi tanpa harus berinteraksi langsung dengan hardware.
+4. **Application Layer** merupakan tempat aplikasi pengguna berjalan.
 
-* Akses file system lebih bebas
-* Sandboxing tidak seketat mobile
+Sandboxing diterapkan lebih ketat karena perangkat mobile menyimpan banyak data pribadi seperti kontak, lokasi, dan media. Selain itu, aplikasi mobile sering diunduh dari internet sehingga berpotensi membawa malware. Oleh karena itu, setiap aplikasi dibatasi dalam ruangnya sendiri agar tidak dapat mengakses data aplikasi lain tanpa izin.
 
----
+#### Example
 
-### Point (Penegasan Ulang)
+Pada Android:
 
-Jadi, 4 lapisan OS mobile bekerja secara terstruktur dari hardware hingga aplikasi, dan sandboxing lebih ketat di mobile untuk melindungi data pengguna.
+* Kernel berbasis Linux
+* Libraries seperti SQLite
+* Framework seperti Activity Manager
+* Application seperti WhatsApp
+
+Sandbox:
+
+* Aplikasi memiliki ruang terpisah
+* Akses data harus melalui permission
+
+#### Point (Penegasan)
+
+Arsitektur berlapis menjaga stabilitas sistem, sedangkan sandboxing memastikan keamanan dan privasi pengguna.
 
 ---
 
 ## 5. Hierarki Proses Android & Intent
 
-### Point (Pernyataan Utama)
+### Definisi
 
-Hierarki proses pada Android menentukan prioritas aplikasi, sedangkan intent dibagi menjadi eksplisit dan implisit.
-
----
-
-### Reason (Alasan)
-
-* Digunakan untuk mengatur memori dan performa
-* Intent untuk komunikasi antar komponen:
-
-  * Eksplisit → target jelas
-  * Implisit → sistem yang memilih
+* **Hierarki proses** adalah sistem pengelompokan prioritas aplikasi berdasarkan tingkat kepentingannya dalam sistem Android.
+* **Intent** adalah mekanisme komunikasi antar komponen aplikasi untuk menjalankan fungsi tertentu.
 
 ---
 
-### Example (Contoh)
+### PREP
 
-#### Hierarki Proses:
+#### Point
 
-* Foreground Process
-* Visible Process
-* Service Process
-* Background Process
-* Empty Process
+Android menggunakan hierarki proses untuk mengatur penggunaan sumber daya secara efisien, serta menggunakan intent untuk memungkinkan komunikasi antar aplikasi dan komponen.
 
-Contoh:
+#### Reason
 
-* Game → foreground
-* Musik → service
-* App di RAM → background
+Hierarki proses membantu sistem menentukan aplikasi mana yang harus diprioritaskan saat sumber daya seperti RAM terbatas. Aplikasi dengan prioritas tinggi seperti foreground akan tetap berjalan, sedangkan aplikasi dengan prioritas rendah dapat dihentikan.
+Intent memungkinkan aplikasi untuk saling berinteraksi tanpa harus saling terhubung secara langsung. Hal ini meningkatkan fleksibilitas sistem dan memudahkan integrasi antar aplikasi.
 
-#### Intent:
+#### Example
 
-* **Eksplisit** → buka Activity tertentu
-* **Implisit** → share foto (pilih aplikasi)
+Hierarki:
 
----
+* Foreground → aplikasi yang sedang digunakan
+* Visible → terlihat tetapi tidak aktif
+* Service → berjalan di background
+* Background → tidak terlihat
+* Empty → hanya cache
 
-### Point (Penegasan Ulang)
+Intent:
 
-Hierarki proses menjaga performa sistem, sedangkan intent mengatur komunikasi antar komponen aplikasi.
+* Eksplisit → membuka activity tertentu dalam aplikasi
+* Implisit → berbagi file ke aplikasi lain
+
+#### Point (Penegasan)
+
+Hierarki proses menjaga efisiensi dan stabilitas sistem, sedangkan intent memungkinkan komunikasi yang fleksibel antar aplikasi.
 
 ---
 
 ## 6. Native vs Hybrid vs PWA
 
-| Aspek       | Native App         | Hybrid App     | PWA           |
-| ----------- | ------------------ | -------------- | ------------- |
-| Platform    | Android/iOS        | Multi-platform | Web           |
-| Teknologi   | Java/Kotlin, Swift | HTML, CSS, JS  | HTML, CSS, JS |
-| Performa    | ⭐⭐⭐⭐⭐              | ⭐⭐⭐            | ⭐⭐            |
-| Biaya       | Mahal              | Hemat          | Paling murah  |
-| Hardware    | Full               | Hampir full    | Terbatas      |
-| Maintenance | Rumit              | Mudah          | Sangat mudah  |
-| Install     | Store              | Store          | Browser       |
-| Offline     | Sangat baik        | Baik           | Terbatas      |
+### Definisi
+
+* **Native App**: aplikasi khusus untuk satu platform.
+* **Hybrid App**: satu aplikasi untuk banyak platform.
+* **PWA**: aplikasi berbasis web.
 
 ---
 
-### Kesimpulan
+### Perbandingan
 
-Untuk aplikasi inventaris 2 platform dengan budget terbatas:
-➡️ **Hybrid App adalah pilihan terbaik** karena seimbang antara biaya, performa, dan kemudahan development.
+| Aspek          | Native                                 | Hybrid                   | PWA             |
+| -------------- | -------------------------------------- | ------------------------ | --------------- |
+| **Akses**      | Full ke hardware (kamera, GPS, sensor) | Hampir full (via plugin) | Terbatas        |
+| **Performa**   | Sangat tinggi                          | Cukup baik               | Rendah - sedang |
+| **Biaya**      | Mahal                                  | Lebih hemat              | Paling murah    |
+| **Distribusi** | Play Store / App Store                 | Play Store / App Store   | Browser         |
+
+---
+
+### Penjelasan
+
+Native app memiliki performa terbaik karena langsung berjalan pada sistem operasi, namun membutuhkan biaya tinggi karena harus dibuat terpisah untuk setiap platform.
+Hybrid app memungkinkan penggunaan satu codebase untuk berbagai platform sehingga lebih efisien dari segi biaya dan waktu, dengan performa yang masih cukup baik untuk aplikasi bisnis seperti inventaris.
+PWA adalah solusi berbasis web yang paling murah dan mudah didistribusikan, tetapi memiliki keterbatasan dalam akses hardware dan performa.
+
+---
+
+### Pilihan Tepat
+
+Untuk aplikasi inventaris dengan 2 platform dan budget terbatas:
+➡️ **Hybrid App adalah pilihan terbaik**
+
+Karena:
+
+* Lebih hemat biaya
+* Pengembangan lebih cepat
+* Performa cukup untuk kebutuhan aplikasi
+
+---
+
+# ✅ Kesimpulan Akhir
+
+Pemilihan teknologi harus disesuaikan dengan kebutuhan sistem, efisiensi biaya, dan performa agar solusi yang dihasilkan optimal.
 
 ---
