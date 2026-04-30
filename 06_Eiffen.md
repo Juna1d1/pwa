@@ -1,36 +1,91 @@
-Analisis Strategi Pengembangan Aplikasi Mobile (WMC)
-Dokumentasi ini menjelaskan perbandingan antara tiga teknologi utama dalam pengembangan aplikasi mobile: Native, Hybrid, dan Progressive Web Apps (PWA), serta kaitannya dengan arsitektur sistem operasi.
+<h1>Analisis Strategi Pengembangan Aplikasi Mobile (WMC)</h1>
 
-1. Akses Hardware dan Kemampuan Sistem
-Dalam pengembangan aplikasi mobile, akses terhadap hardware (seperti NFC, Kamera, dan Sensor) ditentukan oleh kedekatan aplikasi dengan lapisan Linux Kernel.
+Dokumentasi ini menjelaskan perbandingan antara tiga teknologi utama dalam pengembangan aplikasi mobile: Native, Hybrid, dan Progressive Web Apps (PWA), serta kaitannya dengan arsitektur sistem operasi.<br><br>
 
-- Native App memiliki keunggulan mutlak karena memiliki akses penuh (full access) ke hardware dengan performa maksimal.
 
-- Hybrid App menggunakan framework (seperti React Native atau Flutter) yang membutuhkan bridge atau plugin tambahan untuk berkomunikasi dengan hardware.
+<h1>1. Akses Hardware dan Kemampuan Sistem</h1>
+Dalam pengembangan aplikasi mobile, akses terhadap hardware (seperti NFC, Kamera, dan Sensor) sangat dipengaruhi oleh kedekatan aplikasi dengan lapisan Linux Kernel.<br><br>
 
-- PWA adalah yang paling terbatas karena hanya bisa mengakses fitur hardware yang disediakan oleh standar API browser (Web Standard).
+- Native App memiliki keunggulan karena memiliki akses penuh (full access) ke hardware sehingga mampu memberikan performa maksimal.<br>
+- Hybrid App menggunakan framework seperti React Native atau Flutter yang membutuhkan bridge atau plugin tambahan untuk berkomunikasi dengan hardware.<br>
+- PWA memiliki keterbatasan karena hanya dapat mengakses fitur hardware yang disediakan oleh standar API browser (Web Standard).<br><br>
 
-2. Performa dan Pengalaman Pengguna
-Dilihat dari sisi performa, Native App menempati posisi tertinggi (High Performance) karena kodenya dikompilasi langsung menjadi bahasa mesin yang dipahami oleh Android Runtime (ART).
 
-- Aplikasi Hybrid berada di tingkat menengah; meski cukup cepat, terdapat overhead proses karena adanya lapisan abstraksi.
+<h1>2. Performa dan Pengalaman Pengguna</h1>
+Dari sisi performa, setiap pendekatan memiliki karakteristik yang berbeda.<br><br>
 
-- Sementara itu, PWA mengandalkan Service Workers untuk menjalankan fungsi di latar belakang agar bisa diakses secara offline, namun tetap belum bisa menandingi kecepatan eksekusi aplikasi yang terinstal secara native.
+- Native App memiliki performa tertinggi (High Performance) karena kodenya dikompilasi langsung menjadi bahasa mesin yang dijalankan oleh Android Runtime (ART).<br>
+- Hybrid App berada di tingkat menengah karena terdapat lapisan abstraksi yang menimbulkan overhead, meskipun tetap cukup responsif untuk banyak kebutuhan aplikasi bisnis.<br>
+- PWA mengandalkan Service Workers untuk menjalankan fungsi tertentu secara offline, namun performanya masih berada di bawah aplikasi native karena bergantung pada browser.<br><br>
 
-3. Efisiensi Biaya dan Manajemen Tim
-Dimensi biaya menjadi pertimbangan utama dalam manajemen proyek perangkat lunak.
 
-- Pengembangan Native cenderung mahal karena membutuhkan tim spesifik untuk setiap platform (Android dan iOS).
+<h1>3. Efisiensi Biaya dan Manajemen Tim</h1>
+Biaya pengembangan menjadi faktor penting dalam menentukan strategi aplikasi mobile.<br><br>
 
-- Hybrid menawarkan efisiensi karena satu basis kode dapat digunakan untuk berbagai platform (cross-platform).
+- Native App membutuhkan biaya tinggi karena memerlukan tim pengembang terpisah untuk setiap platform (Android dan iOS).<br>
+- Hybrid App lebih efisien karena menggunakan satu basis kode (codebase) yang dapat dijalankan di berbagai platform (cross-platform).<br>
+- PWA merupakan solusi dengan biaya terendah karena hanya menggunakan teknologi web standar seperti HTML, CSS, dan JavaScript serta tidak memerlukan proses distribusi melalui App Store atau Play Store.<br><br>
 
-- PWA adalah solusi dengan biaya terendah (Low Cost) karena cukup menggunakan teknologi web standar (HTML, CSS, JS) yang dapat diakses secara universal tanpa harus melalui proses verifikasi ketat di PlayStore atau App Store.
 
-4. Penempatan dan Kasus Penggunaan (Best Practice)
-Pemilihan teknologi harus disesuaikan dengan kebutuhan pengguna akhir:
+<h1>4. Penempatan dan Kasus Penggunaan (Best Practice)</h1>
+Pemilihan teknologi harus disesuaikan dengan kebutuhan pengguna dan konteks bisnis.<br><br>
 
-- Native adalah pilihan tepat untuk aplikasi yang membutuhkan pemrosesan grafis berat seperti AR/VR atau game berkualitas tinggi.
+- Native App cocok digunakan untuk aplikasi yang membutuhkan performa tinggi seperti game, augmented reality (AR), dan virtual reality (VR).<br>
+- Hybrid App ideal untuk aplikasi bisnis seperti Point of Sale (POS) atau E-commerce yang membutuhkan pengembangan cepat dan dukungan multi-platform.<br>
+- PWA sangat cocok untuk portal informasi, website berita, atau aplikasi berbasis konten yang mengutamakan akses cepat dan ringan tanpa membebani perangkat pengguna.<br><br>
 
-- Hybrid sangat ideal untuk aplikasi bisnis seperti Point of Sale (POS) atau aplikasi E-commerce yang memerlukan pembaruan fitur secara cepat di berbagai platform.
 
-- PWA sangat efektif untuk portal informasi atau konten berbasis teks yang mengutamakan kecepatan akses tanpa harus membebani memori penyimpanan perangkat pengguna.
+<h1>5. Tabel Perbandingan</h1>
+<table border="1">
+<tr>
+<th>Dimensi</th>
+<th>Native</th>
+<th>Hybrid</th>
+<th>PWA</th>
+</tr>
+
+<tr>
+<td>Akses Hardware</td>
+<td>Full Access</td>
+<td>Terbatas (via plugin/bridge)</td>
+<td>Sangat Terbatas (Web API)</td>
+</tr>
+
+<tr>
+<td>Performa</td>
+<td>Sangat Tinggi</td>
+<td>Sedang</td>
+<td>Rendah - Menengah</td>
+</tr>
+
+<tr>
+<td>Biaya</td>
+<td>Tinggi</td>
+<td>Sedang</td>
+<td>Rendah</td>
+</tr>
+
+<tr>
+<td>Maintenance</td>
+<td>Kompleks</td>
+<td>Lebih Mudah</td>
+<td>Paling Mudah</td>
+</tr>
+
+<tr>
+<td>Distribusi</td>
+<td>App Store / Play Store</td>
+<td>App Store / Play Store</td>
+<td>Browser (tanpa store)</td>
+</tr>
+
+<tr>
+<td>Use Case</td>
+<td>Game, AR/VR, aplikasi berat</td>
+<td>Aplikasi bisnis, POS, E-commerce</td>
+<td>Portal informasi, dashboard, konten</td>
+</tr>
+</table>
+
+<br>
+Kesimpulan: Tidak ada satu pendekatan yang mutlak lebih baik. Pemilihan Native, Hybrid, atau PWA harus mempertimbangkan kebutuhan fitur, performa, biaya, serta konteks bisnis yang ingin dicapai.<br>
