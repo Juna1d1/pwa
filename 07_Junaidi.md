@@ -148,9 +148,41 @@ Reason: Setiap pendekatan memiliki kelebihan dan kekurangan masing-masing<br>
 Example: Native cocok untuk performa tinggi, sedangkan Hybrid dan PWA cocok untuk efisiensi biaya<br>
 Point: Untuk 2 platform dengan budget terbatas, Hybrid atau PWA lebih direkomendasikan<br><br>
 
-<b>APBDP</b><br>
-A: Klien memiliki keterbatasan anggaran<br>
-P: Dibutuhkan solusi yang efisien<br>
-B: Native membutuhkan biaya dan waktu lebih besar<br>
-D: Hybrid dan PWA cukup menggunakan satu codebase<br>
-P: Oleh karena itu, Hybrid atau PWA menjadi pilihan terbaik<br>
+<table border="1">
+<tr>
+<th>Tipe</th>
+<th>A</th>
+<th>P</th>
+<th>B</th>
+<th>D</th>
+<th>P</th>
+</tr>
+
+<tr>
+<td>Native</td>
+<td>Pengembangan aplikasi performa tinggi dibutuhkan</td>
+<td>Native jadi pilihan utama</td>
+<td>Dibuat khusus tiap platform (Android/iOS)</td>
+<td>Contoh: game, aplikasi berat</td>
+<td>Performa tinggi tapi biaya besar</td>
+</tr>
+
+<tr>
+<td>Hybrid</td>
+<td>Developer butuh efisiensi</td>
+<td>Hybrid jadi solusi</td>
+<td>1 codebase untuk banyak platform</td>
+<td>Contoh: aplikasi bisnis sederhana</td>
+<td>Lebih hemat waktu dan biaya</td>
+</tr>
+
+<tr>
+<td>PWA</td>
+<td>Tidak semua app perlu install</td>
+<td>PWA jadi alternatif</td>
+<td>Berjalan di browser seperti app</td>
+<td>Contoh: e-commerce ringan</td>
+<td>Ringan dan murah tapi fitur terbatas</td>
+</tr>
+
+</table>
