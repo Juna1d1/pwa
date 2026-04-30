@@ -52,7 +52,7 @@ Berikut adalah versi tabel dengan bahasa yang sangat sederhana:
 
 ---
 
-### **Penjelasan Gampangnya:**
+### **Penjelasan Gampang :**
 
 1.  **Budget (B):** Bayangkan **Native** itu seperti membangun dua rumah yang berbeda desainnya (Android & iOS), jelas mahal. **Hybrid** itu seperti membangun satu rumah tapi punya dua pintu berbeda, jadi jauh lebih murah.
 2.  **Development (D):** Karena kamu cuma perlu nulis kode satu kali di **Hybrid**, waktunya jadi cepat. Ini cocok buat klien yang ingin aplikasinya cepat beres tapi uangnya pas-pasan.
