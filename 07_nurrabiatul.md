@@ -1,11 +1,5 @@
 # Persiapan UTS - Wireless & Mobile Computing
 
-Tentu, mari kita susun jawaban yang jauh lebih mendalam dan teknis dengan metode **PREP** (*Point, Reason, Example, Point*) untuk setiap modul sesuai dengan file **WhatsApp Image 2026-04-30 at 10.59.11.jpeg**. 
-
-Jawaban ini dirancang agar kamu bisa memberikan penjelasan yang komprehensif saat UTS nanti.
-
----
-
 ### **P1: Fondasi (Wireless vs Mobile Computing)**
 
 *   **Point (Pernyataan):** Perbedaan mendasar terletak pada fokus teknologi: *Wireless* adalah tentang infrastruktur transmisi data, sedangkan *Mobile* adalah tentang fleksibilitas aksesibilitas pengguna.
