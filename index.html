@@ -1,51 +1,50 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMS Kelompok Keliatan</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Kelompok Keliatan</title>
 
-<style>
-:root {
-    --primary: #4a90e2;
-    --light: #f4f4f4;
-}
-body { font-family: sans-serif; margin: 0; background: var(--light); }
-header { background: var(--primary); color: white; padding: 1rem; text-align: center; }
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --light: #f4f4f4;
+        }
+        body { font-family: sans-serif; margin: 0; background: var(--light); }
+        header { background: var(--primary); color: white; padding: 1rem; text-align: center; }
 
-nav { display: none; justify-content: center; background: #fff; flex-wrap: wrap; }
-nav a { padding: 1rem; cursor: pointer; }
+        nav { display: none; justify-content: center; background: #fff; flex-wrap: wrap; }
+        nav a { padding: 1rem; cursor: pointer; text-decoration: none; color: #333; }
+        nav a:hover { color: var(--primary); }
 
-.page { display: none; padding: 20px; max-width: 800px; margin: auto; }
-.page.active { display: block; }
+        .page { display: none; padding: 20px; max-width: 800px; margin: auto; }
+        .page.active { display: block; }
 
-.card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; }
+        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
-button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 3px;
-}
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 3px;
+        }
 
-input, textarea, select {
-    width: 95%;
-    padding: 8px;
-    margin-bottom: 10px;
-}
-</style>
-
+        input, textarea, select {
+            width: 95%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 
 <body>
 
 <header><h1>📚 LMS Kampus</h1></header>
-
-<!-- LOGIN -->
 
 <section id="login" class="page active">
     <h2>Login</h2>
@@ -59,8 +58,6 @@ input, textarea, select {
     </div>
 </section>
 
-<!-- NAV -->
-
 <nav id="navMenu">
     <a onclick="go('dashboard')">Dashboard</a>
     <a id="menuCourse" onclick="go('courses')">Tambah Materi</a>
@@ -71,8 +68,6 @@ input, textarea, select {
     <a onclick="logout()">Logout</a>
 </nav>
 
-<!-- DASHBOARD -->
-
 <section id="dashboard" class="page">
     <h2>Dashboard</h2>
     <div class="card">
@@ -80,8 +75,6 @@ input, textarea, select {
         <p>Total Materi: <span id="totalCourse"></span></p>
     </div>
 </section>
-
-<!-- TAMBAH MATERI -->
 
 <section id="courses" class="page">
     <h2>Tambah Materi</h2>
@@ -103,8 +96,6 @@ input, textarea, select {
     </div>
 </section>
 
-<!-- BUAT QUIZ -->
-
 <section id="quizAdmin" class="page">
     <h2>Buat Quiz</h2>
     <div class="card">
@@ -118,14 +109,10 @@ input, textarea, select {
     </div>
 </section>
 
-<!-- MATERI -->
-
 <section id="learning" class="page">
     <h2>Materi</h2>
     <div id="list"></div>
 </section>
-
-<!-- QUIZ -->
 
 <section id="quiz" class="page">
     <h2>Quiz</h2>
@@ -133,8 +120,6 @@ input, textarea, select {
     <br>
     <button onclick="finishQuiz()">Selesai Quiz</button>
 </section>
-
-<!-- SERTIFIKAT -->
 
 <section id="certificate" class="page">
     <h2>Sertifikat</h2>
@@ -171,6 +156,12 @@ function login() {
 function loginPage() {
     loginSection.classList.remove("active");
     navMenu.style.display = "flex";
+
+    // Reset display semua menu dulu sebelum difilter
+    menuCourse.style.display = "block";
+    menuQuizAdmin.style.display = "block";
+    menuQuizUser.style.display = "block";
+    menuCert.style.display = "block";
 
     if (user.role === "student") {
         menuCourse.style.display = "none";
@@ -235,7 +226,7 @@ function addCourse() {
         localStorage.setItem(DB, JSON.stringify(data));
         alert("Materi ditambahkan!");
         clearForm();
-        render();
+        go("learning"); // Otomatis arahkan ke list materi setelah tambah data
     };
 
     if (fileInput.files[0]) {
@@ -253,6 +244,7 @@ function editCourse(i){
     document.getElementById("category").value = data[i].category;
 
     editIndex = i;
+    go("courses"); // Pindah ke tab form input untuk edit
 }
 
 function updateCourse(){
@@ -270,6 +262,7 @@ function updateCourse(){
     editIndex = null;
     clearForm();
     render();
+    go("learning");
 }
 
 function render() {
@@ -326,23 +319,25 @@ function toggle(i){
 }
 
 function del(i){
-    const data = JSON.parse(localStorage.getItem(DB));
-    data.splice(i,1);
-    localStorage.setItem(DB, JSON.stringify(data));
-    render();
+    if(confirm("Yakin ingin menghapus materi ini?")) {
+        const data = JSON.parse(localStorage.getItem(DB));
+        data.splice(i,1);
+        localStorage.setItem(DB, JSON.stringify(data));
+        render();
+    }
 }
 
 // ===== QUIZ DOSEN =====
 function addQuestion(){
-    const q = qText.value;
-    const a1 = opt1.value;
-    const a2 = opt2.value;
-    const a3 = opt3.value;
-    const a4 = opt4.value;
-    const c = correct.value;
+    const q = document.getElementById("qText").value;
+    const a1 = document.getElementById("opt1").value;
+    const a2 = document.getElementById("opt2").value;
+    const a3 = document.getElementById("opt3").value;
+    const a4 = document.getElementById("opt4").value;
+    const c = document.getElementById("correct").value;
 
-    if(!q||!a1||!a2||!a3||!a4) return alert("Isi semua!");
-    if(c < 0 || c > 3) return alert("Jawaban benar 0-3!");
+    if(!q||!a1||!a2||!a3||!a4||c==="") return alert("Isi semua!");
+    if(Number(c) < 0 || Number(c) > 3) return alert("Jawaban benar 0-3!");
 
     const data = JSON.parse(localStorage.getItem(QUIZ_DB)||"[]");
 
@@ -354,6 +349,14 @@ function addQuestion(){
 
     localStorage.setItem(QUIZ_DB,JSON.stringify(data));
     alert("Soal ditambahkan!");
+    
+    // Clear form kuis setelah ditambah
+    document.getElementById("qText").value = "";
+    document.getElementById("opt1").value = "";
+    document.getElementById("opt2").value = "";
+    document.getElementById("opt3").value = "";
+    document.getElementById("opt4").value = "";
+    document.getElementById("correct").value = "";
 }
 
 // ===== QUIZ MAHASISWA =====
@@ -363,6 +366,10 @@ let answered = {};
 function renderQuiz(){
     const container = document.getElementById("quizContainer");
     const questions = JSON.parse(localStorage.getItem(QUIZ_DB) || "[]");
+
+    // Reset state pengerjaan pas halaman kuis dibuka kembali
+    score = 0;
+    answered = {};
 
     if (!questions.length){
         container.innerHTML = "<p>Belum ada quiz</p>";
@@ -398,16 +405,20 @@ function finishQuiz(){
     const questions = JSON.parse(localStorage.getItem(QUIZ_DB) || "[]");
 
     if (!questions.length) return alert("Belum ada soal!");
+    
+    // Cek apakah semua kuis sudah dijawab oleh mahasiswa
+    if (Object.keys(answered).length < questions.length) {
+        if(!confirm("Ada soal yang belum dijawab. Tetap kumpulkan?")) return;
+    }
 
     const result = (score / questions.length) * 100;
+    localStorage.setItem("quiz_score", result.toFixed(1)); // Dibulatkan agar rapi
 
-    localStorage.setItem("quiz_score", result);
-
-    alert("Nilai: " + result);
+    alert("Nilai: " + result.toFixed(1));
     alert(result >= 70 ? "LULUS 🎉" : "TIDAK LULUS ❌");
 
-    score = 0;
-    answered = {};
+    // Kembalikan ke dashboard setelah kuis selesai
+    go("dashboard");
 }
 
 // ===== SERTIFIKAT =====
@@ -420,17 +431,19 @@ function loadCertificate(){
         return;
     }
 
-    if (nilai < 70){
-        container.innerHTML = "<p>Tidak lulus</p>";
+    if (parseFloat(nilai) < 70){
+        container.innerHTML = "<p>Maaf, Anda tidak lulus kuis. Nilai minimal kelulusan adalah 70.</p>";
         return;
     }
 
     container.innerHTML = `
-        <div style="border:3px solid #4a90e2;padding:20px;text-align:center">
-            <h2>SERTIFIKAT</h2>
-            <h3>${user.name}</h3>
-            <p>Nilai: ${nilai}</p>
-            <b>LULUS 🎓</b>
+        <div style="border:3px dashed #4a90e2;padding:30px;text-align:center;background:#fff;border-radius:10px;">
+            <h1 style="color:#4a90e2;margin-bottom:5px;">SERTIFIKAT KELULUSAN</h1>
+            <p style="font-style:italic;margin-top:0;">Diberikan Kepada:</p>
+            <h2 style="border-bottom:2px solid #333;display:inline-block;padding:0 30px;text-transform:uppercase;">${user.name}</h2>
+            <p>Telah menyelesaikan seluruh rangkaian materi kuliah dan dinyatakan:</p>
+            <h3 style="color:green;font-size:24px;margin:10px 0;">🏆 LULUS DENGAN NILAI: ${nilai} 🎓</h3>
+            <p style="font-size:12px;color:#777;margin-top:30px;">Diverifikasi secara otomatis oleh Sistem PWA LMS Kampus</p>
         </div>
     `;
 }
