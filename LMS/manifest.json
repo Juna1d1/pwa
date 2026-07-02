@@ -1,11 +1,11 @@
 {
-  "name": "LMS Kampus",
+  "name": "LMS Kampus Pintar",
   "short_name": "LMS",
   "description": "Learning Management System Kelompok Keliatan Berbasis PWA",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4a90e2",
+  "background_color": "#f8fafc",
+  "theme_color": "#6366f1",
   "orientation": "portrait",
   "icons": [
     {
