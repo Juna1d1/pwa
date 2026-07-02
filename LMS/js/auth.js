@@ -41,7 +41,7 @@ const Auth = (function () {
         if (initPromise) return initPromise;
         initPromise = (async () => {
             loadFromStorage();
-            const saved = sessionStorage.getItem('lms_session');
+            const saved = localStorage.getItem('lms_session');
             if (saved) {
                 try {
                     currentUser = JSON.parse(saved);
@@ -83,7 +83,7 @@ const Auth = (function () {
         });
         saveToStorage();
         currentUser = null;
-        sessionStorage.removeItem('lms_session');
+        localStorage.removeItem('lms_session');
     }
 
     async function login(email, password) {
@@ -96,14 +96,21 @@ const Auth = (function () {
             throw new Error('Email atau password salah');
         }
         currentUser = { uid: found.uid, email: found.email, name: found.name, role: found.role };
-        sessionStorage.setItem('lms_session', JSON.stringify(currentUser));
+        localStorage.setItem('lms_session', JSON.stringify(currentUser));
         return currentUser;
     }
 
     async function logout() {
         currentUser = null;
-        sessionStorage.removeItem('lms_session');
+        localStorage.removeItem('lms_session');
     }
 
-    return { init, getUser, isLoggedIn, register, login, logout };
+    function createSeedUser(email, password, name, role, uid) {
+        loadFromStorage();
+        if (localUsers.find(u => u.email === email)) return;
+        localUsers.push({ uid, email, password: hashPass(password), name, role, createdAt: Date.now() });
+        saveToStorage();
+    }
+
+    return { init, getUser, isLoggedIn, register, login, logout, createSeedUser };
 })();
