@@ -1,94 +1,156 @@
 {
   "courses": [
     {
-      "title": "Pengenalan Jaringan Komputer",
-      "category": "Jaringan",
-      "desc": "Materi dasar mengenai arsitektur jaringan, topologi, dan protokol dasar komunikasi data.",
+      "id": "seed_c1",
+      "title": "Pemrograman Web Modern",
+      "category": "Pemrograman",
+      "desc": "Materi ini membahas fundamental pengembangan web modern menggunakan HTML5, CSS3, dan JavaScript. Anda akan mempelajari cara membangun halaman web responsif dengan struktur semantic HTML, styling lanjutan dengan CSS Flexbox dan Grid, serta interaktivitas menggunakan DOM manipulation. Topik mencakup: semantic HTML, responsive design, CSS animations, ES6+ JavaScript, event handling, dan dasar-dasar REST API. Cocok untuk pemula yang ingin memulai karir sebagai web developer.",
       "file": null,
       "done": false,
-      "author": "Admin",
-      "ownerId": "system"
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
     },
     {
-      "title": "Dasar Pemrograman Web PWA",
-      "category": "Pemrograman",
-      "desc": "Belajar bagaimana mengubah website statis menjadi Progressive Web Apps yang responsive dan offline-capable.",
+      "id": "seed_c2",
+      "title": "Sistem Basis Data Relasional",
+      "category": "Database",
+      "desc": "Materi komprehensif tentang perancangan dan implementasi basis data relasional. Dipelajari: konsep Entity Relationship Diagram (ERD), normalisasi database hingga 3NF, bahasa SQL (DDL, DML, DCL), join tables, indexing untuk optimasi query, transaction processing, dan Stored Procedure. Studi kasus menggunakan MySQL/MariaDB. Materi ini penting bagi mahasiswa yang ingin menguasai pengelolaan data skala kecil hingga enterprise.",
       "file": null,
       "done": false,
-      "author": "Admin",
-      "ownerId": "system"
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "id": "seed_c3",
+      "title": "Jaringan & Keamanan Komputer",
+      "category": "Jaringan",
+      "desc": "Materi ini mencakup konsep fundamental jaringan komputer dan keamanan siber. Pembahasan meliputi: model OSI Layer dan TCP/IP, topologi jaringan, perangkat jaringan (router, switch, firewall), subnetting IP address, protokol HTTP/HTTPS/DNS/DHCP, konsep VPN dan tunneling, enkripsi data, serangan umum (DDoS, SQL Injection, XSS), serta praktik secure coding. Dibekali dengan simulasi menggunakan Cisco Packet Tracer.",
+      "file": null,
+      "done": false,
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
     }
   ],
   "questions": [
     {
-      "q": "Apa kepanjangan dari HTML?",
-      "a": ["HyperText Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language", "HyperText Machine Language"],
-      "correct": 0,
-      "author": "Admin",
-      "ownerId": "system"
-    },
-    {
-      "q": "CSS digunakan untuk?",
-      "a": ["Membuat struktur halaman web", "Mempercantik tampilan web", "Menghubungkan ke database", "Membuat animasi 3D"],
+      "q": "Tag HTML apa yang digunakan untuk membuat paragraf?",
+      "a": ["<paragraph>", "<p>", "<text>", "<div>"],
       "correct": 1,
-      "author": "Admin",
-      "ownerId": "system"
+      "courseId": "seed_c1",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
     },
     {
-      "q": "Apa fungsi dari JavaScript?",
-      "a": ["Mengatur tata letak halaman", "Menyimpan data pengguna", "Membuat halaman web menjadi interaktif", "Mengoptimalkan SEO"],
+      "q": "CSS Flexbox digunakan untuk...",
+      "a": ["Membuat animasi 3D", "Mengatur tata letak elemen secara fleksibel", "Menyimpan data di browser", "Memvalidasi input form"],
+      "correct": 1,
+      "courseId": "seed_c1",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Method Array di JavaScript yang digunakan untuk mengiterasi setiap elemen adalah...",
+      "a": ["map()", "forEach()", "filter()", "reduce()"],
+      "correct": 1,
+      "courseId": "seed_c1",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Apa kepanjangan dari DOM dalam JavaScript?",
+      "a": ["Document Object Model", "Data Orientation Model", "Digital Output Management", "Dynamic Object Mapping"],
+      "correct": 0,
+      "courseId": "seed_c1",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "HTTP method mana yang umum digunakan untuk mengirim data dari form HTML?",
+      "a": ["GET", "POST", "PUT", "DELETE"],
+      "correct": 1,
+      "courseId": "seed_c1",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Perintah SQL untuk mengambil data dari tabel adalah...",
+      "a": ["GET", "SELECT", "FETCH", "RETRIEVE"],
+      "correct": 1,
+      "courseId": "seed_c2",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Bentuk normal ketiga (3NF) mensyaratkan...",
+      "a": ["Tidak ada atribut yang bergantung pada primary key", "Tidak ada atribut non-key yang bergantung transitif pada candidate key", "Semua atribut harus bernilai atomik", "Harus memiliki foreign key"],
+      "correct": 1,
+      "courseId": "seed_c2",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Jenis JOIN yang mengembalikan semua record dari kedua tabel adalah...",
+      "a": ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN"],
+      "correct": 3,
+      "courseId": "seed_c2",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Index dalam database berfungsi untuk...",
+      "a": ["Mempercepat pencarian data", "Mengenkripsi data", "Membuat backup otomatis", "Menormalkan tabel"],
+      "correct": 0,
+      "courseId": "seed_c2",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Perintah DDL (Data Definition Language) adalah...",
+      "a": ["INSERT, UPDATE, DELETE", "SELECT, JOIN, UNION", "CREATE, ALTER, DROP", "GRANT, REVOKE, COMMIT"],
       "correct": 2,
-      "author": "Admin",
-      "ownerId": "system"
+      "courseId": "seed_c2",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
     },
     {
-      "q": "Protokol yang digunakan untuk mengirim email adalah?",
-      "a": ["FTP", "HTTP", "SMTP", "TCP/IP"],
+      "q": "Model referensi yang terdiri dari 7 lapisan adalah...",
+      "a": ["TCP/IP", "OSI Layer", "DNS Model", "HTTP Protocol"],
+      "correct": 1,
+      "courseId": "seed_c3",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Protokol yang digunakan untuk mengubah alamat domain menjadi IP address adalah...",
+      "a": ["DHCP", "DNS", "HTTP", "FTP"],
+      "correct": 1,
+      "courseId": "seed_c3",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Jenis serangan yang menyisipkan perintah SQL ke dalam input pengguna disebut...",
+      "a": ["DDoS", "SQL Injection", "Phishing", "Man-in-the-Middle"],
+      "correct": 1,
+      "courseId": "seed_c3",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
+    },
+    {
+      "q": "Perangkat jaringan yang berfungsi menghubungkan dua jaringan berbeda adalah...",
+      "a": ["Switch", "Hub", "Router", "Repeater"],
       "correct": 2,
-      "author": "Admin",
-      "ownerId": "system"
+      "courseId": "seed_c3",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
     },
     {
-      "q": "Apa singkatan dari LAN?",
-      "a": ["Large Area Network", "Local Area Network", "Long Access Node", "Local Access Network"],
+      "q": "Teknik enkripsi yang menggunakan sepasang kunci publik dan privat disebut...",
+      "a": ["Symmetric Encryption", "Asymmetric Encryption", "Hashing", "Base64 Encoding"],
       "correct": 1,
-      "author": "Admin",
-      "ownerId": "system"
-    },
-    {
-      "q": "IndexedDB digunakan untuk?",
-      "a": ["Menyimpan data di server", "Menyimpan data dalam jumlah besar di browser", "Membuat animasi CSS", "Mengirim data ke server"],
-      "correct": 1,
-      "author": "Admin",
-      "ownerId": "system"
-    },
-    {
-      "q": "Service Worker pada PWA berfungsi untuk?",
-      "a": ["Mengatur tampilan website", "Menyimpan data offline dan caching", "Menghubungkan ke database cloud", "Membuat halaman login"],
-      "correct": 1,
-      "author": "Admin",
-      "ownerId": "system"
-    },
-    {
-      "q": "Apa kepanjangan dari PWA?",
-      "a": ["Progressive Web Application", "Private Web Access", "Public Web App", "Professional Web Architecture"],
-      "correct": 0,
-      "author": "Admin",
-      "ownerId": "system"
-    },
-    {
-      "q": "Database management system yang bersifat open source adalah?",
-      "a": ["MySQL", "Oracle", "Microsoft SQL Server", "MongoDB"],
-      "correct": 0,
-      "author": "Admin",
-      "ownerId": "system"
-    },
-    {
-      "q": "Apa fungsi utama dari Firestore di aplikasi ini?",
-      "a": ["Menyimpan data lokal", "Sinkronisasi data ke cloud secara real-time", "Membuat animasi UI", "Mengelola user interface"],
-      "correct": 1,
-      "author": "Admin",
-      "ownerId": "system"
+      "courseId": "seed_c3",
+      "author": "Dr. Rizky Pratama, S.Kom., M.Kom.",
+      "ownerId": "seed_dosen"
     }
   ]
 }
