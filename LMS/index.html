@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LMS Modern - Kelompok Keliatan</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="manifest" href="manifest.json">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- v4 -->
 
     <style>
         :root {
-            --primary: #6366f1; /* Indigo Modern */
+            --primary: #6366f1;
             --primary-dark: #4f46e5;
             --secondary: #64748b;
             --bg: #f8fafc;
@@ -21,24 +24,26 @@
             --text-light: #64748b;
             --glass: rgba(255, 255, 255, 0.8);
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
         }
 
         * { box-sizing: border-box; transition: all 0.3s ease; }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            background: var(--bg); 
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: var(--bg);
             color: var(--text-dark);
-            padding-top: 130px; /* Jarak agar konten tidak tertutup header */
+            padding-top: 130px;
         }
 
-        /* HEADER & NAV MODERN */
-        header { 
-            background: var(--primary); 
+        header {
+            background: var(--primary);
             background: linear-gradient(135deg, var(--primary), #818cf8);
-            color: white; 
-            padding: 15px 0; 
+            color: white;
+            padding: 15px 0;
             text-align: center;
             position: fixed;
             top: 0;
@@ -48,24 +53,24 @@
         }
         header h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
 
-        nav { 
-            display: none; 
-            justify-content: center; 
+        nav {
+            display: none;
+            justify-content: center;
             background: var(--glass);
             backdrop-filter: blur(10px);
             position: fixed;
-            top: 55px; /* Tepat di bawah header h1 */
+            top: 55px;
             width: 100%;
             z-index: 999;
             border-bottom: 1px solid rgba(0,0,0,0.05);
             padding: 5px 0;
         }
 
-        nav a { 
-            padding: 12px 18px; 
-            cursor: pointer; 
-            text-decoration: none; 
-            color: var(--text-light); 
+        nav a {
+            padding: 12px 18px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-light);
             font-weight: 500;
             font-size: 14px;
             display: flex;
@@ -76,19 +81,9 @@
         }
 
         nav a i { font-size: 16px; }
+        nav a:hover { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+        nav a.active { background: var(--primary); color: white; }
 
-        nav a:hover { 
-            background: rgba(99, 102, 241, 0.1); 
-            color: var(--primary); 
-        }
-
-        /* Menu Aktif */
-        nav a.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* CONTAINER & PAGES */
         .page { display: none; padding: 20px; max-width: 900px; margin: auto; animation: fadeIn 0.5s ease; }
         .page.active { display: block; }
 
@@ -99,19 +94,17 @@
 
         h2 { font-weight: 700; color: var(--text-dark); margin-bottom: 20px; font-size: 24px; }
 
-        /* CARDS MODERN */
-        .card { 
-            background: var(--white); 
-            padding: 25px; 
-            margin-bottom: 20px; 
-            border-radius: 16px; 
+        .card {
+            background: var(--white);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 16px;
             box-shadow: var(--shadow);
             border: 1px solid rgba(0,0,0,0.03);
         }
 
         .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
 
-        /* INPUTS & BUTTONS */
         input, textarea, select {
             width: 100%;
             padding: 12px 15px;
@@ -140,8 +133,14 @@
         }
 
         button:hover { background: var(--primary-dark); transform: scale(1.02); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #16a34a; }
+        .btn-warning { background: var(--warning); }
+        .btn-warning:hover { background: #d97706; }
 
-        /* FOOTER MINI */
         .author-badge {
             font-size: 11px;
             color: var(--primary);
@@ -149,11 +148,9 @@
             padding: 4px 10px;
             border-radius: 20px;
             font-weight: 600;
-            margin-top: 5px;
             display: inline-block;
         }
 
-        /* QUIZ SPECIFIC */
         #quizContainer .card button {
             width: 100%;
             justify-content: center;
@@ -164,8 +161,111 @@
         }
 
         #quizContainer .card button:hover { background: #e2e8f0; }
+        #quizContainer .card button.answered { pointer-events: none; }
 
-        /* RESPONSIVE */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+        .loading i { font-size: 32px; margin-bottom: 10px; }
+
+        .question-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .question-item:last-child { border-bottom: none; }
+        .question-item .q-text { flex: 1; font-size: 14px; }
+        .question-item .q-actions { display: flex; gap: 6px; }
+        .question-item .q-actions button { padding: 6px 12px; font-size: 12px; }
+
+        .score-history { margin-top: 15px; padding: 10px 0; border-top: 1px solid #f1f5f9; }
+        .score-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: var(--text-light); }
+
+        .sync-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #fee2e2;
+            color: #dc2626;
+            margin-left: 8px;
+        }
+        .sync-badge.online { background: #dcfce7; color: #16a34a; }
+
+        .offline-banner {
+            display: none;
+            background: #fef2f2;
+            border-bottom: 1px solid #fecaca;
+            color: #dc2626;
+            text-align: center;
+            padding: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            position: fixed;
+            top: 100px;
+            width: 100%;
+            z-index: 998;
+        }
+        .offline-banner i { margin-right: 6px; }
+
+        .auth-container {
+            max-width: 420px;
+            margin: 20px auto;
+        }
+
+        .auth-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        .auth-footer a {
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .auth-footer a:hover { text-decoration: underline; }
+
+        .role-select {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .role-option {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .role-option:hover { border-color: var(--primary); }
+        .role-option.active {
+            border-color: var(--primary);
+            background: rgba(99,102,241,0.05);
+            color: var(--primary);
+        }
+        .role-option i { font-size: 20px; display: block; margin-bottom: 4px; }
+
         @media (max-width: 600px) {
             nav { overflow-x: auto; justify-content: flex-start; padding: 5px 10px; }
             nav a { white-space: nowrap; padding: 10px 12px; font-size: 12px; }
@@ -176,7 +276,18 @@
 
 <body>
 
-<header><h1><i class="fas fa-graduation-cap"></i> LMS KAMPUS PINTAR</h1></header>
+<header>
+    <h1>
+        <i class="fas fa-graduation-cap"></i> LMS KAMPUS PINTAR
+        <span id="syncStatus" class="sync-badge" style="display:none;">
+            <i class="fas fa-cloud"></i> <span id="syncText">Offline</span>
+        </span>
+    </h1>
+</header>
+
+<div id="offlineBanner" class="offline-banner">
+    <i class="fas fa-wifi-slash"></i> Kamu sedang offline — data tetap tersimpan
+</div>
 
 <nav id="navMenu">
     <a id="nav-dashboard" onclick="go('dashboard')"><i class="fas fa-home"></i> Dashboard</a>
@@ -185,39 +296,115 @@
     <a id="nav-learning" onclick="go('learning')"><i class="fas fa-book-open"></i> Materi</a>
     <a id="nav-quiz" onclick="go('quiz')"><i class="fas fa-edit"></i> Kerjakan Quiz</a>
     <a id="nav-certificate" onclick="go('certificate')"><i class="fas fa-award"></i> Sertifikat</a>
-    <a onclick="logout()" style="color: #ef4444;"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+    <a onclick="logout()" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Keluar</a>
 </nav>
 
 <section id="login" class="page active">
-    <div style="text-align: center; margin-bottom: 30px;">
-        <h2>Selamat Datang</h2>
-        <p style="color: var(--text-light);">Silakan masuk untuk mulai belajar</p>
+    <div class="auth-container">
+        <div style="text-align:center; margin-bottom:25px;">
+            <div style="width:64px; height:64px; background:linear-gradient(135deg, var(--primary), #818cf8); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
+                <i class="fas fa-graduation-cap" style="font-size:28px; color:white;"></i>
+            </div>
+            <h2 style="margin:0 0 5px;">Masuk</h2>
+            <p style="color:var(--text-light); font-size:14px; margin:0;">Silakan masuk ke akun kamu</p>
+        </div>
+
+        <div class="card" style="padding:30px;">
+            <div class="auth-error" id="authSuccess" style="display:none; background:#dcfce7; border-color:#86efac; color:#16a34a;"></div>
+            <div class="auth-error" id="authError"></div>
+
+            <form onsubmit="event.preventDefault(); doLogin()">
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Email</label>
+                <div style="position:relative;">
+                    <i class="fas fa-envelope" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="email" id="loginEmail" placeholder="contoh@email.com" style="padding-left:38px;" autocomplete="email">
+                </div>
+
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Password</label>
+                <div style="position:relative;">
+                    <i class="fas fa-lock" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="password" id="loginPassword" placeholder="Masukkan password" style="padding-left:38px;" autocomplete="current-password">
+                </div>
+
+                <button type="submit" style="width:100%; justify-content:center; padding:14px; margin-top:5px;">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Belum punya akun? <a onclick="showRegister()">Daftar disini</a>
+            </div>
+        </div>
     </div>
-    <div class="card">
-        <label>Nama Lengkap</label>
-        <input type="text" id="username" placeholder="Contoh: Wawan Kurniawan">
-        <label>Masuk Sebagai</label>
-        <select id="role">
-            <option value="student">Mahasiswa</option>
-            <option value="admin">Dosen</option>
-        </select>
-        <button onclick="login()" style="width: 100%; justify-content: center;">Masuk Ke Sistem</button>
+</section>
+
+<section id="register" class="page">
+    <div class="auth-container">
+        <div style="text-align:center; margin-bottom:25px;">
+            <div style="width:64px; height:64px; background:linear-gradient(135deg, #f59e0b, #f97316); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
+                <i class="fas fa-user-plus" style="font-size:28px; color:white;"></i>
+            </div>
+            <h2 style="margin:0 0 5px;">Daftar Akun Baru</h2>
+            <p style="color:var(--text-light); font-size:14px; margin:0;">Buat akun untuk mulai belajar</p>
+        </div>
+
+        <div class="card" style="padding:30px;">
+            <div class="auth-error" id="regError"></div>
+
+            <form onsubmit="event.preventDefault(); doRegister()">
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Nama Lengkap</label>
+                <div style="position:relative;">
+                    <i class="fas fa-id-card" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="text" id="regName" placeholder="Contoh: Wawan Kurniawan" style="padding-left:38px;" autocomplete="name">
+                </div>
+
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Email</label>
+                <div style="position:relative;">
+                    <i class="fas fa-envelope" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="email" id="regEmail" placeholder="contoh@email.com" style="padding-left:38px;" autocomplete="email">
+                </div>
+
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Password</label>
+                <div style="position:relative;">
+                    <i class="fas fa-lock" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="password" id="regPassword" placeholder="Minimal 6 karakter" style="padding-left:38px;" autocomplete="new-password">
+                </div>
+
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin:5px 0 8px; display:block;">Daftar Sebagai</label>
+                <div class="role-select">
+                    <div class="role-option active" data-role="mahasiswa" onclick="selectRole(this)">
+                        <i class="fas fa-user-graduate"></i> Mahasiswa
+                    </div>
+                    <div class="role-option" data-role="admin" onclick="selectRole(this)">
+                        <i class="fas fa-chalkboard-teacher"></i> Dosen
+                    </div>
+                </div>
+
+                <button type="submit" style="width:100%; justify-content:center; padding:14px;">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Sudah punya akun? <a onclick="showLogin()">Masuk disini</a>
+            </div>
+        </div>
     </div>
 </section>
 
 <section id="dashboard" class="page">
-    <h2>Ringkasan Belajar</h2>
+    <h2>Dashboard</h2>
     <div class="card" style="background: linear-gradient(to right, #6366f1, #a855f7); color: white;">
-        <h3 id="welcomeText" style="margin: 0;"></h3>
-        <p style="opacity: 0.9;">Semangat belajarnya hari ini!</p>
+        <h3 id="welcomeText" style="margin:0;"></h3>
+        <p style="opacity:0.9;">Semangat belajarnya hari ini!</p>
     </div>
     <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
             <div>
-                <p style="color: var(--text-light); margin: 0;">Total Materi Tersedia</p>
-                <h1 id="totalCourse" style="margin: 5px 0; font-size: 36px;">0</h1>
+                <p style="color:var(--text-light); margin:0;">Total Materi Tersedia</p>
+                <h1 id="totalCourse" style="margin:5px 0; font-size:36px;">0</h1>
             </div>
-            <i class="fas fa-book-reader" style="font-size: 40px; color: var(--primary); opacity: 0.2;"></i>
+            <i class="fas fa-book-reader" style="font-size:40px; color:var(--primary); opacity:0.2;"></i>
         </div>
     </div>
 </section>
@@ -233,11 +420,11 @@
             <option value="Database">Database</option>
         </select>
         <textarea id="desc" placeholder="Deskripsi atau Konten Materi" rows="5"></textarea>
-        <label style="font-size: 12px; color: var(--text-light);">Lampiran (Gambar/PDF)</label>
+        <label style="font-size:12px; color:var(--text-light);">Lampiran (Gambar/PDF)</label>
         <input type="file" id="file">
-        <div style="display: flex; gap: 10px;">
+        <div style="display:flex; gap:10px;">
             <button onclick="addCourse()"><i class="fas fa-save"></i> Simpan Materi</button>
-            <button onclick="updateCourse()" style="background:orange"><i class="fas fa-sync"></i> Perbarui</button>
+            <button onclick="updateCourse()" style="background:orange;"><i class="fas fa-sync"></i> Perbarui</button>
         </div>
     </div>
 </section>
@@ -257,7 +444,15 @@
             <option value="2">Jawaban C</option>
             <option value="3">Jawaban D</option>
         </select>
-        <button onclick="addQuestion()"><i class="fas fa-plus"></i> Tambah Soal</button>
+        <div style="display:flex; gap:10px;">
+            <button onclick="addQuestion()"><i class="fas fa-plus"></i> Tambah Soal</button>
+            <button onclick="updateQuestion()" style="background:orange;"><i class="fas fa-sync"></i> Perbarui Soal</button>
+            <button onclick="cancelEditQuestion()" style="background:var(--secondary);">Batal</button>
+        </div>
+    </div>
+    <div class="card">
+        <h3 style="font-size:16px; margin:0 0 15px 0;">Daftar Soal</h3>
+        <div id="questionList"></div>
     </div>
 </section>
 
@@ -270,103 +465,179 @@
     <h2>Ujian Kompetensi</h2>
     <div id="quizContainer"></div>
     <br>
-    <button onclick="finishQuiz()" style="width: 100%; justify-content: center; background: #22c55e;">
+    <button onclick="finishQuiz()" class="btn-success" style="width:100%; justify-content:center;" id="finishQuizBtn">
         <i class="fas fa-check-double"></i> Selesaikan Ujian
     </button>
 </section>
 
 <section id="certificate" class="page">
-    <h2>Penghargaan</h2>
+    <h2>Sertifikat</h2>
     <div id="certContainer"></div>
 </section>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/database.js?v=4"></script>
+<script src="js/auth.js?v=3"></script>
 <script>
-const DB = "lms_data";
-const QUIZ_DB = "quiz_data";
 let editIndex = null;
+let editQuizIndex = null;
 let user = null;
 
 const navMenu = document.getElementById("navMenu");
 const loginSection = document.getElementById("login");
 
-function login() {
-    const name = document.getElementById("username").value;
-    const role = document.getElementById("role").value;
-    if (!name) return alert("Tolong isi nama kamu, ya!");
-    user = { name, role };
-    localStorage.setItem("user", JSON.stringify(user));
-    loginPage();
+function sanitize(str) {
+    const el = document.createElement('div');
+    el.textContent = str;
+    return el.innerHTML;
 }
 
-function loginPage() {
-    loginSection.classList.remove("active");
-    navMenu.style.display = "flex";
-    
-    // Filter Navigasi berdasarkan Role
-    document.getElementById("nav-courses").style.display = user.role === "admin" ? "flex" : "none";
-    document.getElementById("nav-quizAdmin").style.display = user.role === "admin" ? "flex" : "none";
-    document.getElementById("nav-quiz").style.display = user.role === "student" ? "flex" : "none";
-    document.getElementById("nav-certificate").style.display = user.role === "student" ? "flex" : "none";
+// ============ AUTH UI ============
 
-    go("dashboard");
+function showLogin() {
+    document.getElementById('login').classList.add('active');
+    document.getElementById('register').classList.remove('active');
+    document.getElementById('authError').style.display = 'none';
+    document.getElementById('authSuccess').style.display = 'none';
 }
 
-function logout() {
-    localStorage.removeItem("user");
+function showRegister() {
+    document.getElementById('register').classList.add('active');
+    document.getElementById('login').classList.remove('active');
+    document.getElementById('regError').style.display = 'none';
+}
+
+function selectRole(el) {
+    document.querySelectorAll('.role-option').forEach(r => r.classList.remove('active'));
+    el.classList.add('active');
+}
+
+function showAuthError(msg) {
+    const el = document.getElementById('authError');
+    el.textContent = msg;
+    el.style.display = 'block';
+}
+
+function showRegError(msg) {
+    const el = document.getElementById('regError');
+    el.textContent = msg;
+    el.style.display = 'block';
+}
+
+async function doLogin() {
+    document.getElementById('authSuccess').style.display = 'none';
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+    try {
+        await Auth.login(email, password);
+        user = Auth.getUser();
+        enterApp();
+    } catch (e) {
+        showAuthError(e.message);
+    }
+}
+
+async function doRegister() {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim().toLowerCase();
+    const password = document.getElementById('regPassword').value;
+    const roleEl = document.querySelector('.role-option.active');
+    const role = roleEl ? roleEl.dataset.role : 'mahasiswa';
+    try {
+        await Auth.register(email, password, name, role);
+        showLogin();
+        document.getElementById('authSuccess').textContent =
+            'Akun berhasil dibuat! Silakan masuk dengan email dan password kamu.';
+        document.getElementById('authSuccess').style.display = 'block';
+    } catch (e) {
+        showRegError(e.message);
+    }
+}
+
+function enterApp() {
+    loginSection.classList.remove('active');
+    navMenu.style.display = 'flex';
+
+    const role = user.role;
+    const isStudent = role === 'mahasiswa' || role === 'student';
+    document.getElementById('nav-courses').style.display = role === 'admin' ? 'flex' : 'none';
+    document.getElementById('nav-quizAdmin').style.display = role === 'admin' ? 'flex' : 'none';
+    document.getElementById('nav-quiz').style.display = isStudent ? 'flex' : 'none';
+    document.getElementById('nav-certificate').style.display = isStudent ? 'flex' : 'none';
+
+    go('dashboard');
+}
+
+async function logout() {
+    await Auth.logout();
+    user = null;
     location.reload();
 }
 
+// ============ NAVIGATION ============
+
 function go(page) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
-    
-    document.getElementById(page).classList.add("active");
-    if(document.getElementById("nav-"+page)) {
-        document.getElementById("nav-"+page).classList.add("active");
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+
+    document.getElementById(page).classList.add('active');
+    if (document.getElementById('nav-' + page)) {
+        document.getElementById('nav-' + page).classList.add('active');
     }
 
-    if (page === "dashboard") loadDashboard();
-    if (page === "learning") render();
-    if (page === "certificate") loadCertificate();
-    if (page === "quiz") renderQuiz();
-    
-    window.scrollTo(0,0);
+    if (page === 'dashboard') loadDashboard();
+    if (page === 'learning') render();
+    if (page === 'certificate') loadCertificate();
+    if (page === 'quiz') renderQuiz();
+    if (page === 'quizAdmin') renderQuestionList();
+
+    window.scrollTo(0, 0);
 }
+
+// ============ DASHBOARD ============
 
 function loadDashboard() {
-    document.getElementById("welcomeText").innerText = "Halo, " + user.name + "!";
-    const data = JSON.parse(localStorage.getItem(DB) || "[]");
-    document.getElementById("totalCourse").innerText = data.length;
+    const courses = Database.getCourses();
+    document.getElementById('welcomeText').innerText = 'Halo, ' + sanitize(user.name) + '!';
+    document.getElementById('totalCourse').innerText = courses.length;
 }
 
-// MATERI LOGIC
-function addCourse() {
-    const title = document.getElementById("title").value;
-    const desc = document.getElementById("desc").value;
-    const category = document.getElementById("category").value;
-    const fileInput = document.getElementById("file");
-    if (!title || !desc || !category) return alert("Lengkapi data materi dulu!");
+// ============ COURSES (MATERI) ============
+
+async function addCourse() {
+    const title = document.getElementById('title').value.trim();
+    const desc = document.getElementById('desc').value.trim();
+    const category = document.getElementById('category').value;
+    const fileInput = document.getElementById('file');
+    if (!title || !desc || !category) return alert('Lengkapi data materi dulu!');
 
     const reader = new FileReader();
-    reader.onload = function () {
-        const data = JSON.parse(localStorage.getItem(DB) || "[]");
-        data.push({ title, desc, category, file: reader.result || null, done: false, author: user.name });
-        localStorage.setItem(DB, JSON.stringify(data));
-        alert("Materi berhasil diterbitkan!");
+    reader.onload = async function () {
+        await Database.saveCourse({
+            title, desc, category,
+            file: reader.result || null,
+            done: false,
+            author: user.name,
+            ownerId: user.uid
+        });
+        alert('Materi berhasil diterbitkan!');
+        editIndex = null;
         clearForm();
-        go("learning");
+        go('learning');
     };
     if (fileInput.files[0]) reader.readAsDataURL(fileInput.files[0]);
     else reader.onload();
 }
 
 function render() {
-    const list = document.getElementById("list");
-    let data = JSON.parse(localStorage.getItem(DB) || "[]");
-    const originalData = [...data];
+    const list = document.getElementById('list');
+    let data = Database.getCourses();
 
-    if (user.role === "admin") {
-        data = data.filter(c => c.author === user.name);
+    if (user.role === 'admin') {
+        data = data.filter(c => c.ownerId === user.uid || c.ownerId === 'system');
     }
 
     if (!data.length) {
@@ -374,171 +645,396 @@ function render() {
         return;
     }
 
-    list.innerHTML = data.map((c)=> {
-        const originalIndex = originalData.findIndex(orig => orig.title === c.title && orig.author === c.author);
+    list.innerHTML = data.map(c => {
+        const isOwner = user.role === 'admin' && c.ownerId === user.uid;
         return `
-            <div class="card">
+            <div class="card" style="cursor:pointer;" onclick="openCourse('${c.id}')">
                 <div style="display:flex; justify-content:space-between; align-items:start;">
-                    <b style="font-size:18px;">${c.title}</b>
-                    <span class="author-badge"><i class="fas fa-user"></i> ${c.author || 'Sistem'}</span>
+                    <b style="font-size:18px;">${sanitize(c.title)}</b>
+                    <span class="author-badge"><i class="fas fa-user"></i> ${sanitize(c.author || 'Sistem')}</span>
                 </div>
-                <p style="color: var(--primary); font-size:12px; font-weight:600; margin: 5px 0;"># ${c.category}</p>
-                <p style="color: var(--text-light); line-height:1.6;">${c.desc}</p>
-                ${c.file ? (c.file.startsWith("data:image") ? `<img src="${c.file}" style="width:100%; border-radius:12px; margin: 10px 0;">` : `<a href="${c.file}" download style="display:block; margin:10px 0; color:var(--primary);">📥 Download Lampiran</a>`) : ""}
-                <div style="display:flex; gap:10px; margin-top:15px; border-top:1px solid #eee; padding-top:15px;">
-                    <button onclick="toggle(${originalIndex})" style="background:#f1f5f9; color:var(--text-dark);">${c.done ? '✅ Selesai' : '📖 Tandai Selesai'}</button>
-                    ${user.role === "admin" && c.author === user.name ? `
-                        <button onclick="editCourse(${originalIndex})" style="background:#fbbf24;"><i class="fas fa-edit"></i></button>
-                        <button onclick="del(${originalIndex})" style="background:#ef4444;"><i class="fas fa-trash"></i></button>
-                    ` : ""}
+                <p style="color:var(--primary); font-size:12px; font-weight:600; margin:5px 0;"># ${sanitize(c.category)}</p>
+                <p style="color:var(--text-light); line-height:1.6;">${sanitize(c.desc)}</p>
+                ${c.file ? (c.file.startsWith('data:image') ?
+                    `<img src="${c.file}" style="width:100%; max-width:600px; border-radius:12px; margin:10px 0;" loading="lazy">` :
+                    `<a href="${c.file}" download style="display:block; margin:10px 0; color:var(--primary);" onclick="event.stopPropagation()"><i class="fas fa-paperclip"></i> Download Lampiran</a>`) : ''}
+                <div style="display:flex; gap:10px; margin-top:15px; border-top:1px solid #eee; padding-top:15px;" onclick="event.stopPropagation()">
+                    <button onclick="toggle('${c.id}')" style="background:#f1f5f9; color:var(--text-dark);">
+                        ${c.done ? '<i class="fas fa-check-circle" style="color:var(--success);"></i> Selesai' : '<i class="fas fa-circle"></i> Tandai Selesai'}
+                    </button>
+                    ${isOwner ? `
+                        <button onclick="editCourse('${c.id}')" class="btn-warning"><i class="fas fa-edit"></i></button>
+                        <button onclick="del('${c.id}')" class="btn-danger"><i class="fas fa-trash"></i></button>
+                    ` : ''}
                 </div>
             </div>
         `;
-    }).join("");
+    }).join('');
 }
 
 function clearForm() {
-    document.getElementById("title").value = "";
-    document.getElementById("desc").value = "";
-    document.getElementById("category").value = "";
-    document.getElementById("file").value = "";
-}
-
-function toggle(i){
-    const data = JSON.parse(localStorage.getItem(DB));
-    data[i].done = !data[i].done;
-    localStorage.setItem(DB, JSON.stringify(data));
-    render();
-}
-
-function editCourse(i){
-    const data = JSON.parse(localStorage.getItem(DB));
-    document.getElementById("title").value = data[i].title;
-    document.getElementById("desc").value = data[i].desc;
-    document.getElementById("category").value = data[i].category;
-    editIndex = i;
-    go("courses");
-}
-
-function updateCourse(){
-    if(editIndex === null) return alert("Pilih materi yang mau diubah!");
-    const data = JSON.parse(localStorage.getItem(DB));
-    data[editIndex].title = document.getElementById("title").value;
-    data[editIndex].desc = document.getElementById("desc").value;
-    data[editIndex].category = document.getElementById("category").value;
-    localStorage.setItem(DB, JSON.stringify(data));
-    alert("Berhasil diperbarui!");
+    document.getElementById('title').value = '';
+    document.getElementById('desc').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('file').value = '';
     editIndex = null;
-    clearForm();
-    render();
-    go("learning");
 }
 
-function del(i){
-    if(confirm("Yakin mau hapus materi ini?")) {
-        const data = JSON.parse(localStorage.getItem(DB));
-        data.splice(i,1);
-        localStorage.setItem(DB, JSON.stringify(data));
+async function toggle(id) {
+    await Database.toggleCourseDone(id);
+    render();
+}
+
+function openCourse(id) {
+    const c = Database.getCourses().find(x => x.id === id);
+    if (!c) return;
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    overlay.onclick = () => overlay.remove();
+    overlay.innerHTML = `
+        <div class="card" style="max-width:700px;width:100%;max-height:90vh;overflow-y:auto;" onclick="event.stopPropagation()">
+            <div style="display:flex;justify-content:space-between;align-items:start;">
+                <h3 style="margin:0;">${sanitize(c.title)}</h3>
+                <button onclick="this.closest('div[onclick]').remove()" style="background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
+            </div>
+            <p style="color:var(--primary);font-size:12px;font-weight:600;"># ${sanitize(c.category)}</p>
+            <p style="color:var(--text-light);line-height:1.6;">${sanitize(c.desc)}</p>
+            ${c.file ? (c.file.startsWith('data:image') ?
+                `<img src="${c.file}" style="width:100%;border-radius:12px;margin:10px 0;">` :
+                `<a href="${c.file}" download style="display:block;margin:10px 0;color:var(--primary);"><i class="fas fa-paperclip"></i> Download Lampiran</a>`) : '<p style="color:var(--text-light);font-style:italic;">Tidak ada lampiran.</p>'}
+            <hr>
+            <p style="color:var(--text-light);font-size:13px;">Status: ${c.done ? '&#10003; Selesai' : '&#9711; Belum selesai'}</p>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+}
+
+function editCourse(id) {
+    const data = Database.getCourses();
+    const item = data.find(c => c.id === id);
+    if (!item) return;
+    document.getElementById('title').value = item.title;
+    document.getElementById('desc').value = item.desc;
+    document.getElementById('category').value = item.category;
+    editIndex = item.id;
+    go('courses');
+}
+
+async function updateCourse() {
+    if (editIndex === null) return alert('Pilih materi yang mau diubah!');
+    const data = Database.getCourses();
+    const item = data.find(c => c.id === editIndex);
+    if (!item) return alert('Materi tidak ditemukan!');
+    const fileInput = document.getElementById('file');
+
+    const doUpdate = async (fileData) => {
+        item.title = document.getElementById('title').value.trim();
+        item.desc = document.getElementById('desc').value.trim();
+        item.category = document.getElementById('category').value;
+        if (fileData !== undefined) item.file = fileData;
+        await Database.saveCourse(item);
+        alert('Berhasil diperbarui!');
+        editIndex = null;
+        clearForm();
+        render();
+        go('learning');
+    };
+
+    if (fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = () => doUpdate(reader.result);
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        doUpdate(undefined);
+    }
+}
+
+async function del(id) {
+    if (confirm('Yakin mau hapus materi ini?')) {
+        await Database.deleteCourse(id);
         render();
     }
 }
 
-// QUIZ LOGIC
-function addQuestion(){
-    const q = document.getElementById("qText").value;
-    const a = [document.getElementById("opt1").value, document.getElementById("opt2").value, document.getElementById("opt3").value, document.getElementById("opt4").value];
-    const c = document.getElementById("correct").value;
-    if(!q || a.includes("") || c === "") return alert("Isi soal kuis dengan lengkap!");
-    const data = JSON.parse(localStorage.getItem(QUIZ_DB)||"[]");
-    data.push({ q, a, correct:Number(c) });
-    localStorage.setItem(QUIZ_DB,JSON.stringify(data));
-    alert("Soal berhasil ditambah!");
-    document.getElementById("qText").value = "";
-    document.getElementById("opt1").value = ""; document.getElementById("opt2").value = ""; document.getElementById("opt3").value = ""; document.getElementById("opt4").value = "";
+// ============ QUIZ ADMIN ============
+
+function renderQuestionList() {
+    const container = document.getElementById('questionList');
+    const questions = Database.getQuestions().filter(q => q.ownerId === user.uid);
+    if (!questions.length) {
+        container.innerHTML = "<p style='color:var(--text-light);'>Belum ada soal milikmu.</p>";
+        return;
+    }
+    container.innerHTML = questions.map((q, i) => {
+        const labels = ['A', 'B', 'C', 'D'];
+        const isEditing = editQuizIndex === q.id;
+        return `
+            <div class="question-item" style="${isEditing ? 'background:#fefce8; border-radius:8px; padding:12px; margin-bottom:8px;' : ''}">
+                <div class="q-text">
+                    <strong>${sanitize(q.q)}</strong><br>
+                    <span style="font-size:12px;color:var(--text-light);">
+                        ${q.a.map((opt, j) => `${labels[j]}. ${sanitize(opt)}${j === q.correct ? ' ✅' : ''}`).join(' | ')}
+                    </span>
+                </div>
+                <div class="q-actions">
+                    <button onclick="editQuestion(${q.id})" class="btn-warning"><i class="fas fa-edit"></i></button>
+                    <button onclick="deleteQuestion(${q.id})" class="btn-danger"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
-let score = 0; let answered = {};
-function renderQuiz(){
-    const container = document.getElementById("quizContainer");
-    const questions = JSON.parse(localStorage.getItem(QUIZ_DB) || "[]");
-    score = 0; answered = {};
-    if (!questions.length) return container.innerHTML = "<div class='card'>Dosen belum membuat kuis.</div>";
-    container.innerHTML = questions.map((q,i)=>`
-        <div class="card">
-            <p><b>Soal ${i+1}:</b> ${q.q}</p>
-            ${q.a.map((opt,j)=>`
-                <button id="q${i}_${j}" onclick="answerQuiz(${i},${j})">${opt}</button>
-            `).join("")}
-        </div>
-    `).join("");
+async function addQuestion() {
+    const q = document.getElementById('qText').value.trim();
+    const a = [
+        document.getElementById('opt1').value.trim(),
+        document.getElementById('opt2').value.trim(),
+        document.getElementById('opt3').value.trim(),
+        document.getElementById('opt4').value.trim()
+    ];
+    const c = document.getElementById('correct').value;
+    if (!q || a.some(v => !v) || c === '') return alert('Isi soal kuis dengan lengkap!');
+    await Database.saveQuestion({ q, a, correct: Number(c), ownerId: user.uid });
+    alert('Soal berhasil ditambah!');
+    clearQuizForm();
+    renderQuestionList();
 }
 
-function answerQuiz(i,j){
-    const questions = JSON.parse(localStorage.getItem(QUIZ_DB) || "[]");
-    if (answered[i]) return;
-    answered[i] = true;
-    const btn = document.getElementById(`q${i}_${j}`);
-    if (j === questions[i].correct){
-        score++;
-        btn.style.background = "#22c55e"; btn.style.color = "white";
-    } else {
-        btn.style.background = "#ef4444"; btn.style.color = "white";
-        document.getElementById(`q${i}_${questions[i].correct}`).style.background = "#22c55e";
-        document.getElementById(`q${i}_${questions[i].correct}`).style.color = "white";
+function editQuestion(id) {
+    const data = Database.getQuestions().filter(q => q.ownerId === user.uid);
+    const item = data.find(q => q.id === id);
+    if (!item) return;
+    document.getElementById('qText').value = item.q;
+    document.getElementById('opt1').value = item.a[0];
+    document.getElementById('opt2').value = item.a[1];
+    document.getElementById('opt3').value = item.a[2];
+    document.getElementById('opt4').value = item.a[3];
+    document.getElementById('correct').value = String(item.correct);
+    editQuizIndex = id;
+    renderQuestionList();
+}
+
+async function updateQuestion() {
+    if (editQuizIndex === null) return alert('Pilih soal yang mau diubah!');
+    const q = document.getElementById('qText').value.trim();
+    const a = [
+        document.getElementById('opt1').value.trim(),
+        document.getElementById('opt2').value.trim(),
+        document.getElementById('opt3').value.trim(),
+        document.getElementById('opt4').value.trim()
+    ];
+    const c = document.getElementById('correct').value;
+    if (!q || a.some(v => !v) || c === '') return alert('Isi soal kuis dengan lengkap!');
+    const item = Database.getQuestions().find(x => x.id === editQuizIndex);
+    if (!item) return alert('Soal tidak ditemukan!');
+    item.q = q; item.a = a; item.correct = Number(c);
+    await Database.saveQuestion(item);
+    alert('Soal berhasil diperbarui!');
+    editQuizIndex = null;
+    clearQuizForm();
+    renderQuestionList();
+}
+
+function cancelEditQuestion() {
+    editQuizIndex = null;
+    clearQuizForm();
+    renderQuestionList();
+}
+
+async function deleteQuestion(id) {
+    if (confirm('Yakin mau hapus soal ini?')) {
+        await Database.deleteQuestion(id);
+        if (editQuizIndex === id) { editQuizIndex = null; clearQuizForm(); }
+        renderQuestionList();
     }
 }
 
-function finishQuiz(){
-    const questions = JSON.parse(localStorage.getItem(QUIZ_DB) || "[]");
-    if (!questions.length) return;
-    const result = (score / questions.length) * 100;
-    localStorage.setItem("quiz_score", result.toFixed(1));
-    alert("Skor kamu: " + result.toFixed(1));
-    go("dashboard");
+function clearQuizForm() {
+    ['qText', 'opt1', 'opt2', 'opt3', 'opt4'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('correct').value = '';
 }
 
-function loadCertificate(){
-    const nilai = localStorage.getItem("quiz_score");
-    const container = document.getElementById("certContainer");
-    if (!nilai || parseFloat(nilai) < 70) return container.innerHTML = "<div class='card'>Selesaikan kuis dengan nilai minimal 70 untuk dapat sertifikat.</div>";
+// ============ QUIZ ============
+
+let score = 0;
+let answered = {};
+
+function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    const courses = Database.getCourses();
+    const questions = Database.getQuestions();
+    const finishBtn = document.getElementById('finishQuizBtn');
+
+    const hasReadMaterial = courses.some(c => c.done === true);
+
+    const isStudent = user.role === 'mahasiswa' || user.role === 'student';
+
+    if (isStudent && !hasReadMaterial) {
+        if (finishBtn) finishBtn.style.display = 'none';
+        container.innerHTML = `
+            <div class="card" style="text-align:center; padding:40px;">
+                <i class="fas fa-book-open" style="font-size:48px; color:var(--text-light); opacity:0.3; margin-bottom:15px;"></i>
+                <h3 style="margin:0 0 10px;">Selesaikan Materi Dulu!</h3>
+                <p style="color:var(--text-light); margin:0 0 15px;">
+                    Kamu harus membaca dan menandai selesai minimal 1 materi sebelum bisa mengerjakan quiz.
+                </p>
+                <button onclick="go('learning')" style="margin:0 auto;">
+                    <i class="fas fa-book-reader"></i> Buka Materi
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    if (finishBtn) finishBtn.style.display = 'inline-flex';
+
+    score = 0;
+    answered = {};
+
+    if (!questions.length) {
+        container.innerHTML = "<div class='card'>Dosen belum membuat kuis.</div>";
+        return;
+    }
+
+    container.innerHTML = questions.map((q, i) => `
+        <div class="card">
+            <p><b>Soal ${i + 1}:</b> ${sanitize(q.q)}</p>
+            ${q.a.map((opt, j) => `
+                <button id="q${i}_${j}" onclick="answerQuiz(${i},${j})">${sanitize(opt)}</button>
+            `).join('')}
+        </div>
+    `).join('');
+}
+
+function answerQuiz(i, j) {
+    const questions = Database.getQuestions();
+    if (answered[i] || !questions[i]) return;
+    answered[i] = true;
+    const btns = document.querySelectorAll(`#q${i}_0, #q${i}_1, #q${i}_2, #q${i}_3`);
+    btns.forEach(b => b.classList.add('answered'));
+    const btn = document.getElementById(`q${i}_${j}`);
+    if (j === questions[i].correct) {
+        score++;
+        btn.style.background = '#22c55e';
+        btn.style.color = 'white';
+    } else {
+        btn.style.background = '#ef4444';
+        btn.style.color = 'white';
+        const cb = document.getElementById(`q${i}_${questions[i].correct}`);
+        if (cb) { cb.style.background = '#22c55e'; cb.style.color = 'white'; }
+    }
+}
+
+async function finishQuiz() {
+    const questions = Database.getQuestions();
+    if (!questions.length) return;
+    const result = (score / questions.length) * 100;
+    await Database.addScore({
+        score: result.toFixed(1),
+        date: new Date().toLocaleString('id-ID'),
+        name: user.name,
+        userId: user.uid
+    });
+    localStorage.setItem('quiz_score', result.toFixed(1));
+    alert('Skor kamu: ' + result.toFixed(1) + '%');
+    go('dashboard');
+}
+
+// ============ CERTIFICATE ============
+
+function loadCertificate() {
+    const scores = Database.getScores().filter(s => s.userId === user.uid);
+    const container = document.getElementById('certContainer');
+    const bestScore = scores.length ? Math.max(...scores.map(s => parseFloat(s.score))) : 0;
+
+    let historyHtml = '';
+    if (scores.length) {
+        historyHtml = `
+            <div class="score-history">
+                <p style="font-weight:600; font-size:14px; margin:0 0 8px 0;">Riwayat Nilai:</p>
+                ${scores.slice().reverse().map(s => `
+                    <div class="score-item">
+                        <span>${sanitize(s.date || '')}</span>
+                        <span style="font-weight:600; color:${parseFloat(s.score) >= 70 ? 'var(--success)' : 'var(--danger)'};">${sanitize(s.score)}%</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    if (bestScore < 70) {
+        return container.innerHTML = `
+            <div class="card">
+                <p style="text-align:center;">Selesaikan kuis dengan nilai minimal 70 untuk dapat sertifikat.</p>
+                <p style="text-align:center; color:var(--text-light); font-size:13px;">Nilai terbaikmu: <strong>${bestScore}%</strong></p>
+                ${historyHtml}
+            </div>
+        `;
+    }
+
     container.innerHTML = `
-        <div class="card" style="border: 8px double var(--primary); text-align:center; padding: 50px;">
+        <div class="card" style="border:8px double var(--primary); text-align:center; padding:50px;">
             <h1 style="color:var(--primary); font-size:40px; margin:0;">SERTIFIKAT</h1>
             <p style="margin:20px 0;">Diberikan dengan hormat kepada:</p>
-            <h2 style="text-decoration:underline; font-size:32px;">${user.name}</h2>
+            <h2 style="text-decoration:underline; font-size:32px;">${sanitize(user.name)}</h2>
             <p>Telah dinyatakan Lulus pada kuis kompetensi dengan skor:</p>
-            <h1 style="color:#22c55e;">${nilai}</h1>
+            <h1 style="color:var(--success);">${bestScore}%</h1>
             <p style="font-size:12px; margin-top:40px; color:var(--text-light);">E-Certificate Generated by LMS PWA</p>
         </div>
+        ${historyHtml}
     `;
 }
 
-// INITIAL LOAD (Sudah Ditambah Registrasi Service Worker PWA)
+// ============ SYNC BADGE ============
+
+function updateSyncBadge(online) {
+    const badge = document.getElementById('syncStatus');
+    const text = document.getElementById('syncText');
+    const banner = document.getElementById('offlineBanner');
+    if (badge) {
+        badge.style.display = 'inline-flex';
+        badge.className = 'sync-badge' + (online ? ' online' : '');
+        badge.querySelector('i').className = online ? 'fas fa-cloud-sun' : 'fas fa-cloud';
+        text.textContent = online ? 'Tersinkronisasi' : 'Offline';
+    }
+    if (banner) banner.style.display = online ? 'none' : 'block';
+}
+
+// ============ INIT ============
+
 window.onload = async () => {
-    // 1. Registrasi Service Worker PWA agar bisa diakses Offline
     if ('serviceWorker' in navigator) {
         try {
-            const reg = await navigator.serviceWorker.register('sw.js');
-            console.log('PWA: Service Worker berhasil terdaftar di scope:', reg.scope);
-        } catch (error) {
-            console.error('PWA: Gagal mendaftarkan Service Worker:', error);
-        }
-    }
-
-    // 2. Load Data Awal dari data.json ke LocalStorage jika kosong
-    if (!localStorage.getItem(DB)) {
-        try {
-            const response = await fetch('./data.json');
-            const defaultData = await response.json();
-            localStorage.setItem(DB, JSON.stringify(defaultData));
+            await navigator.serviceWorker.register('sw.js');
         } catch (e) {
-            console.error('Gagal memuat default data.json:', e);
+            console.error('SW gagal:', e);
         }
     }
 
-    // 3. Cek Status Login User
-    const saved = localStorage.getItem("user");
-    if (saved){ user = JSON.parse(saved); loginPage(); }
+    window.addEventListener('online', () => updateSyncBadge(true));
+    window.addEventListener('offline', () => updateSyncBadge(false));
+    updateSyncBadge(navigator.onLine);
+
+    await Database.init();
+
+    const authUser = await Auth.init();
+    if (authUser) {
+        user = authUser;
+        enterApp();
+    }
+
+    Database.onDataChange(() => {
+        const active = document.querySelector('.page.active');
+        if (active) {
+            const id = active.id;
+            if (id === 'learning') render();
+            if (id === 'quizAdmin') renderQuestionList();
+            if (id === 'dashboard') loadDashboard();
+            if (id === 'certificate') loadCertificate();
+            if (id === 'quiz') renderQuiz();
+        }
+    });
 };
 </script>
 
