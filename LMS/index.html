@@ -1,1 +1,1858 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Modern - Kelompok Keliatan</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="apple-touch-icon" href="favicon-192.png">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- v4 -->
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --glass: rgba(255, 255, 255, 0.8);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text-dark);
+            padding-top: 56px;
+        }
+
+        header {
+            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #818cf8);
+            color: white;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        header .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            max-width: 1200px;
+            margin: auto;
+            width: 100%;
+        }
+        header .header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        header h1 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .page-title-display { font-size: 13px; font-weight: 400; opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        header .header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .user-name-display { font-size: 12px; font-weight: 500; opacity: 0.9; }
+        .hamburger-icon { color: white; font-size: 22px; cursor: pointer; padding: 4px; display: none; }
+        .hamburger-icon:active { opacity: 0.7; }
+
+        nav {
+            display: none;
+            justify-content: center;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 5px 0;
+        }
+
+        nav a {
+            padding: 12px 18px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 8px;
+            margin: 0 4px;
+        }
+
+        nav a i { font-size: 16px; }
+        nav a:hover { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+        nav a.active { background: var(--primary); color: white !important; }
+        nav a.active i { color: white !important; }
+        nav a.active span { color: white !important; }
+
+        .page { display: none !important; padding: 20px; max-width: 900px; margin: auto; background: var(--bg); }
+        .page.active { display: block !important; min-height: calc(100vh - 56px); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-weight: 700; color: var(--text-dark); margin-bottom: 20px; font-size: 24px; }
+
+        .card {
+            background: var(--white);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--primary); }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover { background: var(--primary-dark); transform: scale(1.02); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #16a34a; }
+        .btn-warning { background: var(--warning); }
+        .btn-warning:hover { background: #d97706; }
+
+        .author-badge {
+            font-size: 11px;
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        #quizContainer .card button {
+            width: 100%;
+            justify-content: center;
+            margin: 5px 0;
+            background: #f1f5f9;
+            color: var(--text-dark);
+            border: 1px solid #e2e8f0;
+        }
+
+        #quizContainer .card button:hover { background: #e2e8f0; }
+        #quizContainer .card button.answered { pointer-events: none; }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+        }
+        .loading i { font-size: 32px; margin-bottom: 10px; }
+
+        .question-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .question-item:last-child { border-bottom: none; }
+        .question-item .q-text { flex: 1; font-size: 14px; }
+        .question-item .q-actions { display: flex; gap: 6px; }
+        .question-item .q-actions button { padding: 6px 12px; font-size: 12px; }
+
+        .score-history { margin-top: 15px; padding: 10px 0; border-top: 1px solid #f1f5f9; }
+        .score-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: var(--text-light); }
+
+        #dashCharts canvas { max-height:250px; width:100% !important; }
+
+        .undo-toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            background: #1e293b; color: white; padding: 14px 24px; border-radius: 12px;
+            display: flex; align-items: center; gap: 16px; z-index: 9999;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3); font-size: 14px;
+            animation: slideUp 0.3s ease;
+        }
+        .undo-toast button {
+            background: var(--primary); color: white; border: none;
+            padding: 8px 18px; border-radius: 8px; cursor: pointer;
+            font-weight: 600; font-size: 13px; white-space: nowrap;
+        }
+        .undo-toast button:hover { background: var(--primary-dark); }
+        @keyframes slideUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+
+        .sync-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #fee2e2;
+            color: #dc2626;
+            margin-left: 8px;
+        }
+        .sync-badge.online { background: #dcfce7; color: #16a34a; }
+
+        .offline-banner {
+            display: none;
+            background: #fef2f2;
+            border-bottom: 1px solid #fecaca;
+            color: #dc2626;
+            text-align: center;
+            padding: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            position: fixed;
+            top: 100px;
+            width: 100%;
+            z-index: 998;
+        }
+        .offline-banner i { margin-right: 6px; }
+
+        .sync-badge {
+            display: inline-flex;
+        }
+        
+        .auth-container {
+            max-width: 420px;
+            margin: 20px auto;
+        }
+
+        .auth-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        .auth-footer a {
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .auth-footer a:hover { text-decoration: underline; }
+
+        .role-select {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .role-option {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .role-option:hover { border-color: var(--primary); }
+        .role-option.active {
+            border-color: var(--primary);
+            background: rgba(99,102,241,0.05);
+            color: var(--primary);
+        }
+        .role-option i { font-size: 20px; display: block; margin-bottom: 4px; }
+
+        /* ============ BOTTOM NAV ============ */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px 0;
+            padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        .bottom-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 10px;
+            font-weight: 500;
+            padding: 4px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            gap: 2px;
+            transition: all 0.2s;
+        }
+        .bottom-nav a i { font-size: 20px; }
+        .bottom-nav a.active { color: var(--primary); }
+        .bottom-nav a:active { background: rgba(99,102,241,0.1); }
+
+        /* ============ DRAWER ============ */
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--white);
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .drawer.open { right: 0; }
+        .drawer-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1999;
+        }
+        .drawer-overlay.open { display: block; }
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .drawer-header h3 { margin: 0; font-size: 18px; }
+        .drawer-header a { font-size: 20px; cursor: pointer; color: var(--text-light); padding: 4px; }
+        .drawer-body { padding: 10px 0; flex: 1; }
+        .drawer-body a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            text-decoration: none;
+            color: var(--text-dark);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .drawer-body a:hover { background: #f1f5f9; }
+        .drawer-body a i { width: 20px; text-align: center; }
+        .drawer-body hr { margin: 8px 20px; border: none; border-top: 1px solid #e2e8f0; }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            body { padding-bottom: 65px; padding-top: 50px; }
+            nav#navMenu { display: none !important; }
+            header .header-inner { padding: 10px 15px; }
+            header h1 { font-size: 16px; }
+            .page { padding: 15px; min-height: calc(100vh - 115px); }
+            .card { padding: 16px; }
+            h2 { font-size: 18px; }
+            .offline-banner { top: 46px; }
+            #dashCharts { grid-template-columns: 1fr !important; }
+        }
+        @media (min-width: 769px) {
+            .bottom-nav { display: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="header-left">
+            <h1><i class="fas fa-graduation-cap"></i> LMS</h1>
+            <span id="pageTitleDisplay" class="page-title-display" style="display:none;"></span>
+        </div>
+        <div class="header-right">
+            <span id="userNameDisplay" class="user-name-display" style="display:none;"></span>
+            <span id="syncStatus" class="sync-badge" style="display:none;">
+                <i class="fas fa-cloud"></i> <span id="syncText">Offline</span>
+            </span>
+            <a id="headerHamburger" onclick="toggleDrawer()" class="hamburger-icon" style="display:none;">
+                <i class="fas fa-bars"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<nav id="navMenu">
+    <a id="nav-dashboard" onclick="go('dashboard')"><i class="fas fa-home"></i> Dashboard</a>
+    <a id="nav-courses" onclick="go('courses')"><i class="fas fa-plus-circle"></i> Tambah Materi</a>
+    <a id="nav-quizAdmin" onclick="go('quizAdmin')"><i class="fas fa-tasks"></i> Buat Quiz</a>
+    <a id="nav-learning" onclick="go('learning')"><i class="fas fa-book-open"></i> Materi</a>
+    <a id="nav-quiz" onclick="go('quiz')"><i class="fas fa-edit"></i> Kerjakan Quiz</a>
+    <a id="nav-certificate" onclick="go('certificate')"><i class="fas fa-award"></i> Sertifikat</a>
+    <a onclick="logout()" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+</nav>
+
+<nav id="bottomNav" class="bottom-nav">
+    <a id="bnav-dashboard" onclick="go('dashboard')"><i class="fas fa-home"></i><span>Beranda</span></a>
+    <a id="bnav-learning" onclick="go('learning')"><i class="fas fa-book-open"></i><span>Materi</span></a>
+    <a id="bnav-quiz" onclick="go('quiz')"><i class="fas fa-edit"></i><span>Quiz</span></a>
+    <a id="bnav-certificate" onclick="go('certificate')"><i class="fas fa-award"></i><span>Sertifikat</span></a>
+    <a onclick="toggleDrawer()"><i class="fas fa-ellipsis-h"></i><span>Lainnya</span></a>
+</nav>
+
+<div id="drawer" class="drawer">
+    <div class="drawer-header">
+        <div>
+            <p style="font-size:12px;color:var(--text-light);margin:0;">Hi, <span id="drawerUserName">User</span></p>
+            <h3 style="margin:0;">Menu</h3>
+        </div>
+        <a onclick="closeDrawer()"><i class="fas fa-times"></i></a>
+    </div>
+    <div class="drawer-body">
+        <a id="dnav-dashboard" onclick="closeDrawer(); go('dashboard')"><i class="fas fa-home"></i> Dashboard</a>
+        <a id="dnav-learning" onclick="closeDrawer(); go('learning')"><i class="fas fa-book-open"></i> Materi</a>
+        <a id="dnav-quiz" onclick="closeDrawer(); go('quiz')"><i class="fas fa-edit"></i> Kerjakan Quiz</a>
+        <a id="dnav-certificate" onclick="closeDrawer(); go('certificate')"><i class="fas fa-award"></i> Sertifikat</a>
+        <a id="dnav-courses" onclick="closeDrawer(); go('courses')"><i class="fas fa-plus-circle"></i> Tambah Materi</a>
+        <a id="dnav-quizAdmin" onclick="closeDrawer(); go('quizAdmin')"><i class="fas fa-tasks"></i> Buat Quiz</a>
+        <hr>
+        <a onclick="logout()" style="color:var(--danger);"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+    </div>
+</div>
+<div id="drawerOverlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+
+<div id="loadingBar" style="position:fixed;top:0;left:0;width:100%;height:3px;background:var(--primary);z-index:9999;display:none;"></div>
+
+<section id="login" class="page active">
+    <div class="auth-container">
+        <div style="text-align:center; margin-bottom:25px;">
+            <div style="width:64px; height:64px; background:linear-gradient(135deg, var(--primary), #818cf8); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
+                <i class="fas fa-graduation-cap" style="font-size:28px; color:white;"></i>
+            </div>
+            <h2 style="margin:0 0 5px;">Masuk</h2>
+            <p style="color:var(--text-light); font-size:14px; margin:0;">Silakan masuk ke akun kamu</p>
+        </div>
+
+        <div class="card" style="padding:30px;">
+            <div class="auth-error" id="authSuccess" style="display:none; background:#dcfce7; border-color:#86efac; color:#16a34a;"></div>
+            <div class="auth-error" id="authError"></div>
+
+            <form onsubmit="event.preventDefault(); doLogin()">
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Email</label>
+                <div style="position:relative;">
+                    <i class="fas fa-envelope" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="email" id="loginEmail" placeholder="Masukkan dosen@lms.test" style="padding-left:38px;" autocomplete="email">
+                </div>
+
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Password</label>
+                <div style="position:relative;">
+                    <i class="fas fa-lock" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="password" id="loginPassword" placeholder="Masukkan dosen123" style="padding-left:38px;" autocomplete="current-password">
+                </div>
+
+                <button type="submit" style="width:100%; justify-content:center; padding:14px; margin-top:5px;">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Belum punya akun? <a onclick="showRegister()">Daftar disini</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="register" class="page">
+    <div class="auth-container">
+        <div style="text-align:center; margin-bottom:25px;">
+            <div style="width:64px; height:64px; background:linear-gradient(135deg, #f59e0b, #f97316); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
+                <i class="fas fa-user-plus" style="font-size:28px; color:white;"></i>
+            </div>
+            <h2 style="margin:0 0 5px;">Daftar Akun Baru</h2>
+            <p style="color:var(--text-light); font-size:14px; margin:0;">Buat akun untuk mulai belajar</p>
+        </div>
+
+        <div class="card" style="padding:30px;">
+            <div class="auth-error" id="regError"></div>
+
+            <form onsubmit="event.preventDefault(); doRegister()">
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Nama Lengkap</label>
+                <div style="position:relative;">
+                    <i class="fas fa-id-card" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="text" id="regName" placeholder="Contoh: Wawan Kurniawan" style="padding-left:38px;" autocomplete="name">
+                </div>
+
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Email</label>
+                <div style="position:relative;">
+                    <i class="fas fa-envelope" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="email" id="regEmail" placeholder="contoh@email.com" style="padding-left:38px;" autocomplete="email">
+                </div>
+
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin-bottom:5px; display:block;">Password</label>
+                <div style="position:relative;">
+                    <i class="fas fa-lock" style="position:absolute; left:14px; top:13px; color:var(--text-light);"></i>
+                    <input type="password" id="regPassword" placeholder="Minimal 6 karakter" style="padding-left:38px;" autocomplete="new-password">
+                </div>
+
+                <label style="font-size:13px; font-weight:600; color:var(--text-dark); margin:5px 0 8px; display:block;">Daftar Sebagai</label>
+                <div class="role-select">
+                    <div class="role-option active" data-role="mahasiswa" onclick="selectRole(this)">
+                        <i class="fas fa-user-graduate"></i> Mahasiswa
+                    </div>
+                    <div class="role-option" data-role="admin" onclick="selectRole(this)">
+                        <i class="fas fa-chalkboard-teacher"></i> Dosen
+                    </div>
+                </div>
+
+                <button type="submit" style="width:100%; justify-content:center; padding:14px;">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Sudah punya akun? <a onclick="showLogin()">Masuk disini</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="dashboard" class="page">
+    <h2>Dashboard</h2>
+    <div class="card" style="background: linear-gradient(to right, #6366f1, #a855f7); color: white;">
+        <h3 id="welcomeText" style="margin:0;"></h3>
+        <p style="opacity:0.9;">Semangat belajarnya hari ini!</p>
+    </div>
+    <div id="dashStats" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:16px;"></div>
+    <div id="dashCharts" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div class="card">
+            <canvas id="dashChart1"></canvas>
+        </div>
+        <div class="card">
+            <canvas id="dashChart2"></canvas>
+        </div>
+    </div>
+</section>
+
+<section id="courses" class="page">
+    <h2>Buat Materi Baru</h2>
+    <div class="card">
+        <input type="text" id="title" placeholder="Judul Materi">
+        <select id="category">
+            <option value="">Pilih Kategori</option>
+            <option value="Pemrograman">Pemrograman</option>
+            <option value="Jaringan">Jaringan</option>
+            <option value="Database">Database</option>
+        </select>
+        <textarea id="desc" placeholder="Deskripsi atau Konten Materi" rows="5"></textarea>
+        <label style="font-size:12px; color:var(--text-light);">Lampiran (Gambar/PDF)</label>
+        <input type="file" id="file">
+        <div style="display:flex; gap:10px;">
+            <button onclick="addCourse()"><i class="fas fa-save"></i> Simpan Materi</button>
+            <button onclick="updateCourse()" style="background:orange;"><i class="fas fa-sync"></i> Perbarui</button>
+            <button onclick="cancelEdit()" class="btn-danger"><i class="fas fa-times"></i> Batal</button>
+        </div>
+    </div>
+</section>
+
+<section id="quizAdmin" class="page">
+    <h2>Panel Pembuatan Soal</h2>
+    <div class="card">
+        <input type="text" id="qText" placeholder="Pertanyaan">
+        <input type="text" id="opt1" placeholder="Pilihan A">
+        <input type="text" id="opt2" placeholder="Pilihan B">
+        <input type="text" id="opt3" placeholder="Pilihan C">
+        <input type="text" id="opt4" placeholder="Pilihan D">
+        <select id="correct">
+            <option value="">Pilih Jawaban Benar</option>
+            <option value="0">Jawaban A</option>
+            <option value="1">Jawaban B</option>
+            <option value="2">Jawaban C</option>
+            <option value="3">Jawaban D</option>
+        </select>
+        <select id="qCourse">
+            <option value="">Pilih Materi Terkait</option>
+        </select>
+        <div style="display:flex; gap:10px;">
+            <button onclick="addQuestion()"><i class="fas fa-plus"></i> Tambah Soal</button>
+            <button onclick="updateQuestion()" style="background:orange;"><i class="fas fa-sync"></i> Perbarui Soal</button>
+            <button onclick="cancelEditQuestion()" style="background:var(--secondary);">Batal</button>
+        </div>
+    </div>
+    <div class="card">
+        <h3 style="font-size:16px; margin:0 0 15px 0;">Daftar Soal</h3>
+        <div id="questionList"></div>
+    </div>
+</section>
+
+<section id="learning" class="page">
+    <h2>Materi Pembelajaran</h2>
+    <div id="lecturerFilter" style="margin-bottom:15px; display:none;">
+        <label style="font-size:13px; font-weight:600; display:block; margin-bottom:5px;">Filter Dosen:</label>
+        <select id="lecturerSelect" onchange="render()" style="margin-bottom:0;">
+            <option value="">Semua Dosen</option>
+        </select>
+    </div>
+    <div id="list"></div>
+</section>
+
+<section id="quiz" class="page">
+    <h2>Ujian Kompetensi</h2>
+    <div id="quizContainer"></div>
+    <br>
+    <button onclick="finishQuiz()" class="btn-success" style="width:100%; justify-content:center;" id="finishQuizBtn">
+        <i class="fas fa-check-double"></i> Selesaikan Ujian
+    </button>
+</section>
+
+<section id="certificate" class="page">
+    <h2>Sertifikat</h2>
+    <div id="certSelectWrap" style="margin-bottom:15px; display:none;">
+        <label style="font-size:13px; font-weight:600; display:block; margin-bottom:5px; color:var(--text-light);">Pilih Materi:</label>
+        <select id="certSelect" onchange="loadCertificate()" style="width:100%;"></select>
+    </div>
+    <div id="certContainer"></div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/database.js?v=9"></script>
+<script src="js/auth.js?v=5"></script>
+<script>
+let editIndex = null;
+let editQuizIndex = null;
+let user = null;
+
+const navMenu = document.getElementById("navMenu");
+const loginSection = document.getElementById("login");
+
+function sanitize(str) {
+    const el = document.createElement('div');
+    el.textContent = str;
+    return el.innerHTML;
+}
+
+// ============ DRAWER ============
+function toggleDrawer() {
+    document.getElementById('drawer').classList.toggle('open');
+    document.getElementById('drawerOverlay').classList.toggle('open');
+}
+function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('open');
+}
+
+// ============ LOADING ============
+function showLoading(msg) {
+    document.getElementById('loadingBar').style.display = 'block';
+}
+function hideLoading() {
+    document.getElementById('loadingBar').style.display = 'none';
+}
+
+// ============ AUTH UI ============
+
+function showLogin() {
+    document.getElementById('login').classList.add('active');
+    document.getElementById('register').classList.remove('active');
+    document.getElementById('authError').style.display = 'none';
+    document.getElementById('authSuccess').style.display = 'none';
+}
+
+function showRegister() {
+    document.getElementById('register').classList.add('active');
+    document.getElementById('login').classList.remove('active');
+    document.getElementById('regError').style.display = 'none';
+}
+
+function selectRole(el) {
+    document.querySelectorAll('.role-option').forEach(r => r.classList.remove('active'));
+    el.classList.add('active');
+}
+
+function showAuthError(msg) {
+    const el = document.getElementById('authError');
+    el.textContent = msg;
+    el.style.display = 'block';
+}
+
+function showRegError(msg) {
+    const el = document.getElementById('regError');
+    el.textContent = msg;
+    el.style.display = 'block';
+}
+
+async function doLogin() {
+    document.getElementById('authSuccess').style.display = 'none';
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const password = document.getElementById('loginPassword').value;
+    showLoading('Memproses masuk...');
+    try {
+        await Auth.login(email, password);
+        user = Auth.getUser();
+        hideLoading();
+        enterApp();
+    } catch (e) {
+        hideLoading();
+        showAuthError(e.message);
+    }
+}
+
+async function doRegister() {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim().toLowerCase();
+    const password = document.getElementById('regPassword').value;
+    const roleEl = document.querySelector('.role-option.active');
+    const role = roleEl ? roleEl.dataset.role : 'mahasiswa';
+    showLoading('Membuat akun...');
+    try {
+        await Auth.register(email, password, name, role);
+        hideLoading();
+        showLogin();
+        document.getElementById('authSuccess').textContent =
+            'Akun berhasil dibuat! Silakan masuk dengan email dan password kamu.';
+        document.getElementById('authSuccess').style.display = 'block';
+    } catch (e) {
+        hideLoading();
+        showRegError(e.message);
+    }
+}
+
+function enterApp() {
+    loginSection.classList.remove('active');
+    navMenu.style.display = 'flex';
+    document.getElementById('bottomNav').style.display = 'flex';
+    document.getElementById('headerHamburger').style.display = 'block';
+    document.getElementById('userNameDisplay').style.display = 'inline';
+    document.getElementById('userNameDisplay').textContent = user.name;
+    document.getElementById('pageTitleDisplay').style.display = 'inline';
+
+    const role = user.role;
+    const isStudent = role === 'mahasiswa' || role === 'student';
+    const isAdmin = role === 'admin';
+    document.getElementById('nav-courses').style.display = isAdmin ? 'flex' : 'none';
+    document.getElementById('nav-quizAdmin').style.display = isAdmin ? 'flex' : 'none';
+    document.getElementById('nav-learning').style.display = 'flex';
+    document.getElementById('nav-quiz').style.display = isStudent ? 'flex' : 'none';
+    document.getElementById('nav-certificate').style.display = isStudent ? 'flex' : 'none';
+
+    // Bottom nav
+    const bnavQuiz = document.getElementById('bnav-quiz');
+    const bnavCert = document.getElementById('bnav-certificate');
+    if (bnavQuiz) bnavQuiz.style.display = isStudent ? 'flex' : 'none';
+    if (bnavCert) bnavCert.style.display = isStudent ? 'flex' : 'none';
+
+    // Drawer items visibility
+    const dnavCourses = document.getElementById('dnav-courses');
+    const dnavQuizAdmin = document.getElementById('dnav-quizAdmin');
+    const dnavLearning = document.getElementById('dnav-learning');
+    const dnavQuiz = document.getElementById('dnav-quiz');
+    const dnavCert = document.getElementById('dnav-certificate');
+    if (dnavCourses) dnavCourses.style.display = isAdmin ? 'flex' : 'none';
+    if (dnavQuizAdmin) dnavQuizAdmin.style.display = isAdmin ? 'flex' : 'none';
+    if (dnavLearning) dnavLearning.style.display = 'flex';
+    if (dnavQuiz) dnavQuiz.style.display = isStudent ? 'flex' : 'none';
+    if (dnavCert) dnavCert.style.display = isStudent ? 'flex' : 'none';
+
+    // Drawer user name
+    document.getElementById('drawerUserName').textContent = user.name;
+
+    go('dashboard');
+}
+
+const pageTitles = {
+    dashboard: 'Dashboard',
+    courses: 'Buat Materi',
+    quizAdmin: 'Panel Soal',
+    learning: 'Materi',
+    quiz: 'Quiz',
+    certificate: 'Sertifikat'
+};
+
+async function logout() {
+    await Auth.logout();
+    user = null;
+    location.reload();
+}
+
+// ============ NAVIGATION ============
+
+function go(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
+
+    document.getElementById(page).classList.add('active');
+    if (document.getElementById('nav-' + page)) {
+        document.getElementById('nav-' + page).classList.add('active');
+    }
+    if (document.getElementById('bnav-' + page)) {
+        document.getElementById('bnav-' + page).classList.add('active');
+    }
+
+    // Update page title in header
+    document.getElementById('pageTitleDisplay').textContent = pageTitles[page] || page;
+
+    if (page === 'dashboard') loadDashboard();
+    if (page === 'learning') render();
+    if (page === 'certificate') loadCertificate();
+    if (page === 'quiz') renderQuiz();
+    if (page === 'quizAdmin') { renderQuestionList(); populateCourseSelector(); }
+
+    window.scrollTo(0, 0);
+    closeDrawer();
+}
+
+// ============ DASHBOARD ============
+
+let dashChart1 = null, dashChart2 = null;
+const pendingDeletes = new Set();
+let deleteTimer = null;
+
+function loadDashboard() {
+    const courses = Database.getCourses();
+    const questions = Database.getQuestions();
+    const scores = Database.getScores();
+    const isStudent = user.role === 'mahasiswa' || user.role === 'student';
+
+    document.getElementById('welcomeText').innerText = 'Halo, ' + sanitize(user.name) + '!';
+
+    if (isStudent) {
+        const myScores = scores.filter(s => s.userId === user.uid);
+        const doneCount = courses.filter(c => c.done).length;
+        const quizCount = myScores.length;
+        const avgScore = quizCount
+            ? (myScores.reduce((sum, s) => sum + parseFloat(s.score), 0) / quizCount).toFixed(1)
+            : 0;
+
+        document.getElementById('dashStats').innerHTML = `
+            <div class="card" style="text-align:center;">
+                <p style="color:var(--text-light);margin:0;font-size:12px;">Total Materi</p>
+                <h1 style="margin:4px 0;font-size:28px;">${courses.length}</h1>
+                <i class="fas fa-book-open" style="color:var(--primary);opacity:.3;"></i>
+            </div>
+            <div class="card" style="text-align:center;">
+                <p style="color:var(--text-light);margin:0;font-size:12px;">Selesai Dibaca</p>
+                <h1 style="margin:4px 0;font-size:28px;">${doneCount}</h1>
+                <i class="fas fa-check-circle" style="color:var(--success);opacity:.3;"></i>
+            </div>
+            <div class="card" style="text-align:center;">
+                <p style="color:var(--text-light);margin:0;font-size:12px;">Quiz Dikerjakan</p>
+                <h1 style="margin:4px 0;font-size:28px;">${quizCount}</h1>
+                <i class="fas fa-edit" style="color:var(--warning);opacity:.3;"></i>
+            </div>
+            <div class="card" style="text-align:center;">
+                <p style="color:var(--text-light);margin:0;font-size:12px;">Rata-rata Nilai</p>
+                <h1 style="margin:4px 0;font-size:28px;color:${avgScore >= 70 ? 'var(--success)' : avgScore >= 40 ? 'var(--warning)' : 'var(--danger)'};">${avgScore}%</h1>
+                <i class="fas fa-chart-line" style="color:var(--primary);opacity:.3;"></i>
+            </div>
+        `;
+
+        // Chart 1: Skor per Quiz
+        const labels1 = myScores.map(s => {
+            const c = findCourse(s.courseId);
+            return c ? c.title : 'Quiz #' + s.courseId;
+        });
+        const data1 = myScores.map(s => parseFloat(s.score));
+
+        if (dashChart1) dashChart1.destroy();
+        if (dashChart2) dashChart2.destroy();
+        const ctx1 = document.getElementById('dashChart1').getContext('2d');
+        dashChart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: labels1.length ? labels1 : ['Belum ada data'],
+                datasets: [{
+                    label: 'Skor (%)',
+                    data: data1.length ? data1 : [0],
+                    backgroundColor: 'rgba(99,102,241,0.6)',
+                    borderColor: '#6366f1',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false }, title: { display: true, text: 'Nilai Quiz' } },
+                scales: { y: { beginAtZero: true, max: 100 } }
+            }
+        });
+
+        // Chart 2: Progress Doughnut
+        const ctx2 = document.getElementById('dashChart2').getContext('2d');
+        dashChart2 = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Selesai', 'Belum Dibaca'],
+                datasets: [{
+                    data: [doneCount, courses.length - doneCount],
+                    backgroundColor: ['#22c55e', '#e2e8f0'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    title: { display: true, text: 'Progress Membaca' }
+                }
+            }
+        });
+    } else {
+        // Admin/Dosen
+        const myCourses = courses.filter(c => c.ownerId === user.uid);
+        const myIds = myCourses.map(c => String(c.id));
+
+        // Questions: use getCourseQuestions fallback
+        const myQuestions = [];
+        for (const c of myCourses) {
+            const qs = getCourseQuestions(c.id);
+            for (const q of qs) {
+                if (!myQuestions.find(x => String(x.id) === String(q.id))) myQuestions.push(q);
+            }
+        }
+
+        // Scores: match by direct course ID OR by known seed-course pattern
+        const myScoreIds = new Set(myIds);
+        for (const c of myCourses) {
+            const seedId = SEED_TITLE_MAP[c.title];
+            if (seedId) myScoreIds.add(seedId);
+        }
+        const studentScores = scores.filter(s => myScoreIds.has(String(s.courseId)));
+
+        document.getElementById('dashStats').innerHTML = `
+            <div class="card" style="text-align:center;">
+                <p style="color:var(--text-light);margin:0;font-size:12px;">Materi Saya</p>
+                <h1 style="margin:4px 0;font-size:28px;">${myCourses.length}</h1>
+                <i class="fas fa-book-open" style="color:var(--primary);opacity:.3;"></i>
+            </div>
+            <div class="card" style="text-align:center;">
+                <p style="color:var(--text-light);margin:0;font-size:12px;">Total Soal</p>
+                <h1 style="margin:4px 0;font-size:28px;">${myQuestions.length}</h1>
+                <i class="fas fa-list" style="color:var(--warning);opacity:.3;"></i>
+            </div>
+        `;
+
+        if (dashChart1) dashChart1.destroy();
+        if (dashChart2) dashChart2.destroy();
+
+        // Chart 1: Soal per Materi
+        const labels1 = myCourses.map(c => c.title);
+        const data1 = myCourses.map(c => getCourseQuestions(c.id).length);
+        const ctx1 = document.getElementById('dashChart1').getContext('2d');
+        dashChart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: labels1.length ? labels1 : ['Belum ada data'],
+                datasets: [{
+                    label: 'Jumlah Soal',
+                    data: data1.length ? data1 : [0],
+                    backgroundColor: 'rgba(99,102,241,0.6)',
+                    borderColor: '#6366f1',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false }, title: { display: true, text: 'Soal per Materi' } },
+                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+
+        // Chart 2: Kategori Doughnut
+        const catMap = {};
+        myCourses.forEach(c => { catMap[c.category] = (catMap[c.category] || 0) + 1; });
+        const ctx2 = document.getElementById('dashChart2').getContext('2d');
+        dashChart2 = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(catMap).length ? Object.keys(catMap) : ['Belum ada data'],
+                datasets: [{
+                    data: Object.values(catMap).length ? Object.values(catMap) : [1],
+                    backgroundColor: ['#6366f1', '#22c55e', '#f59e0b', '#ef4444', '#a855f7'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    title: { display: true, text: 'Kategori Materi' }
+                }
+            }
+        });
+    }
+}
+
+// ============ COURSES (MATERI) ============
+
+async function addCourse() {
+    const title = document.getElementById('title').value.trim();
+    const desc = document.getElementById('desc').value.trim();
+    const category = document.getElementById('category').value;
+    const fileInput = document.getElementById('file');
+    if (!title || !desc || !category) return alert('Lengkapi data materi dulu!');
+
+    showLoading('Menyimpan materi...');
+    try {
+        const reader = new FileReader();
+        reader.onload = async function () {
+            await Database.saveCourse({
+                title, desc, category,
+                file: reader.result || null,
+                done: false,
+                author: user.name,
+                ownerId: user.uid
+            });
+            hideLoading();
+            alert('Materi berhasil diterbitkan!');
+            editIndex = null;
+            clearForm();
+            go('learning');
+        };
+        if (fileInput.files[0]) reader.readAsDataURL(fileInput.files[0]);
+        else reader.onload();
+    } catch (e) { hideLoading(); alert('Gagal: ' + e.message); }
+}
+
+function render() {
+    const list = document.getElementById('list');
+    let data = Database.getCourses();
+    const isStudent = user.role === 'mahasiswa' || user.role === 'student';
+
+    // Filter out pending deletes
+    data = data.filter(c => !pendingDeletes.has(String(c.id)));
+
+    if (user.role === 'admin') {
+        data = data.filter(c => c.ownerId === user.uid || c.ownerId === 'system');
+    }
+
+    // Lecturer filter for students
+    const filterEl = document.getElementById('lecturerFilter');
+    const selectEl = document.getElementById('lecturerSelect');
+    if (isStudent && filterEl) {
+        filterEl.style.display = 'block';
+        const authors = [...new Set(data.map(c => c.author).filter(Boolean))];
+        const currentVal = selectEl.value;
+        selectEl.innerHTML = '<option value="">Semua Dosen</option>' +
+            authors.map(a => `<option value="${sanitize(a)}">${sanitize(a)}</option>`).join('');
+        selectEl.value = currentVal || '';
+        if (selectEl.value) {
+            data = data.filter(c => c.author === selectEl.value);
+        }
+    } else if (filterEl) {
+        filterEl.style.display = 'none';
+    }
+
+    if (!data.length) {
+        list.innerHTML = "<div class='card' style='text-align:center;'>Belum ada materi yang tersedia.</div>";
+        return;
+    }
+
+    list.innerHTML = data.map(c => {
+        const isOwner = user.role === 'admin' && c.ownerId === user.uid;
+        const hasQuiz = getCourseQuestions(c.id).length > 0;
+        return `
+            <div class="card" style="cursor:pointer;" onclick="openCourse('${c.id}')">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <b style="font-size:18px;">${sanitize(c.title)}</b>
+                    <span class="author-badge"><i class="fas fa-user"></i> ${sanitize(c.author || 'Sistem')}</span>
+                </div>
+                <p style="color:var(--primary); font-size:12px; font-weight:600; margin:5px 0;"># ${sanitize(c.category)}</p>
+                <p style="color:var(--text-light); line-height:1.6;">${sanitize(c.desc)}</p>
+                ${c.file ? (c.file.startsWith('data:image') ?
+                    `<img src="${c.file}" style="width:100%; max-width:600px; border-radius:12px; margin:10px 0;" loading="lazy">` :
+                    `<a href="${c.file}" download style="display:block; margin:10px 0; color:var(--primary);" onclick="event.stopPropagation()"><i class="fas fa-paperclip"></i> Download Lampiran</a>`) : ''}
+                <div style="display:flex; gap:10px; margin-top:15px; border-top:1px solid #eee; padding-top:15px;" onclick="event.stopPropagation()">
+                    ${isStudent ? `
+                    <button onclick="toggle('${c.id}')" style="background:#f1f5f9; color:var(--text-dark); flex:1; justify-content:center;">
+                        ${c.done ? '<i class="fas fa-check-circle" style="color:var(--success);"></i> Selesai' : '<i class="fas fa-check"></i> Tandai Selesai'}
+                    </button>
+                    ` : ''}
+                    ${c.done && hasQuiz && isStudent ? `
+                        <button onclick="takeQuiz('${c.id}')" class="btn-success" style="flex-shrink:0;">
+                            <i class="fas fa-edit"></i> Kerjakan Quiz
+                        </button>
+                    ` : ''}
+                    ${isOwner ? `
+                        <button onclick="editCourse('${c.id}')" class="btn-warning"><i class="fas fa-edit"></i></button>
+                        <button onclick="del('${c.id}')" class="btn-danger"><i class="fas fa-trash"></i></button>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function takeQuiz(courseId) {
+    selectedQuizCourseId = courseId;
+    go('quiz');
+}
+
+function clearForm() {
+    document.getElementById('title').value = '';
+    document.getElementById('desc').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('file').value = '';
+    editIndex = null;
+}
+
+function cancelEdit() {
+    clearForm();
+    go('learning');
+}
+
+async function toggle(id) {
+    showLoading('Memperbarui status...');
+    try {
+        await Database.toggleCourseDone(String(id));
+        hideLoading();
+        render();
+    } catch (e) { hideLoading(); }
+}
+
+function openCourse(id) {
+    const c = Database.getCourses().find(x => String(x.id) === String(id));
+    if (!c) return;
+    const isStudent = user.role === 'mahasiswa' || user.role === 'student';
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    overlay.onclick = () => overlay.remove();
+    overlay.innerHTML = `
+        <div class="card" style="max-width:700px;width:100%;max-height:90vh;overflow-y:auto;" onclick="event.stopPropagation()">
+            <div style="display:flex;justify-content:space-between;align-items:start;">
+                <div>
+                    <h3 style="margin:0;">${sanitize(c.title)}</h3>
+                    <span style="color:var(--primary);font-size:12px;font-weight:600;"># ${sanitize(c.category)}</span>
+                </div>
+                <button onclick="this.closest('div[onclick]').remove()" style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--text-light);padding:0 4px;">&times;</button>
+            </div>
+            <hr style="margin:15px 0;">
+            <div style="line-height:1.8; color:var(--text-dark); font-size:15px; white-space:pre-wrap;">${sanitize(c.desc)}</div>
+            ${c.file ? (c.file.startsWith('data:image') ?
+                `<div style="margin:15px 0;"><img src="${c.file}" style="width:100%;border-radius:12px;"></div>` :
+                `<div style="margin:15px 0;"><a href="${c.file}" download style="color:var(--primary);"><i class="fas fa-paperclip"></i> Download Lampiran</a></div>`) : ''}
+            <hr style="margin:15px 0;">
+            <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+                ${isStudent ? `
+                <span style="font-size:13px;color:var(--text-light);">
+                    <i class="fas ${c.done ? 'fa-check-circle' : 'fa-circle'}"></i>
+                    ${c.done ? 'Selesai dibaca' : 'Belum selesai'}
+                </span>
+                <div style="display:flex; gap:8px;">
+                    ${c.done && getCourseQuestions(c.id).length > 0 && isStudent ? `
+                        <button onclick="event.stopPropagation(); this.closest('div[onclick]').remove(); takeQuiz('${c.id}')" class="btn-success" style="padding:10px 20px;">
+                            <i class="fas fa-edit"></i> Kerjakan Quiz
+                        </button>
+                    ` : ''}
+                    <button onclick="event.stopPropagation(); toggleRead('${c.id}')" style="${c.done ? 'background:var(--secondary);' : 'background:var(--success);'} padding:10px 20px;">
+                        <i class="fas ${c.done ? 'fa-undo' : 'fa-check'}"></i>
+                        ${c.done ? 'Tandai Belum Selesai' : 'Tandai Selesai Dibaca'}
+                    </button>
+                </div>
+                ` : `<span style="font-size:13px;color:var(--text-light);"><i class="fas fa-chalkboard-teacher"></i> Materi oleh ${sanitize(c.author || 'Sistem')}</span>`}
+        </div>
+    `;
+    document.body.appendChild(overlay);
+}
+
+async function toggleRead(id) {
+    showLoading();
+    try {
+        await Database.toggleCourseDone(id);
+        hideLoading();
+        render();
+        // Close all overlays and re-open with updated status
+        document.querySelectorAll('div[style*="position:fixed"][style*="z-index:999"]').forEach(el => el.remove());
+        openCourse(id);
+    } catch (e) { hideLoading(); }
+}
+
+function editCourse(id) {
+    const data = Database.getCourses();
+    const item = data.find(c => String(c.id) === String(id));
+    if (!item) return;
+    document.getElementById('title').value = item.title;
+    document.getElementById('desc').value = item.desc;
+    document.getElementById('category').value = item.category;
+    editIndex = item.id;
+    go('courses');
+}
+
+async function updateCourse() {
+    if (editIndex === null) return alert('Pilih materi yang mau diubah!');
+    const data = Database.getCourses();
+    const item = data.find(c => String(c.id) === String(editIndex));
+    if (!item) return alert('Materi tidak ditemukan!');
+    const fileInput = document.getElementById('file');
+
+    showLoading('Memperbarui materi...');
+    try {
+        const doUpdate = async (fileData) => {
+            item.title = document.getElementById('title').value.trim();
+            item.desc = document.getElementById('desc').value.trim();
+            item.category = document.getElementById('category').value;
+            if (fileData !== undefined) item.file = fileData;
+            await Database.saveCourse(item);
+            hideLoading();
+            alert('Berhasil diperbarui!');
+            editIndex = null;
+            clearForm();
+            render();
+            go('learning');
+        };
+
+        if (fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = () => doUpdate(reader.result);
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            doUpdate(undefined);
+        }
+    } catch (e) { hideLoading(); alert('Gagal: ' + e.message); }
+}
+
+function del(id) {
+    const c = Database.getCourses().find(x => String(x.id) === String(id));
+    if (!c) return;
+    const sid = String(id);
+
+    // Remove existing toast if any
+    const oldToast = document.querySelector('.undo-toast');
+    if (oldToast) oldToast.remove();
+    if (deleteTimer) { clearTimeout(deleteTimer); deleteTimer = null; }
+
+    pendingDeletes.add(sid);
+    render();
+
+    const toast = document.createElement('div');
+    toast.className = 'undo-toast';
+    toast.innerHTML = `
+        <span><strong>${sanitize(c.title)}</strong> dihapus</span>
+        <button id="undoBtn">Undo</button>
+    `;
+    document.body.appendChild(toast);
+
+    let undone = false;
+    document.getElementById('undoBtn').onclick = () => {
+        undone = true;
+        pendingDeletes.delete(sid);
+        toast.remove();
+        if (deleteTimer) { clearTimeout(deleteTimer); deleteTimer = null; }
+        render();
+    };
+
+    deleteTimer = setTimeout(async () => {
+        toast.remove();
+        if (!undone) {
+            pendingDeletes.delete(sid);
+            showLoading('Menghapus permanen...');
+            try {
+                await Database.deleteCourse(sid);
+            } catch (e) { alert('Gagal: ' + e.message); }
+            hideLoading();
+            render();
+        }
+        deleteTimer = null;
+    }, 5000);
+}
+
+// ============ QUIZ ADMIN ============
+
+function renderQuestionList() {
+    const container = document.getElementById('questionList');
+    const questions = Database.getQuestions().filter(q => q.ownerId === user.uid);
+    const courses = Database.getCourses();
+    if (!questions.length) {
+        container.innerHTML = "<p style='color:var(--text-light);'>Belum ada soal milikmu.</p>";
+        return;
+    }
+    container.innerHTML = questions.map((q, i) => {
+        const labels = ['A', 'B', 'C', 'D'];
+        const isEditing = editQuizIndex === q.id;
+        const courseName = courses.find(c => String(c.id) === String(q.courseId))?.title || 'Tanpa Materi';
+        return `
+            <div class="question-item" style="${isEditing ? 'background:#fefce8; border-radius:8px; padding:12px; margin-bottom:8px;' : ''}">
+                <div class="q-text">
+                    <strong>${sanitize(q.q)}</strong><br>
+                    <span style="font-size:12px;color:var(--text-light);">
+                        ${q.a.map((opt, j) => `${labels[j]}. ${sanitize(opt)}${j === q.correct ? ' ✅' : ''}`).join(' | ')}
+                    </span>
+                    <br><span style="font-size:11px;color:var(--primary);"><i class="fas fa-book"></i> ${sanitize(courseName)}</span>
+                </div>
+                <div class="q-actions">
+                    <button onclick="editQuestion(${q.id})" class="btn-warning"><i class="fas fa-edit"></i></button>
+                    <button onclick="deleteQuestion(${q.id})" class="btn-danger"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function populateCourseSelector() {
+    const sel = document.getElementById('qCourse');
+    const courses = Database.getCourses().filter(c => c.ownerId === user.uid);
+    sel.innerHTML = '<option value="">Pilih Materi Terkait</option>' +
+        courses.map(c => `<option value="${c.id}">${sanitize(c.title)}</option>`).join('');
+}
+
+async function addQuestion() {
+    const q = document.getElementById('qText').value.trim();
+    const a = [
+        document.getElementById('opt1').value.trim(),
+        document.getElementById('opt2').value.trim(),
+        document.getElementById('opt3').value.trim(),
+        document.getElementById('opt4').value.trim()
+    ];
+    const c = document.getElementById('correct').value;
+    const courseId = document.getElementById('qCourse').value;
+    if (!q || a.some(v => !v) || c === '') return alert('Isi soal kuis dengan lengkap!');
+    if (!courseId) return alert('Pilih materi terkait untuk soal ini!');
+    showLoading('Menyimpan soal...');
+    try {
+        await Database.saveQuestion({ q, a, correct: Number(c), courseId, ownerId: user.uid });
+        hideLoading();
+        alert('Soal berhasil ditambah!');
+        clearQuizForm();
+        renderQuestionList();
+    } catch (e) { hideLoading(); alert('Gagal: ' + e.message); }
+}
+
+function editQuestion(id) {
+    const data = Database.getQuestions().filter(q => q.ownerId === user.uid);
+    const item = data.find(q => String(q.id) === String(id));
+    if (!item) return;
+    document.getElementById('qText').value = item.q;
+    document.getElementById('opt1').value = item.a[0];
+    document.getElementById('opt2').value = item.a[1];
+    document.getElementById('opt3').value = item.a[2];
+    document.getElementById('opt4').value = item.a[3];
+    document.getElementById('correct').value = String(item.correct);
+    document.getElementById('qCourse').value = item.courseId || '';
+    editQuizIndex = id;
+    renderQuestionList();
+}
+
+async function updateQuestion() {
+    if (editQuizIndex === null) return alert('Pilih soal yang mau diubah!');
+    const q = document.getElementById('qText').value.trim();
+    const a = [
+        document.getElementById('opt1').value.trim(),
+        document.getElementById('opt2').value.trim(),
+        document.getElementById('opt3').value.trim(),
+        document.getElementById('opt4').value.trim()
+    ];
+    const c = document.getElementById('correct').value;
+    const courseId = document.getElementById('qCourse').value;
+    if (!q || a.some(v => !v) || c === '') return alert('Isi soal kuis dengan lengkap!');
+    if (!courseId) return alert('Pilih materi terkait untuk soal ini!');
+    const item = Database.getQuestions().find(x => String(x.id) === String(editQuizIndex));
+    if (!item) return alert('Soal tidak ditemukan!');
+    item.q = q; item.a = a; item.correct = Number(c); item.courseId = courseId;
+    showLoading('Memperbarui soal...');
+    try {
+        await Database.saveQuestion(item);
+        hideLoading();
+        alert('Soal berhasil diperbarui!');
+        editQuizIndex = null;
+        clearQuizForm();
+        renderQuestionList();
+    } catch (e) { hideLoading(); alert('Gagal: ' + e.message); }
+}
+
+function cancelEditQuestion() {
+    editQuizIndex = null;
+    clearQuizForm();
+    renderQuestionList();
+}
+
+async function deleteQuestion(id) {
+    if (confirm('Yakin mau hapus soal ini?')) {
+        showLoading('Menghapus soal...');
+        try {
+            await Database.deleteQuestion(id);
+            hideLoading();
+            if (String(editQuizIndex) === String(id)) { editQuizIndex = null; clearQuizForm(); }
+            renderQuestionList();
+        } catch (e) { hideLoading(); alert('Gagal: ' + e.message); }
+    }
+}
+
+function clearQuizForm() {
+    ['qText', 'opt1', 'opt2', 'opt3', 'opt4'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('correct').value = '';
+    document.getElementById('qCourse').value = '';
+}
+
+// ============ QUIZ ============
+
+const SEED_TITLE_MAP = {
+    'Pemrograman Web Modern': 'seed_c1',
+    'Sistem Basis Data Relasional': 'seed_c2',
+    'Jaringan & Keamanan Komputer': 'seed_c3'
+};
+
+function findCourse(id) {
+    const courses = Database.getCourses();
+    // Direct match by id
+    let c = courses.find(x => String(x.id) === String(id));
+    if (c) return c;
+    // Match by seed reverse (if id is seed_c1, find course whose title maps to it)
+    for (const [title, seedId] of Object.entries(SEED_TITLE_MAP)) {
+        if (seedId === String(id)) {
+            c = courses.find(x => x.title === title);
+            if (c) return c;
+        }
+    }
+    return null;
+}
+
+function getCourseQuestions(courseId) {
+    const questions = Database.getQuestions();
+    let result = questions.filter(q => String(q.courseId) === String(courseId));
+    if (!result.length) {
+        const course = findCourse(courseId);
+        if (course && course.title) {
+            const fallbackId = SEED_TITLE_MAP[course.title];
+            if (fallbackId) {
+                result = questions.filter(q => String(q.courseId) === fallbackId);
+            }
+        }
+    }
+    return result;
+}
+
+function showPreviousResult(courseId) {
+    const container = document.getElementById('quizContainer');
+    const courses = Database.getCourses();
+    const questions = Database.getQuestions();
+    const scores = Database.getScores();
+    const course = courses.find(c => String(c.id) === String(courseId));
+    if (!course) return;
+
+    const myScores = scores.filter(s => s.userId === user.uid && String(s.courseId) === String(courseId));
+    const bestScore = myScores.length ? Math.max(...myScores.map(s => parseFloat(s.score))) : 0;
+    const courseQuestions = getCourseQuestions(courseId);
+
+    container.innerHTML = `
+        <div class="card" style="text-align:center; border:3px solid var(--success); padding:30px;">
+            <i class="fas fa-check-circle" style="font-size:48px; color:var(--success); margin-bottom:10px;"></i>
+            <h3 style="margin:0 0 5px;">Kamu Sudah Lulus!</h3>
+            <p style="color:var(--text-light);">${sanitize(course.title)}</p>
+            <h1 style="color:var(--success); font-size:36px; margin:10px 0;">${bestScore}%</h1>
+            <p style="font-size:13px; color:var(--text-light);">Nilai terbaik dari ${myScores.length} percobaan</p>
+            <button onclick="selectedQuizCourseId=null; renderQuiz();" style="background:#f1f5f9; color:var(--text-dark); margin-top:10px;">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+        </div>
+        <div style="margin-top:15px;">
+            <p style="font-weight:600; font-size:14px; margin:0 0 10px;">Kunci Jawaban:</p>
+            ${courseQuestions.map((q, i) => `
+                <div class="card" style="padding:14px; background:#fafafa;">
+                    <p style="margin:0 0 8px;"><b>Soal ${i + 1}:</b> ${sanitize(q.q)}</p>
+                    ${q.a.map((opt, j) => `
+                        <div style="padding:8px 12px; border-radius:6px; margin-bottom:4px; font-size:14px; background:${j === q.correct ? '#dcfce7' : '#fff'}; border:${j === q.correct ? '1px solid #22c55e' : '1px solid #e2e8f0'};">
+                            ${labels[j]}. ${sanitize(opt)} ${j === q.correct ? '<i class="fas fa-check" style="color:var(--success);"></i>' : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+let score = 0;
+let answered = {};
+let selectedQuizCourseId = null;
+const labels = ['A', 'B', 'C', 'D'];
+
+function startQuiz(courseId) {
+    selectedQuizCourseId = courseId;
+    renderQuiz();
+}
+
+function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    const courses = Database.getCourses();
+    const questions = Database.getQuestions();
+    const scores = Database.getScores();
+    const finishBtn = document.getElementById('finishQuizBtn');
+
+    const isStudent = user.role === 'mahasiswa' || user.role === 'student';
+
+    // Admin: show all questions (preview)
+    if (!isStudent) {
+        if (finishBtn) finishBtn.style.display = 'none';
+        container.innerHTML = questions.length
+            ? "<p style='color:var(--text-light);'>Admin — pratinjau semua soal</p>"
+            : "<div class='card'>Belum ada soal.</div>";
+        return;
+    }
+
+    // Student: course selection first
+    if (!selectedQuizCourseId) {
+        if (finishBtn) finishBtn.style.display = 'none';
+        const completedCourses = courses.filter(c => c.done === true);
+
+        if (!completedCourses.length) {
+            container.innerHTML = `
+                <div class="card" style="text-align:center; padding:40px;">
+                    <i class="fas fa-book-open" style="font-size:48px; color:var(--text-light); opacity:0.3; margin-bottom:15px;"></i>
+                    <h3 style="margin:0 0 10px;">Selesaikan Materi Dulu!</h3>
+                    <p style="color:var(--text-light); margin:0 0 15px;">
+                        Kamu harus membaca dan menandai selesai minimal 1 materi sebelum bisa mengerjakan quiz.
+                    </p>
+                    <button onclick="go('learning')" style="margin:0 auto;">
+                        <i class="fas fa-book-reader"></i> Buka Materi
+                    </button>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="card" style="text-align:center;">
+                <h3 style="margin:0 0 5px;">Pilih Materi untuk Quiz</h3>
+                <p style="color:var(--text-light); margin-bottom:20px; font-size:14px;">Pilih materi yang sudah kamu selesaikan:</p>
+                ${completedCourses.map(c => {
+                    const myScores = scores.filter(s => s.userId === user.uid && String(s.courseId) === String(c.id));
+                    const bestScore = myScores.length ? Math.max(...myScores.map(s => parseFloat(s.score))) : null;
+                    const passed = bestScore !== null && bestScore >= 70;
+                    const failed = bestScore !== null && bestScore < 70;
+                    let btnClass = 'width:100%; justify-content:center; margin-bottom:10px; padding:14px;';
+                    let badge = '';
+                    let disabled = '';
+                    if (passed) {
+                        btnClass += ' background:#f0fdf4; color:var(--success); border:2px solid var(--success); cursor:default;';
+                        disabled = 'disabled="disabled"';
+                        badge = '<span style="display:block;font-size:12px;margin-top:4px;">✅ Lulus — ' + bestScore + '%</span>';
+                    } else if (failed) {
+                        btnClass += ' background:#fef2f2; color:var(--danger); border:2px solid var(--danger);';
+                        badge = '<span style="display:block;font-size:12px;margin-top:4px;">❌ ' + bestScore + '% — Kerjakan Ulang</span>';
+                    } else {
+                        btnClass += ' background:#f1f5f9; color:var(--text-dark); border:1px solid #e2e8f0;';
+                    }
+                    return `<button onclick="${passed ? '' : "startQuiz('" + c.id + "')"}" style="${btnClass}" ${disabled}>
+                        <i class="fas fa-book"></i> ${sanitize(c.title)}${badge}
+                    </button>`;
+                }).join('')}
+            </div>
+        `;
+        return;
+    }
+
+    // Course selected — check if already passed
+    const existingScores = scores.filter(s => s.userId === user.uid && (String(s.courseId) === String(selectedQuizCourseId) || (
+        (() => { const c = findCourse(selectedQuizCourseId); return c && String(s.courseId) === SEED_TITLE_MAP[c.title]; })()
+    )));
+    const bestExisting = existingScores.length ? Math.max(...existingScores.map(s => parseFloat(s.score))) : null;
+
+    if (bestExisting !== null && bestExisting >= 70) {
+        if (finishBtn) finishBtn.style.display = 'none';
+        showPreviousResult(selectedQuizCourseId);
+        return;
+    }
+
+    // Show quiz questions
+    if (finishBtn) finishBtn.style.display = 'inline-flex';
+    score = 0;
+    answered = {};
+
+    let courseQuestions = getCourseQuestions(selectedQuizCourseId);
+
+    if (!courseQuestions.length) {
+        const totalQ = Database.getQuestions().length;
+        const allCourseIds = [...new Set(Database.getQuestions().map(q => String(q.courseId)))].join(', ');
+        const rawCourse = courses.find(c => String(c.id) === String(selectedQuizCourseId));
+        const courseTitle = rawCourse?.title || '(unknown)';
+        container.innerHTML = `
+            <div class="card" style="text-align:center; padding:30px;">
+                <p>Belum ada soal untuk materi <b>${sanitize(courseTitle)}</b>.</p>
+                <p style="font-size:12px; color:var(--text-light);">ID materi: ${sanitize(String(selectedQuizCourseId))} (${typeof selectedQuizCourseId})</p>
+                <p style="font-size:12px; color:var(--text-light);">Semua courseId di soal: ${sanitize(allCourseIds)}</p>
+                <button onclick="selectedQuizCourseId=null; renderQuiz();" style="margin-top:10px;">Ganti Materi</button>
+            </div>
+        `;
+        console.log('DEBUG quiz:', { selectedQuizCourseId, type: typeof selectedQuizCourseId, course: rawCourse, allCourseIds });
+        return;
+    }
+
+    container.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <p style="margin:0; font-size:13px; color:var(--text-light);">
+                <i class="fas fa-book"></i> ${sanitize(courses.find(c => String(c.id) === String(selectedQuizCourseId))?.title || '')}
+            </p>
+            <button onclick="selectedQuizCourseId=null; renderQuiz();" style="background:#f1f5f9; color:var(--text-dark); font-size:12px; padding:8px 12px;">
+                <i class="fas fa-undo"></i> Ganti Materi
+            </button>
+        </div>
+        ${courseQuestions.map((q, i) => `
+            <div class="card">
+                <p><b>Soal ${i + 1}:</b> ${sanitize(q.q)}</p>
+                ${q.a.map((opt, j) => `
+                    <button id="q${i}_${j}" onclick="answerQuiz(${i},${j})">${sanitize(opt)}</button>
+                `).join('')}
+            </div>
+        `).join('')}
+    `;
+}
+
+function answerQuiz(i, j) {
+    const questions = getCourseQuestions(selectedQuizCourseId);
+    if (answered[i] || !questions[i]) return;
+    answered[i] = true;
+    const btns = document.querySelectorAll(`#q${i}_0, #q${i}_1, #q${i}_2, #q${i}_3`);
+    btns.forEach(b => b.classList.add('answered'));
+    const btn = document.getElementById(`q${i}_${j}`);
+    if (j === questions[i].correct) {
+        score++;
+        btn.style.background = '#22c55e';
+        btn.style.color = 'white';
+    } else {
+        btn.style.background = '#ef4444';
+        btn.style.color = 'white';
+        const cb = document.getElementById(`q${i}_${questions[i].correct}`);
+        if (cb) { cb.style.background = '#22c55e'; cb.style.color = 'white'; }
+    }
+}
+
+async function finishQuiz() {
+    const questions = getCourseQuestions(selectedQuizCourseId);
+    if (!questions.length) return;
+    showLoading('Menyimpan hasil...');
+    try {
+        const result = (score / questions.length) * 100;
+        const pct = result.toFixed(1);
+        await Database.addScore({
+            score: pct,
+            date: new Date().toLocaleString('id-ID'),
+            name: user.name,
+            userId: user.uid,
+            courseId: selectedQuizCourseId
+        });
+        localStorage.setItem('quiz_score', pct);
+        hideLoading();
+
+        if (result >= 70) {
+            alert('🎉 Selamat! Skor kamu: ' + pct + '%\nKamu lulus dan berhak mendapatkan sertifikat!');
+            selectedQuizCourseId = null;
+            go('certificate');
+        } else {
+            const retry = confirm('Skor kamu: ' + pct + '%\nNilai minimal 70 untuk sertifikat.\nKlik OK untuk coba lagi, Batal untuk kembali.');
+            if (retry) {
+                renderQuiz();
+            } else {
+                selectedQuizCourseId = null;
+                go('dashboard');
+            }
+        }
+    } catch (e) { hideLoading(); alert('Gagal: ' + e.message); }
+}
+
+// ============ CERTIFICATE ============
+
+function loadCertificate() {
+    const scores = Database.getScores().filter(s => s.userId === user.uid);
+    const courses = Database.getCourses();
+    const container = document.getElementById('certContainer');
+    const selectWrap = document.getElementById('certSelectWrap');
+    const select = document.getElementById('certSelect');
+
+    // Build list of qualified courses (score >= 70)
+    const qualified = {};
+    scores.forEach(s => {
+        const score = parseFloat(s.score);
+        if (score >= 70) {
+            const cid = String(s.courseId);
+            if (!qualified[cid] || score > parseFloat(qualified[cid].score)) {
+                qualified[cid] = { score: score.toFixed(1), date: s.date, courseId: cid };
+            }
+        }
+    });
+
+    const qualIds = Object.keys(qualified);
+    const qualCourses = courses.filter(c => qualIds.includes(String(c.id)));
+
+    if (!qualCourses.length) {
+        selectWrap.style.display = 'none';
+        const bestScore = scores.length ? Math.max(...scores.map(s => parseFloat(s.score))) : 0;
+        return container.innerHTML = `
+            <div class="card">
+                <p style="text-align:center;">Selesaikan kuis dengan nilai minimal 70 untuk dapat sertifikat.</p>
+                <p style="text-align:center; color:var(--text-light); font-size:13px;">Nilai terbaikmu: <strong>${bestScore}%</strong></p>
+            </div>
+        `;
+    }
+
+    // Populate dropdown
+    selectWrap.style.display = 'block';
+    const currentVal = select.value;
+    select.innerHTML = qualCourses.map(c =>
+        `<option value="${sanitize(String(c.id))}">${sanitize(c.title)} — ${qualified[String(c.id)].score}%</option>`
+    ).join('');
+    select.value = (currentVal && qualIds.includes(currentVal)) ? currentVal : qualCourses[0].id;
+
+    const selectedId = select.value;
+    const selectedCourse = courses.find(c => String(c.id) === String(selectedId));
+    const qData = qualified[String(selectedId)];
+    if (!selectedCourse || !qData) return;
+
+    // Filter scores for this course (for history)
+    const courseScores = scores.filter(s => String(s.courseId) === String(selectedId));
+    const historyHtml = courseScores.length ? `
+        <div class="score-history">
+            <p style="font-weight:600; font-size:14px; margin:0 0 8px 0;">Riwayat Nilai — ${sanitize(selectedCourse.title)}:</p>
+            ${courseScores.slice().reverse().map(s => `
+                <div class="score-item">
+                    <span>${sanitize(s.date || '')}</span>
+                    <span style="font-weight:600; color:${parseFloat(s.score) >= 70 ? 'var(--success)' : 'var(--danger)'};">${sanitize(s.score)}%</span>
+                </div>
+            `).join('')}
+        </div>
+    ` : '';
+
+    container.innerHTML = `
+        <div id="certificateCard" class="card" style="border:8px double var(--primary); text-align:center; padding:50px;">
+            <h1 style="color:var(--primary); font-size:40px; margin:0;">SERTIFIKAT</h1>
+            <p style="margin:20px 0 5px;">Diberikan dengan hormat kepada:</p>
+            <h2 style="text-decoration:underline; font-size:32px;">${sanitize(user.name)}</h2>
+            <p style="margin:15px 0 5px; color:var(--text-light);">Atas keberhasilan menyelesaikan materi:</p>
+            <h3 style="margin:5px 0 15px; color:var(--primary-dark);">${sanitize(selectedCourse.title)}</h3>
+            <p>Telah dinyatakan Lulus pada kuis kompetensi dengan skor:</p>
+            <h1 style="color:var(--success);">${qData.score}%</h1>
+            <p style="font-size:12px; margin-top:10px; color:var(--text-light);">${sanitize(qData.date || '')}</p>
+            <p style="font-size:12px; margin-top:30px; color:var(--text-light);">E-Certificate Generated by LMS PWA</p>
+        </div>
+        <div style="text-align:center; margin:15px 0;">
+            <button onclick="downloadCertificate()" style="background:var(--primary);">
+                <i class="fas fa-download"></i> Download Sertifikat
+            </button>
+        </div>
+        ${historyHtml}
+    `;
+}
+
+function downloadCertificate() {
+    const el = document.getElementById('certificateCard');
+    if (!el) return;
+    html2canvas(el, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'sertifikat_lms.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+// ============ SYNC BADGE ============
+
+function updateSyncBadge(online) {
+    const badge = document.getElementById('syncStatus');
+    const text = document.getElementById('syncText');
+    const banner = document.getElementById('offlineBanner');
+    if (badge) {
+        badge.style.display = 'inline-flex';
+        badge.className = 'sync-badge' + (online ? ' online' : '');
+        badge.querySelector('i').className = online ? 'fas fa-cloud-sun' : 'fas fa-cloud';
+        text.textContent = online ? 'Tersinkronisasi' : 'Offline';
+    }
+    if (banner) banner.style.display = online ? 'none' : 'block';
+}
+
+// ============ INIT ============
+
+window.onload = async () => {
+    showLoading();
+    try {
+        if ('serviceWorker' in navigator) {
+            try {
+                await navigator.serviceWorker.register('sw.js');
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    location.reload();
+                });
+            } catch (e) {
+                console.error('SW gagal:', e);
+            }
+        }
+
+        window.addEventListener('online', () => updateSyncBadge(true));
+        window.addEventListener('offline', () => updateSyncBadge(false));
+        updateSyncBadge(navigator.onLine);
+
+        await Database.init();
+
+        const authUser = await Auth.init();
+        console.log('Auth result:', authUser);
+        if (authUser) {
+            user = authUser;
+            enterApp();
+        }
+
+        Database.onDataChange(() => {
+            const active = document.querySelector('.page.active');
+            if (active) {
+                const id = active.id;
+                if (id === 'learning') render();
+                if (id === 'quizAdmin') renderQuestionList();
+                if (id === 'dashboard') loadDashboard();
+                if (id === 'certificate') loadCertificate();
+                if (id === 'quiz') renderQuiz();
+            }
+        });
+    } catch (e) {
+        console.error('Init error:', e);
+    }
+    hideLoading();
+};
+</script>
+
+</body>
+</html>
 
