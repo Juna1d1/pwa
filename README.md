@@ -23,7 +23,7 @@ Sistem Manajemen Pembelajaran (*Learning Management System*) berbasis **Progress
 | Eiffen Arjen Ariyanto | 202301110037 |
 | Renaldi Sentosa | 202301110010 |
 | Nur Rabiatul Adawiyah | 202301110021 |
-| Gizza Farah Nadifa | 202301110xxx |
+| Gizza Farah Nadifa | 202301110036 |
 
 ---
 
@@ -257,4 +257,4 @@ Menampilkan jumlah materi milik sendiri, total soal yang dibuat, grafik jumlah s
 
 ---
 
-<p align="center">Dibuat oleh <b>Kelompok Keliatan</b> — Tugas Software Process</p>
+<p align="center">Dibuat oleh <b>Kelompok Keliatan</b> — Tugas Wireless and Mobile Computing</p>
