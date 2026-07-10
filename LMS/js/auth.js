@@ -31,6 +31,7 @@ const Auth = (function () {
         }
     }
 
+    // Menyimpan kembali data seluruh user ke dalam localStorage
     function saveToStorage() {
         try {
             localStorage.setItem('lms_users', JSON.stringify(localUsers));
