@@ -94,6 +94,7 @@ const Database = (function () {
         onChangeCallbacks.forEach(cb => cb());
     }
 
+    // Mengambil semua data dari IndexedDB dan membersihkan data duplikat yang disebabkan oleh sinkronisasi real-time Firebase
     async function loadAllFromIDB() {
         data.courses = await idbAll('courses');
         data.questions = await idbAll('questions');
@@ -105,6 +106,7 @@ const Database = (function () {
         user = savedUser;
     }
 
+    // Melakukan migrasi data pengguna, kursus, kuis, dan skor dari localStorage ke IndexedDB (hanya dijalankan sekali)
     async function migrateFromLocalStorage() {
         const lsData = localStorage.getItem('lms_data');
         const lsQuiz = localStorage.getItem('quiz_data');
@@ -139,6 +141,7 @@ const Database = (function () {
             await idbSetMeta('user', JSON.parse(lsUser));
         }
 
+        // Menandai bahwa proses migrasi telah selesai agar tidak berjalan ulang di masa mendatang
         await idbSetMeta('migrated', true);
         console.log('Migrasi dari localStorage ke IndexedDB berhasil');
     }
@@ -187,6 +190,7 @@ const Database = (function () {
         }
     }
 
+    // perubahan data secara real-time dari Firestore dan menyinkronkannya ke IndexedDB lokal
     function subscribeFirebase(collection, storeName) {
         if (!isFirebaseReady) return;
         const unsub = firestore.collection(collection).orderBy('updatedAt', 'asc').onSnapshot(async (snap) => {
@@ -195,12 +199,15 @@ const Database = (function () {
                 const fbData = { firebaseId: change.doc.id, ...change.doc.data() };
                 const localIdx = data[storeName].findIndex(d => d.firebaseId === change.doc.id);
 
+                // Kasus 1: Data dihapus di Firestore, hapus juga di lokal
                 if (change.type === 'removed') {
                     if (localIdx !== -1) {
                         await idbDelete(storeName, data[storeName][localIdx].id);
                         data[storeName].splice(localIdx, 1);
                         changed = true;
                     }
+
+                // Kasus 2: Data baru ditambahkan atau diubah di Firestore    
                 } else if (change.type === 'added' || change.type === 'modified') {
                     if (localIdx === -1) {
                         // Double check by local id (Firebase doc id might match local doc id)
@@ -226,6 +233,8 @@ const Database = (function () {
                     }
                 }
             }
+
+            // Jika ada perubahan pada database lokal, pemicu callback untuk memperbarui UI
             if (changed) notifyChange();
         });
         unsubscribeFns.push(unsub);
@@ -274,6 +283,7 @@ const Database = (function () {
         }
     }
 
+    // Mengisi database lokal dengan data awal (seed data) dari file data.json jika versi berbeda atau database kosong
     async function seedFromDataJson() {
         const SEED_VERSION = 4;
         const lastVersion = await idbGetMeta('seed_version');
