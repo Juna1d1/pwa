@@ -46,7 +46,7 @@ Sistem Manajemen Pembelajaran (*Learning Management System*) berbasis **Progress
 
 **LMS Kampus Pintar** adalah platform pembelajaran digital (Learning Management System) berbasis Web yang dirancang untuk mendukung interaksi akademik modern antara Dosen dan Mahasiswa. LMS Kampus Pintar memungkinkan **Dosen** membuat dan membagikan materi pembelajaran beserta soal quiz, sementara **Mahasiswa** dapat mempelajari materi, mengerjakan quiz, dan mengunduh sertifikat kelulusan.
 
-Sebagai Progressive Web App (PWA) modern, Aplikasi dapat diakses langsung lewat browser maupun dipasang (*install*) ke perangkat seperti aplikasi native, serta tetap dapat digunakan meski koneksi internet terputus — data disimpan secara lokal (IndexedDB) dan disinkronkan otomatis ke cloud (Firebase) begitu koneksi tersedia kembali.
+Sebagai Progressive Web App (PWA) modern, aplikasi ini dapat diakses langsung lewat browser maupun dipasang (*install*) ke perangkat seperti aplikasi native, serta tetap dapat digunakan meski koneksi internet terputus (Offline) — data disimpan secara lokal (IndexedDB) dan disinkronkan otomatis ke cloud (Firebase) begitu koneksi tersedia kembali.
 
 ## ✨ Fitur Utama
 
