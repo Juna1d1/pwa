@@ -10,6 +10,7 @@ self.addEventListener('activate', e => {
     e.waitUntil(self.clients.claim());
 });
 
+// Jika perangkat offline (gagal fetch), kembalikan respon error 503 Service Unavailable.
 self.addEventListener('fetch', e => {
     e.respondWith(fetch(e.request).catch(() => new Response('Offline', { status: 503 })));
 });
