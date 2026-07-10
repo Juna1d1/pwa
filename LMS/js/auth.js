@@ -22,6 +22,7 @@ const Auth = (function () {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
+    // Mengambil data seluruh user yang terdaftar dari localStorage
     function loadFromStorage() {
         try {
             const raw = localStorage.getItem('lms_users');
